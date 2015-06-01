@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: MXAbiertoParticipa
+        psr4_prefix: MXAbiertoParticipa
+        src_path: app

@@ -1,0 +1,17 @@
+# Laravel
+vendor
+
+# Configuration
+.env
+config.codekit
+
+# Assets
+/bower_components
+/node_modules
+
+# Packages
+npm-debug.log
+.vagrant
+
+# PHPUnit
+phpunit.xml
