@@ -48,21 +48,21 @@ class MainRoutes
 
         //User Routes
         //$router->controller('user', 'UserController');
-        $router->get('user/login', [
-            'as'   => 'user/login',
-            'uses' => 'UserController@getLogin'
+        $router->get('auth/login', [
+            'as'   => 'auth.login',
+            'uses' => 'AuthController@getLogin'
         ]);
-        $router->get('user/signup', [
-            'as'   => 'user/signup',
-            'uses' => 'UserController@getSignup'
+        $router->post('auth/login', [
+            'as'   => 'auth.login',
+            'uses' => 'AuthController@postLogin'
         ]);
-        $router->post('user/login', [
-            'as'   => 'user.login',
-            'uses' => 'UserController@postLogin'
+        $router->get('auth/signup', [
+            'as'   => 'auth.signup',
+            'uses' => 'AuthController@getSignup'
         ]);
-        $router->post('user/signup', [
-            'as'  => 'user/signup',
-            'uses' => 'UserController@postSignup'
+        $router->post('auth/signup', [
+            'as'  => 'user.signup',
+            'uses' => 'AuthController@postSignup'
         ]);
 
         $router->get('user/{user}', [

@@ -52,8 +52,8 @@
               <?php endif; ?>
               <li class="link-logout"><a href="{{ URL::route('logout') }}" target="_self">{{ trans('messages.logout') }}</a></li>
             @else
-              <li class="link-login"><a href="{{ URL::route('user/login') }}" target="_self">{{ trans('messages.login') }}</a></li>
-              <li class="link-signup"><a href="{{ URL::route('user/signup') }}" target="_self">{{ trans('messages.signup') }}</a></li>
+              <li class="link-login"><a href="{{ URL::route('auth.login') }}" target="_self">{{ trans('messages.login') }}</a></li>
+              <li class="link-signup"><a href="{{ URL::route('auth.signup') }}" target="_self">{{ trans('messages.signup') }}</a></li>
             @endif
           </ul>
         </li>

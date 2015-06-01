@@ -5,11 +5,11 @@
 			<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
 				<div class="content">
 					<h1>{{ trans('messages.login') }}</h1>
-					<form action="{{ route('user.login') }}" method="post">
+					<form action="{{ route('auth.login') }}" method="post">
 						{!! csrf_field() !!}
 						<!-- Email -->
 						<div class="form-group">
-							<label for="email">{{ trans('message.email') }}</label>
+							<label for="email">{{ trans('messages.email') }}</label>
 							<input class="form-control" id="email" type="text" name="email" value="{{ Input::old('email') }}" placeholder="{{ trans('messages.email') }}">
 						</div>
 						<!-- Password -->
@@ -27,13 +27,13 @@
 						<br><br>
 						<ul class="list-unstyled">
 							<li>
-								<a class="forgot-password" href="{{ URL::route('password/remind') }}">{{ trans('messages.forgotpassword') }}</a>
+								<a class="forgot-password" href="{{ route('password/remind') }}">{{ trans('messages.forgotpassword') }}</a>
 							</li>
 							<li>
-								<a class="forgot-password" href="{{ URL::route('verification/remind') }}">{{ trans('messages.resend') }}</a>
+								<a class="forgot-password" href="{{ route('verification/remind') }}">{{ trans('messages.resend') }}</a>
 							</li>
 							<li>
-								<a class="forgot-password" href="{{ URL::route('user/signup') }}" target="_self">{{ trans('messages.signup') }}</a>
+								<a class="forgot-password" href="{{ route('auth.signup') }}" target="_self">{{ trans('messages.signup') }}</a>
 							</li>
 						</ul>
 						<input type="hidden" name="previous_page" value="{{ $previous_page }}">
