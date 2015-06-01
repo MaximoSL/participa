@@ -2,7 +2,7 @@
 
 namespace MXAbierto\Participa\Models;
 
-use Illuminate\Database\Model\Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Model\Collection;
 
 class Group extends Model

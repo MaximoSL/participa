@@ -21,98 +21,98 @@ class ApiRoutes
     public function map(Registrar $router)
     {
         $router->group(['namespace' => 'Api', 'prefix' => 'api'], function(Registrar $router) {
-            $router->get('api/user/sponsors/all', 'DocumentApiController@getAllSponsorsForUser');
-            $router->get('api/sponsors/all', 'SponsorApiController@getAllSponsors');
+            $router->get('user/sponsors/all', 'DocumentController@getAllSponsorsForUser');
+            $router->get('sponsors/all', 'SponsorController@getAllSponsors');
 
             //Annotation Action Routes
-            $router->post('api/docs/{doc}/annotations/{annotation}/likes', 'AnnotationApiController@postLikes');
-            $router->post('api/docs/{doc}/annotations/{annotation}/dislikes', 'AnnotationApiController@postDislikes');
-            $router->post('api/docs/{doc}/annotations/{annotation}/flags', 'AnnotationApiController@postFlags');
-            $router->post('api/docs/{doc}/annotations/{annotation}/seen', 'AnnotationApiController@postSeen');
-            $router->get('api/docs/{doc}/annotations/{annotation}/likes', 'AnnotationApiController@getLikes');
-            $router->get('api/docs/{doc}/annotations/{annotation}/dislikes', 'AnnotationApiController@getDislikes');
-            $router->get('api/docs/{doc}/annotations/{annotation}/flags', 'AnnotationApiController@getFlags');
+            $router->post('docs/{doc}/annotations/{annotation}/likes', 'AnnotationController@postLikes');
+            $router->post('docs/{doc}/annotations/{annotation}/dislikes', 'AnnotationController@postDislikes');
+            $router->post('docs/{doc}/annotations/{annotation}/flags', 'AnnotationController@postFlags');
+            $router->post('docs/{doc}/annotations/{annotation}/seen', 'AnnotationController@postSeen');
+            $router->get('docs/{doc}/annotations/{annotation}/likes', 'AnnotationController@getLikes');
+            $router->get('docs/{doc}/annotations/{annotation}/dislikes', 'AnnotationController@getDislikes');
+            $router->get('docs/{doc}/annotations/{annotation}/flags', 'AnnotationController@getFlags');
 
             //Annotation Comment Routes
-            $router->get('api/docs/{doc}/annotations/{annotation}/comments', 'AnnotationApiController@getComments');
-            $router->post('api/docs/{doc}/annotations/{annotation}/comments', 'AnnotationApiController@postComments');
-            $router->get('api/docs/{doc}/annotations/{annotation}/comments/{comment}', 'AnnotationApiController@getComments');
+            $router->get('docs/{doc}/annotations/{annotation}/comments', 'AnnotationController@getComments');
+            $router->post('docs/{doc}/annotations/{annotation}/comments', 'AnnotationController@postComments');
+            $router->get('docs/{doc}/annotations/{annotation}/comments/{comment}', 'AnnotationController@getComments');
 
             //Annotation Routes
-            $router->get('api/annotations/search', 'AnnotationApiController@getSearch');
-            $router->get('api/docs/{doc}/annotations/{annotation?}', ['as' => 'getAnnotation', 'uses' => 'AnnotationApiController@getIndex']);
-            $router->post('api/docs/{doc}/annotations', 'AnnotationApiController@postIndex');
-            $router->put('api/docs/{doc}/annotations/{annotation}', 'AnnotationApiController@putIndex');
-            $router->delete('api/docs/{doc}/annotations/{annotation}', 'AnnotationApiController@deleteIndex');
+            $router->get('annotations/search', 'AnnotationController@getSearch');
+            $router->get('docs/{doc}/annotations/{annotation?}', ['as' => 'getAnnotation', 'uses' => 'AnnotationController@getIndex']);
+            $router->post('docs/{doc}/annotations', 'AnnotationController@postIndex');
+            $router->put('docs/{doc}/annotations/{annotation}', 'AnnotationController@putIndex');
+            $router->delete('docs/{doc}/annotations/{annotation}', 'AnnotationController@deleteIndex');
 
             //Document Comment Routes
-            $router->post('api/docs/{doc}/comments', 'CommentApiController@postIndex');
-            $router->get('api/docs/{doc}/comments', 'CommentApiController@getIndex');
-            $router->get('api/docs/{doc}/comments/{comment?}', 'CommentApiController@getIndex');
-            $router->post('api/docs/{doc}/comments/{comment}/likes', 'CommentApiController@postLikes');
-            $router->post('api/docs/{doc}/comments/{comment}/dislikes', 'CommentApiController@postDislikes');
-            $router->post('api/docs/{doc}/comments/{comment}/flags', 'CommentApiController@postFlags');
-            $router->post('api/docs/{doc}/comments/{comment}/comments', 'CommentApiController@postComments');
-            $router->post('api/docs/{doc}/comments/{comment}/seen', 'CommentApiController@postSeen');
-            $router->post('api/docs/{doc}/comments/{comment}/hide', [
+            $router->post('docs/{doc}/comments', 'CommentController@postIndex');
+            $router->get('docs/{doc}/comments', 'CommentController@getIndex');
+            $router->get('docs/{doc}/comments/{comment?}', 'CommentController@getIndex');
+            $router->post('docs/{doc}/comments/{comment}/likes', 'CommentController@postLikes');
+            $router->post('docs/{doc}/comments/{comment}/dislikes', 'CommentController@postDislikes');
+            $router->post('docs/{doc}/comments/{comment}/flags', 'CommentController@postFlags');
+            $router->post('docs/{doc}/comments/{comment}/comments', 'CommentController@postComments');
+            $router->post('docs/{doc}/comments/{comment}/seen', 'CommentController@postSeen');
+            $router->post('docs/{doc}/comments/{comment}/hide', [
                 'as'   => 'comment/hide',
-                'uses' => 'CommentApiController@destroy'
+                'uses' => 'CommentController@destroy'
             ]);
-            $router->delete('api/docs/{doc}/comments/{comment}/delete', [
+            $router->delete('docs/{doc}/comments/{comment}/delete', [
                 'as'   => 'comment/delete',
-                'uses' => 'CommentApiController@destroy'
+                'uses' => 'CommentController@destroy'
             ]);
 
             //Document Support / Oppose routes
-            $router->post('api/docs/{doc}/support/', 'DocController@postSupport');
-            $router->get('api/users/{user}/support/{doc}', 'UserApiController@getSupport');
+            $router->post('docs/{doc}/support/', 'DocController@postSupport');
+            $router->get('users/{user}/support/{doc}', 'UserController@getSupport');
 
             //Document Api Routes
-            $router->get('api/docs/recent/{query?}', 'DocumentApiController@getRecent')->where('query', '[0-9]+');
-            $router->get('api/docs/categories', 'DocumentApiController@getCategories');
-            $router->get('api/docs/statuses', 'DocumentApiController@getAllStatuses');
-            $router->get('api/docs/sponsors', 'DocumentApiController@getAllSponsors');
-            $router->get('api/docs/{doc}/categories', 'DocumentApiController@getCategories');
-            $router->post('api/docs/{doc}/categories', 'DocumentApiController@postCategories');
-            $router->get('api/docs/{doc}/introtext', 'DocumentApiController@getIntroText');
-            $router->post('api/docs/{doc}/introtext', 'DocumentApiController@postIntroText');
-            $router->get('api/docs/{doc}/sponsor/{sponsor}', 'DocumentApiController@hasSponsor');
-            $router->get('api/docs/{doc}/sponsor', 'DocumentApiController@getSponsor');
-            $router->post('api/docs/{doc}/sponsor', 'DocumentApiController@postSponsor');
-            $router->get('api/docs/{doc}/status', 'DocumentApiController@getStatus');
-            $router->post('api/docs/{doc}/status', 'DocumentApiController@postStatus');
-            $router->get('api/docs/{doc}/dates', 'DocumentApiController@getDates');
-            $router->post('api/docs/{doc}/dates', 'DocumentApiController@postDate');
-            $router->put('api/dates/{date}', 'DocumentApiController@putDate');
-            $router->delete('api/docs/{doc}/dates/{date}', 'DocumentApiController@deleteDate');
-            $router->get('api/docs/{doc}', 'DocumentApiController@getDoc');
-            $router->post('api/docs/{doc}/title', 'DocumentApiController@postTitle');
-            $router->post('api/docs/{doc}/slug', 'DocumentApiController@postSlug');
-            $router->post('api/docs/{doc}/content', 'DocumentApiController@postContent');
-            $router->get('api/docs/', 'DocumentApiController@getDocs');
+            $router->get('docs/recent/{query?}', 'DocumentController@getRecent')->where('query', '[0-9]+');
+            $router->get('docs/categories', 'DocumentController@getCategories');
+            $router->get('docs/statuses', 'DocumentController@getAllStatuses');
+            $router->get('docs/sponsors', 'DocumentController@getAllSponsors');
+            $router->get('docs/{doc}/categories', 'DocumentController@getCategories');
+            $router->post('docs/{doc}/categories', 'DocumentController@postCategories');
+            $router->get('docs/{doc}/introtext', 'DocumentController@getIntroText');
+            $router->post('docs/{doc}/introtext', 'DocumentController@postIntroText');
+            $router->get('docs/{doc}/sponsor/{sponsor}', 'DocumentController@hasSponsor');
+            $router->get('docs/{doc}/sponsor', 'DocumentController@getSponsor');
+            $router->post('docs/{doc}/sponsor', 'DocumentController@postSponsor');
+            $router->get('docs/{doc}/status', 'DocumentController@getStatus');
+            $router->post('docs/{doc}/status', 'DocumentController@postStatus');
+            $router->get('docs/{doc}/dates', 'DocumentController@getDates');
+            $router->post('docs/{doc}/dates', 'DocumentController@postDate');
+            $router->put('dates/{date}', 'DocumentController@putDate');
+            $router->delete('docs/{doc}/dates/{date}', 'DocumentController@deleteDate');
+            $router->get('docs/{doc}', 'DocumentController@getDoc');
+            $router->post('docs/{doc}/title', 'DocumentController@postTitle');
+            $router->post('docs/{doc}/slug', 'DocumentController@postSlug');
+            $router->post('docs/{doc}/content', 'DocumentController@postContent');
+            $router->get('docs/', 'DocumentController@getDocs');
 
             //User Routes
-            $router->get('api/user/{user}', 'UserApiController@getUser');
-            $router->get('api/user/verify/', 'UserApiController@getVerify');
-            $router->post('api/user/verify/', 'UserApiController@postVerify');
-            $router->get('api/user/admin/', 'UserApiController@getAdmins');
-            $router->post('api/user/admin/', 'UserApiController@postAdmin');
-            $router->get('api/user/independent/verify/', 'UserApiController@getIndependentVerify');
-            $router->post('api/user/independent/verify/', 'UserApiController@postIndependentVerify');
-            $router->get('api/user/current', 'UserController@getCurrent');
-            $router->put('api/user/{user}/edit/email', 'UserController@editEmail');
-            $router->get('api/user/{user}/notifications', 'UserController@getNotifications');
-            $router->put('api/user/{user}/notifications', 'UserController@putNotifications');
+            $router->get('user/{user}', 'UserController@getUser');
+            $router->get('user/verify/', 'UserController@getVerify');
+            $router->post('user/verify/', 'UserController@postVerify');
+            $router->get('user/admin/', 'UserController@getAdmins');
+            $router->post('user/admin/', 'UserController@postAdmin');
+            $router->get('user/independent/verify/', 'UserController@getIndependentVerify');
+            $router->post('user/independent/verify/', 'UserController@postIndependentVerify');
+            $router->get('user/current', 'UserController@getCurrent');
+            $router->put('user/{user}/edit/email', 'UserController@editEmail');
+            $router->get('user/{user}/notifications', 'UserController@getNotifications');
+            $router->put('user/{user}/notifications', 'UserController@putNotifications');
 
             // Group Routes
-            $router->get('api/groups/verify/', 'GroupsApiController@getVerify');
-            $router->post('api/groups/verify/', 'GroupsApiController@postVerify');
+            $router->get('groups/verify/', 'GroupsController@getVerify');
+            $router->post('groups/verify/', 'GroupsController@postVerify');
 
             // User Login / Signup AJAX requests
-            $router->get('api/user/login', ['as' => 'api/user/login', 'uses' => 'UserManageApiController@getLogin']);
-            $router->post('api/user/login', ['as' => 'api/user/login', 'uses' => 'UserManageApiController@postLogin']);
-            $router->get('api/user/signup', ['as' => 'api/user/signup', 'uses' => 'UserManageApiController@getSignup']);
-            $router->post('api/user/signup', ['as' => 'api/user/signup', 'uses' => 'UserManageApiController@postSignup']);
+            $router->get('user/login', ['as' => 'api/user/login', 'uses' => 'UserManageController@getLogin']);
+            $router->post('user/login', ['as' => 'api/user/login', 'uses' => 'UserManageController@postLogin']);
+            $router->get('user/signup', ['as' => 'api/user/signup', 'uses' => 'UserManageController@getSignup']);
+            $router->post('user/signup', ['as' => 'api/user/signup', 'uses' => 'UserManageController@postSignup']);
         });
     }
 }

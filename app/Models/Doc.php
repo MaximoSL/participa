@@ -2,9 +2,8 @@
 
 namespace MXAbierto\Participa\Models;
 
-use Illuminate\Database\Model\Collection;
-
-use Illuminate\Database\Model\Model;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class Doc extends Model
 {
