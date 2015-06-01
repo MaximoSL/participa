@@ -11,17 +11,17 @@
 						<!-- First Name -->
 						<div class="form-group">
 							<label for="fname">{{ trans('messages.fname') }}</label>
-							<input class="form-control" id="fname" type="text" name="fname" value="{{ Input::old('fname') }}" placeholder="{{ trans('messages.fname') }}">
+							<input class="form-control" id="fname" type="text" name="fname" value="{{ old('fname') }}" placeholder="{{ trans('messages.fname') }}">
 						</div>
 						<!-- Last Name -->
 						<div class="form-group">
 							<label for="lname">{{ trans('messages.lname') }}</label>
-							<input class="form-control" id="lname" type="text" name="lname" value="{{ Input::old('lname') }}" placeholder="{{ trans('messages.lname') }}">
+							<input class="form-control" id="lname" type="text" name="lname" value="{{ old('lname') }}" placeholder="{{ trans('messages.lname') }}">
 						</div>
 						<!-- Email -->
 						<div class="form-group">
 							<label for="email">{{ trans('messages.email') }}</label>
-							<input class="form-control" id="email" type="text" name="email" value="{{ Input::old('email') }}" placeholder="{{ trans('messages.email') }}">
+							<input class="form-control" id="email" type="text" name="email" value="{{ old('email') }}" placeholder="{{ trans('messages.email') }}">
 						</div>
 						<!-- Password -->
 						<div class="form-group">

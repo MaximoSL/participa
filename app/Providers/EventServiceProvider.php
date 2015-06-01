@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'MXAbierto\Participa\Events\SomeEvent' => [
-            'MXAbierto\Participa\Listeners\EventListener',
+        'MXAbierto\Participa\Events\UserHasRegisteredEvent' => [
+            'MXAbierto\Participa\Listeners\SendEmailConfirmationListener',
         ],
     ];
 

@@ -41,31 +41,31 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *	Validation rules.
      */
     protected static $rules = [
-      'save' => [
-      'fname'    => 'required',
-      'lname'    => 'required',
+        'save' => [
+            'fname'    => 'required',
+            'lname'    => 'required',
         ],
-      'create' => [
-        'email'            => 'required|unique:users',
-        'password'         => 'required',
-      ],
-      'social-signup'    => [
-        'email'               => 'required|unique:users',
-        'oauth_vendor'        => 'required',
-        'oauth_id'            => 'required',
-        'oauth_update'        => 'required',
+        'create' => [
+            'email'            => 'required|unique:users',
+            'password'         => 'required',
+        ],
+        'social-signup'    => [
+            'email'               => 'required|unique:users',
+            'oauth_vendor'        => 'required',
+            'oauth_id'            => 'required',
+            'oauth_update'        => 'required',
         ],
         'twitter-signup'    => [
-      'oauth_vendor'        => 'required',
-      'oauth_id'            => 'required',
-      'oauth_update'        => 'required',
-    ],
-    'update'    => [
-      'email'            => 'required|unique:users',
-      'password'         => 'required',
+            'oauth_vendor'        => 'required',
+            'oauth_id'            => 'required',
+            'oauth_update'        => 'required',
+        ],
+        'update'    => [
+            'email'            => 'required|unique:users',
+            'password'         => 'required',
         ],
         'verify'    => [
-      'phone'            => 'required',
+            'phone'            => 'required',
         ],
     ];
 

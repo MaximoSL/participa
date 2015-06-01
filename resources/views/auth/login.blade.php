@@ -10,7 +10,7 @@
 						<!-- Email -->
 						<div class="form-group">
 							<label for="email">{{ trans('messages.email') }}</label>
-							<input class="form-control" id="email" type="text" name="email" value="{{ Input::old('email') }}" placeholder="{{ trans('messages.email') }}">
+							<input class="form-control" id="email" type="text" name="email" value="{{ old('email') }}" placeholder="{{ trans('messages.email') }}">
 						</div>
 						<!-- Password -->
 						<div class="form-group">
@@ -19,8 +19,9 @@
 						</div>
 						<!-- Remember checkbox -->
 						<div class="checkbox">
-							<label for="remember">{{ trans('messages.rememberme') }}</label>
-							<input type="checkbox" id="remember" name="remember" value="1" checked="true">
+							<label>
+								<input type="checkbox" name="remember" id="remember" {{ old('remember') ? ' checked' : '' }}> {{ trans('messages.rememberme') }}
+							</label>
 						</div>
 						<!-- Submit -->
 						<input class="btn btn-default" type="submit" value="{{ trans('messages.login') }}">

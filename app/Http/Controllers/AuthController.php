@@ -2,9 +2,13 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
-use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use MXAbierto\Participa\Events\UserHasRegisteredEvent;
+use MXAbierto\Participa\Models\User;
 
 class AuthController extends AbstractController
 {
@@ -17,11 +21,11 @@ class AuthController extends AbstractController
      *
      * @return Illuminate\View\View
      */
-    public function getLogin()
+    public function getLogin(Request $request)
     {
-        $previous_page = Input::old('previous_page', URL::previous());
+        $previous_page = $request->old('previous_page', URL::previous());
 
-        return view('login.index', [
+        return view('auth.login', [
             'page_id'          => 'login',
             'page_title'       => 'Log In',
             'previous_page'    => $previous_page,
@@ -36,49 +40,46 @@ class AuthController extends AbstractController
     *
     * @return Illuminate\Http\RedirectResponse
     */
-   public function postLogin()
+   public function postLogin(Request $request)
    {
-       //Retrieve POST values
-       $email = Input::get('email');
-       $password = Input::get('password');
-       $previous_page = Input::get('previous_page');
-       $remember = Input::get('remember');
-       $user_details = Input::all();
-
        //Rules for login form submission
-       $rules = ['email' => 'required', 'password' => 'required'];
-       $validation = Validator::make($user_details, $rules);
+       $this->validate($request, [
+           'email' => 'required|email',
+           'password' => 'required',
+        ]);
 
-       //Validate input against rules
-       if ($validation->fails()) {
-           return redirect()->route('user/login')->withInput()->withErrors($validation);
-       }
+       // Retrieve POST values
+       $email = $request->input('email');
+       $password = $request->input('password');
+       $previous_page = $request->input('previous_page');
+       $user_details = $request->all();
 
-       //Check that the user account exists
+       // Check that the user account exists
        $user = User::where('email', $email)->first();
 
-       if (!isset($user)) {
-           return redirect()->route('user/login')->with('error', 'Ese email no existe.');
+       if (! $user) {
+           return redirect()->route('auth.login')->with('error', 'Ese email no existe.');
        }
 
-       //If the user's token field isn't blank, he/she hasn't confirmed their account via email
+       // If the user's token field isn't blank, he/she hasn't confirmed their account via email
        if ($user->token != '') {
-           return redirect()->route('user/login')->with('error', 'Por favor, haz click en el enlace enviado a tu email para verificar la cuenta.');
+           return redirect()->route('auth.login')->with('error', 'Por favor, haz click en el enlace enviado a tu email para verificar la cuenta.');
        }
 
        //Attempt to log user in
        $credentials = ['email' => $email, 'password' => $password];
 
-       if (Auth::attempt($credentials, ($remember == 'true') ? true : false)) {
-           Auth::user()->last_login = new DateTime();
-           Auth::user()->save();
-           if (isset($previous_page)) {
-               return redirect()->to($previous_page)->with('message', 'Has ingresado exitosamente.');
-           } else {
-               return redirect()->route('docs')->with('message', 'Has ingresado exitosamente.');
-           }
+       if (! Auth::attempt($credentials, $request->has('remember'))) {
+           return redirect()->route('auth.login')->with('error', 'Datos incorrectos')->withInput(['previous_page' => $previous_page]);
+       }
+
+       Auth::user()->last_login = Carbon::now();
+       Auth::user()->save();
+
+       if ($previous_page) {
+           return redirect()->to($previous_page)->with('message', 'Has ingresado exitosamente.');
        } else {
-           return redirect()->route('user/login')->with('error', 'Datos incorrectos')->withInput(['previous_page' => $previous_page]);
+           return redirect()->route('docs')->with('message', 'Has ingresado exitosamente.');
        }
    }
 
@@ -98,7 +99,7 @@ class AuthController extends AbstractController
            'page_title'     => 'Registro a Participa',
        ];
 
-       return view('login.signup', $data);
+       return view('auth.signup', $data);
    }
 
    /**
@@ -109,13 +110,13 @@ class AuthController extends AbstractController
     *
     * @return Illuminate\Http\RedirectResponse
     */
-   public function postSignup()
+   public function postSignup(Request $request)
    {
        //Retrieve POST values
-       $email = Input::get('email');
-       $password = Input::get('password');
-       $fname = Input::get('fname');
-       $lname = Input::get('lname');
+       $email = $request->input('email');
+       $password = $request->input('password');
+       $fname = $request->input('fname');
+       $lname = $request->input('lname');
 
        //Create user token for email verification
        $token = str_random();
@@ -129,18 +130,11 @@ class AuthController extends AbstractController
        $user->token = $token;
 
        if (! $user->save()) {
-           return redirect()->route('user/signup')->withInput()->withErrors($user->getErrors());
+           return redirect()->route('auth.signup')->withInput()->withErrors($user->getErrors());
        }
 
-       Event::fire(MadisonEvent::NEW_USER_SIGNUP, $user);
+       event(new UserHasRegisteredEvent($user));
 
-       //Send email to user for email account verification
-       Mail::queue('email.signup', ['token' => $token], function ($message) use ($email, $fname) {
-           $message->subject(trans('messages.confirmationtitle'));
-           $message->from(trans('messages.emailfrom'), trans('messages.emailfromname'));
-           $message->to($email); // Recipient address
-       });
-
-       return redirect()->route('user/login')->with('message', trans('messages.confirmationresent'));
+       return redirect()->route('auth.login')->with('message', trans('messages.confirmationresent'));
    }
 }
