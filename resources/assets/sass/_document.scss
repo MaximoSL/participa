@@ -1,0 +1,91 @@
+
+.rss-link{
+	position:relative;
+	float:right;
+	top: 10px;
+	right:6px;
+
+	.rss-icon{
+		height:15px;
+		width:15px;
+	}
+}
+
+
+// Prewview Box
+#wmd-preview {
+	background-color: transparent;
+	float: none;
+	width: auto;
+	margin-top: 40px;
+}
+
+.doc-head {
+  padding: 30px 0 60px 0;
+}
+
+.doc_content{
+	margin-bottom: 165px;
+}
+
+.doc-content-main {
+	margin-top: 30px;
+
+	img {
+		max-width: 100%;
+	}
+}
+
+.doc-forum {
+	margin-top: 30px;
+}
+
+.activity-thread {
+	.activity-item {
+		background-color: #F4F4F4;
+		margin-bottom: 20px;
+		padding: 20px;
+	}
+
+	.author {
+		margin: 0;
+	}
+
+	.activity-replies {
+		padding-left: 30px;
+		padding-bottom: 20px;
+
+		.subcomment-field {
+			padding-top: 20px;
+
+            + .activity-reply {
+                margin-top: 10px;
+            }
+		}
+
+		.activity-reply {
+			padding-top: 10px;
+            padding-bottom: 10px;
+		}
+	}
+}
+
+.activity-icon {
+	font-size: 12px;
+	display: inline;
+
+	.glyphicon {
+		padding-right: 10px;
+	}
+}
+
+.doc-headings-list {
+	list-style: disc !important;
+	list-style-position: inside !important;
+
+	li {
+		background-color: #F4F4F4;
+		margin-bottom: 10px;
+		padding: 10px 10px 10px 20px;
+	}
+}

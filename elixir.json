@@ -1,0 +1,5 @@
+{
+    "bowerDir": "bower_components",
+    "cssOutput": "public/dist/css",
+    "jsOutput": "public/dist/js"
+}

@@ -7,10 +7,10 @@
 
 
 <!-- Stylesheets -->
-<link type="text/css" rel="stylesheet" href="/participa-assets/build/app.css">
+<link type="text/css" rel="stylesheet" href="{{ elixir('dist/css/app.css') }}">
 
 <!-- Scripts -->
-<script src="/participa-assets/build/app.js"></script>
+<script src="{{ elixir('dist/js/app.js') }}"></script>
 
 <?php
 $fs = new Illuminate\Filesystem\Filesystem();

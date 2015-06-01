@@ -8,6 +8,7 @@ config.codekit
 # Assets
 /bower_components
 /node_modules
+/public/dist
 
 # Packages
 npm-debug.log

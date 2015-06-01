@@ -1,0 +1,6 @@
+{
+  "name": "Participa",
+  "dependencies": {
+    "compass-mixins": "~1.0.2"
+  }
+}
