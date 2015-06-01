@@ -1,15 +1,16 @@
 <?php
+
+namespace MXAbierto\Participa\Http\Controllers;
+
 /**
  * 	Controller for Document actions.
  */
-class DocController extends BaseController
+class DocController extends AbstractController
 {
     public $restful = true;
 
     public function __construct()
     {
-        parent::__construct();
-
         $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);
     }
 

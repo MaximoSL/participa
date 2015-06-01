@@ -1,6 +1,8 @@
 <?php
 
-class DocumentsController extends Controller
+namespace MXAbierto\Participa\Http\Controllers;
+
+class DocumentsController extends AbstractController
 {
     public function listDocuments()
     {

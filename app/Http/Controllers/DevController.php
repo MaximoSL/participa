@@ -1,6 +1,8 @@
 <?php
 
-class DevController extends Controller
+namespace MXAbierto\Participa\Http\Controllers;
+
+class DevController extends AbstractController
 {
     public function testEvent()
     {

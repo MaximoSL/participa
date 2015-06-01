@@ -1,13 +1,14 @@
 <?php
+
+namespace MXAbierto\Participa\Http\Controllers;
+
 /**
  * 	Controller for note actions.
  */
-class AnnotationController extends BaseController
+class AnnotationController extends AbstractController
 {
     public function __construct()
     {
-        parent::__construct();
-
         //Require the user to be signed in to create, update notes
         $this->beforeFilter('auth', ['on' => ['post', 'put']]);
 

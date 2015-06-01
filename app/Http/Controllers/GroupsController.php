@@ -1,6 +1,8 @@
 <?php
 
-class GroupsController extends Controller
+namespace MXAbierto\Participa\Http\Controllers;
+
+class GroupsController extends AbstractController
 {
     public function processMemberInvite($groupId)
     {

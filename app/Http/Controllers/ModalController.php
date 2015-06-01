@@ -1,12 +1,9 @@
 <?php
 
-class ModalController extends Controller
-{
-    public function __construct()
-    {
-        //$this->beforeFilter('auth', array('on' => array('post','put', 'delete')));
-    }
+namespace MXAbierto\Participa\Http\Controllers;
 
+class ModalController extends AbstractController
+{
     public function seenAnnotationThanksModal()
     {
         if (!Auth::check()) {

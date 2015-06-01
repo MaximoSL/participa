@@ -1,12 +1,9 @@
 <?php
 
-class RemindersController extends BaseController
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
+namespace MXAbierto\Participa\Http\Controllers;
 
+class RemindersController extends AbstractController
+{
     /**
      * Display the password reminder view.
      *

@@ -1,11 +1,13 @@
 <?php
 
+namespace MXAbierto\Participa\Http\Controllers;
+
 use Illuminate\Database\Eloquent\Collection;
 
 /**
  * 	Controller for admin dashboard.
  */
-class DashboardController extends BaseController
+class DashboardController extends AbstractController
 {
     public $restful = true;
 
@@ -16,8 +18,6 @@ class DashboardController extends BaseController
 
         //Run csrf filter before all posts
         $this->beforeFilter('csrf', ['on' => 'post']);
-
-        parent::__construct();
     }
 
     /**

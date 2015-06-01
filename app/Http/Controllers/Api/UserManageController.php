@@ -1,14 +1,12 @@
 <?php
+
+namespace MXAbierto\Participa\Http\Controllers\Api;
+
 /**
  * 	Controller for User Login/Signup API actions.
  */
-class UserManageApiController extends ApiController
+class UserManageController extends AbstractApiController
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getLogin()
     {
         return View::make('login.api.index');

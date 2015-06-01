@@ -1,6 +1,8 @@
 <?php
 
-class SponsorController extends Controller
+namespace MXAbierto\Participa\Http\Controllers;
+
+class SponsorController extends AbstractController
 {
     /**
      * Shows form for requesting role as Independent Sponsor.
