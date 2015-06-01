@@ -47,15 +47,60 @@ class MainRoutes
         ]);
 
         //User Routes
-        $router->get('user/{user}', 'UserController@getIndex');
-        $router->get('user/edit/{user}', ['as' => 'editUser', 'uses' => 'UserController@getEdit']);
-        $router->put('user/edit/{user}', ['as' => 'editUser', 'uses' => 'UserController@putEdit']);
-        $router->get('user/edit/{user}/notifications', ['as' => 'editNotifications', 'uses' => 'UserController@editNotifications']);
-        $router->controller('user', 'UserController');
-        $router->get('user/login', ['as' => 'user/login', 'uses' => 'UserController@getLogin']);
-        $router->get('user/signup', ['as' => 'user/signup', 'uses' => 'UserController@getSignup']);
-        $router->post('user/login', ['as' => 'user/login', 'uses' => 'UserController@postLogin']);
-        $router->post('user/signup', ['as' => 'user/signup', 'uses' => 'UserController@postSignup']);
+        //$router->controller('user', 'UserController');
+        $router->get('user/login', [
+            'as'   => 'user/login',
+            'uses' => 'UserController@getLogin'
+        ]);
+        $router->get('user/signup', [
+            'as'   => 'user/signup',
+            'uses' => 'UserController@getSignup'
+        ]);
+        $router->post('user/login', [
+            'as'   => 'user.login',
+            'uses' => 'UserController@postLogin'
+        ]);
+        $router->post('user/signup', [
+            'as'  => 'user/signup',
+            'uses' => 'UserController@postSignup'
+        ]);
+
+        $router->get('user/{user}', [
+            'as'   => 'user/index',
+            'uses' => 'UserController@getIndex'
+        ]);
+        $router->get('user/edit/{user}', [
+            'as' => 'editUser',
+            'uses' => 'UserController@getEdit'
+        ]);
+        $router->put('user/edit/{user}', [
+            'as'   => 'editUser',
+            'uses' => 'UserController@putEdit'
+        ]);
+        $router->get('user/edit/{user}/notifications', [
+            'as'   => 'editNotifications',
+            'uses' => 'UserController@editNotifications'
+        ]);
+
+        //Password Routes
+        $router->get('password/remind', [
+            'as'   => 'password/remind',
+            'uses' => 'RemindersController@getRemind'
+        ]);
+        $router->post('password/remind', 'RemindersController@postRemind');
+        $router->get('password/reset/{token}',  'RemindersController@getReset');
+        $router->post('password/reset',  'RemindersController@postReset');
+
+        // Confirmation email resend
+        $router->get('verification/remind',  [
+            'as' =>   'verification/remind',
+            'uses' => 'RemindersController@getConfirmation'
+        ]);
+        $router->post('verification/remind', [
+            'as' => 'verification/remind',
+            'uses' => 'RemindersController@postConfirmation'
+        ]);
+
 
         // // Modal Routes
         // $router->get('modals/annotation_thanks', [
@@ -104,15 +149,6 @@ class MainRoutes
         // $router->post('user/login', ['as' => 'user/login', 'uses' => 'UserController@postLogin']);
         // $router->post('user/signup', ['as' => 'user/signup', 'uses' => 'UserController@postSignup']);
         //
-        // //Password Routes
-        // $router->get('password/remind', ['as' => 'password/remind', 'uses' => 'RemindersController@getRemind']);
-        // $router->post('password/remind', 'RemindersController@postRemind');
-        // $router->get('password/reset/{token}',  'RemindersController@getReset');
-        // $router->post('password/reset',  'RemindersController@postReset');
-        //
-        // // Confirmation email resend
-        // $router->get('verification/remind',  ['as' => 'verification/remind', 'uses' => 'RemindersController@getConfirmation']);
-        // $router->post('verification/remind', ['as' => 'verification/remind', 'uses' => 'RemindersController@postConfirmation']);
         //
         // //Annotation Routes
         // $router->get('annotation/{annotation}', 'AnnotationController@getIndex');

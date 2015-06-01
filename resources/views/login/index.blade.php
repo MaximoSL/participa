@@ -5,36 +5,39 @@
 			<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
 				<div class="content">
 					<h1>{{ trans('messages.login') }}</h1>
-					{{ Form::open(array('url'=>URL::route('user/login'), 'method'=>'post')) }}
-					<!-- Email -->
-					<div class="form-group">
-						{{ Form::label('email', Lang::get('messages.email')) . Form::text('email', Input::old('email'), array('placeholder'=>Lang::get('messages.email'), 'class'=>'form-control')) }}
-					</div>
-					<!-- Password -->
-					<div class="form-group">
-						{{ Form::label('password', Lang::get('messages.password') ) . Form::password('password', array('placeholder'=>Lang::get('messages.password'), 'class'=>'form-control')) }}
-					</div>
-					<!-- Remember checkbox -->
-					<div class="checkbox">
-						{{ Form::checkbox('remember', 'true') . Form::label('remember', Lang::get('messages.rememberme')) }}
-					</div>
-					<!-- Submit -->
-					{{ Form::submit(Lang::get('messages.login'), array('class'=>'btn btn-default')) }}
-					<br><br>
-					<ul class="list-unstyled">
-						<li>
-							<a class="forgot-password" href="{{ URL::route('password/remind') }}">{{ trans('messages.forgotpassword') }}</a>
-						</li>
-						<li>
-							<a class="forgot-password" href="{{ URL::route('verification/remind') }}">{{ trans('messages.resend') }}</a>
-						</li>
-						<li>
-							<a class="forgot-password" href="{{ URL::route('user/signup') }}" target="_self">{{ trans('messages.signup') }}</a>
-						</li>
-					</ul>
-
-					{{ Form::hidden('previous_page', $previous_page) }}
-					{{ Form::token() . Form::close() }}
+					<form action="{{ route('user.login') }}" method="post">
+						{!! csrf_field() !!}
+						<!-- Email -->
+						<div class="form-group">
+							<label for="email">{{ trans('message.email') }}</label>
+							<input class="form-control" id="email" type="text" name="email" value="{{ Input::old('email') }}" placeholder="{{ trans('messages.email') }}">
+						</div>
+						<!-- Password -->
+						<div class="form-group">
+							<label for="password">{{ trans('messages.password') }}</label>
+							<input class="form-control" id="password" type="password" name="password" placeholder="{{ trans('messages.password') }}">
+						</div>
+						<!-- Remember checkbox -->
+						<div class="checkbox">
+							<label for="remember">{{ trans('messages.rememberme') }}</label>
+							<input type="checkbox" id="remember" name="remember" value="1" checked="true">
+						</div>
+						<!-- Submit -->
+						<input class="btn btn-default" type="submit" value="{{ trans('messages.login') }}">
+						<br><br>
+						<ul class="list-unstyled">
+							<li>
+								<a class="forgot-password" href="{{ URL::route('password/remind') }}">{{ trans('messages.forgotpassword') }}</a>
+							</li>
+							<li>
+								<a class="forgot-password" href="{{ URL::route('verification/remind') }}">{{ trans('messages.resend') }}</a>
+							</li>
+							<li>
+								<a class="forgot-password" href="{{ URL::route('user/signup') }}" target="_self">{{ trans('messages.signup') }}</a>
+							</li>
+						</ul>
+						<input type="hidden" name="previous_page" value="{{ $previous_page }}">
+					</form>
 				</div>
 			</div>
 		</div>
