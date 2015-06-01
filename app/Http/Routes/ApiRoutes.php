@@ -20,7 +20,7 @@ class ApiRoutes
      */
     public function map(Registrar $router)
     {
-        $router->group(['namespace' => 'Api', 'prefix' => 'api'], function(Registrar $router) {
+        $router->group(['namespace' => 'Api', 'prefix' => 'api'], function (Registrar $router) {
             $router->get('sponsors/all', 'SponsorController@getAllSponsors');
             $router->get('user/sponsors/all', 'DocumentController@getAllSponsorsForUser');
 
@@ -42,7 +42,7 @@ class ApiRoutes
             $router->get('annotations/search', 'AnnotationController@getSearch');
             $router->get('docs/{doc}/annotations/{annotation?}', [
                 'as'   => 'getAnnotation',
-                'uses' => 'AnnotationController@getIndex'
+                'uses' => 'AnnotationController@getIndex',
             ]);
             $router->post('docs/{doc}/annotations', 'AnnotationController@postIndex');
             $router->put('docs/{doc}/annotations/{annotation}', 'AnnotationController@putIndex');
@@ -59,11 +59,11 @@ class ApiRoutes
             $router->post('docs/{doc}/comments/{comment}/seen', 'CommentController@postSeen');
             $router->post('docs/{doc}/comments/{comment}/hide', [
                 'as'   => 'comment/hide',
-                'uses' => 'CommentController@destroy'
+                'uses' => 'CommentController@destroy',
             ]);
             $router->delete('docs/{doc}/comments/{comment}/delete', [
                 'as'   => 'comment/delete',
-                'uses' => 'CommentController@destroy'
+                'uses' => 'CommentController@destroy',
             ]);
 
             //Document Support / Oppose routes
@@ -114,19 +114,19 @@ class ApiRoutes
             // User Login / Signup AJAX requests
             $router->get('user/login', [
                 'as'   => 'api/user/login',
-                'uses' => 'UserManageController@getLogin'
+                'uses' => 'UserManageController@getLogin',
             ]);
             $router->post('user/login', [
                 'as'   => 'api/user/login',
-                'uses' => 'UserManageController@postLogin'
+                'uses' => 'UserManageController@postLogin',
             ]);
             $router->get('user/signup', [
                 'as'   => 'api/user/signup',
-                'uses' => 'UserManageController@getSignup'
+                'uses' => 'UserManageController@getSignup',
             ]);
             $router->post('user/signup', [
-                'as' => 'api/user/signup',
-                'uses' => 'UserManageController@postSignup'
+                'as'   => 'api/user/signup',
+                'uses' => 'UserManageController@postSignup',
             ]);
         });
     }

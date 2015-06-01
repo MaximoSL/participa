@@ -20,13 +20,13 @@ class GroupsController extends AbstractController
         $role = Input::all()['role'];
 
         if (!Group::isValidRole($role)) {
-            return Redirect::back()->with('error', "Tipo de Rol no válido");
+            return Redirect::back()->with('error', 'Tipo de Rol no válido');
         }
 
         $user = User::where('email', '=', $email)->first();
 
         if (!$user) {
-            return Redirect::back()->with('error', "Usuario no válido");
+            return Redirect::back()->with('error', 'Usuario no válido');
         }
 
         $userExists = (bool) GroupMember::where('user_id', '=', $user->id)
@@ -43,11 +43,11 @@ class GroupsController extends AbstractController
         $newMember->role = $role;
 
         $newMember->save();
-        $text = "Has sido agregado al grupo ".$group->getDisplayName()." con el rol de ".$role.".";
+        $text = 'Has sido agregado al grupo '.$group->getDisplayName().' con el rol de '.$role.'.';
 
         // Notify member of invite
         Mail::queue('email.notification', ['text' => $text], function ($message) use ($email) {
-            $message->subject("Has sido agregado a un grupo de Madison");
+            $message->subject('Has sido agregado a un grupo de Madison');
             $message->from('sayhello@opengovfoundation.org', 'Madison');
             $message->to($email);
         });
@@ -88,13 +88,13 @@ class GroupsController extends AbstractController
         $group = Group::findByMemberId($memberId);
 
         if (!$group) {
-            return Redirect::to('groups')->with('error', "No se pudo encontrar el grupo al que esta persona pertenece");
+            return Redirect::to('groups')->with('error', 'No se pudo encontrar el grupo al que esta persona pertenece');
         }
 
         $members = GroupMember::where('group_id', '=', $group->id)->count();
 
         if ($members <= 1) {
-            return Redirect::to('groups/members/'.(int) $group->id)->with('error', "No puedes eliminar el último miembro del grupo");
+            return Redirect::to('groups/members/'.(int) $group->id)->with('error', 'No puedes eliminar el último miembro del grupo');
         }
 
         $member = GroupMember::where('id', '=', $memberId);
@@ -123,7 +123,7 @@ class GroupsController extends AbstractController
 
             Session::put('activeGroupId', $groupId);
 
-            return Redirect::back()->with('message', "Grupo Activo Cambiado");
+            return Redirect::back()->with('message', 'Grupo Activo Cambiado');
         } catch (\Exception $e) {
             return Redirect::back()->with('error', 'Hubo un error al procesar tu petición');
         }
@@ -133,14 +133,14 @@ class GroupsController extends AbstractController
     {
         $retval = [
             'success' => false,
-            'message' => "Error Desconocido",
+            'message' => 'Error Desconocido',
         ];
 
         try {
             $groupMember = GroupMember::where('id', '=', $memberId)->first();
 
             if (!$groupMember) {
-                $retval['message'] = "No se pudo encontrar el miembro";
+                $retval['message'] = 'No se pudo encontrar el miembro';
 
                 return Response::json($retval);
             }
@@ -148,13 +148,13 @@ class GroupsController extends AbstractController
             $group = Group::where('id', '=', $groupMember->group_id)->first();
 
             if (!$group) {
-                $retval['message'] = "No se pudo encontrar el grupo";
+                $retval['message'] = 'No se pudo encontrar el grupo';
 
                 return Response::json($retval);
             }
 
             if (!$group->isGroupOwner(Auth::user()->id)) {
-                $retval['message'] = "¡No eres el dueño del grupo!";
+                $retval['message'] = '¡No eres el dueño del grupo!';
 
                 return Response::json($retval);
             }
@@ -173,7 +173,7 @@ class GroupsController extends AbstractController
                                      ->count();
 
                 if ($owners <= 1) {
-                    $retval['message'] = "¡El Grupo debe tener un dueño!";
+                    $retval['message'] = '¡El Grupo debe tener un dueño!';
 
                     return Response::json($retval);
                 }
@@ -183,7 +183,7 @@ class GroupsController extends AbstractController
             $groupMember->save();
 
             $retval['success'] = true;
-            $retval['message'] = "Miembro Actualizado";
+            $retval['message'] = 'Miembro Actualizado';
 
             return Response::json($retval);
         } catch (\Exception $e) {
@@ -219,7 +219,7 @@ class GroupsController extends AbstractController
             $group = Group::where('id', '=', $groupId)->first();
 
             if (!$group) {
-                return Redirect::back()->with('error', "Grupo No Encontrado");
+                return Redirect::back()->with('error', 'Grupo No Encontrado');
             }
 
             if (!$group->isGroupOwner(Auth::user()->id)) {
@@ -257,14 +257,14 @@ class GroupsController extends AbstractController
             $group = new Group();
             $group->status = Group::STATUS_PENDING;
 
-            $message = "¡Tu grupo ha sido creado! Debe ser aprovado antes de que puedas invitar a otros a unirse o crear documentos.";
+            $message = '¡Tu grupo ha sido creado! Debe ser aprovado antes de que puedas invitar a otros a unirse o crear documentos.';
         } else {
             $group = Group::find($groupId);
 
             if (!$group->isGroupOwner(Auth::user()->id)) {
                 return Redirect::to('groups')->with('error', 'No puedes modificar un grupo que no te pertenece.');
             }
-            $message = "¡Tu grupo ha sido actualizado!";
+            $message = '¡Tu grupo ha sido actualizado!';
         }
 
         $group->name = $group_details['gname'];

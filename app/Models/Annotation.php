@@ -8,13 +8,13 @@ class Annotation extends Model implements ActivityInterface
 {
     const INDEX_TYPE = 'annotation';
 
-    const ANNOTATION_CONSUMER = "Madison";
+    const ANNOTATION_CONSUMER = 'Madison';
 
     const ACTION_LIKE = 'like';
     const ACTION_DISLIKE = 'dislike';
     const ACTION_FLAG = 'flag';
 
-    protected $table = "annotations";
+    protected $table = 'annotations';
     protected $fillable = ['quote', 'text', 'uri', 'seen'];
     protected $softDelete = true;
 
@@ -378,9 +378,9 @@ class Annotation extends Model implements ActivityInterface
             $message = json_decode($e->getMessage());
 
             if ($message->ok) {
-                Log::warning("The annotation with id: ".$this->search_id." was not found in ElasticSearch.  Deleting annotation from the DB...");
+                Log::warning('The annotation with id: '.$this->search_id.' was not found in ElasticSearch.  Deleting annotation from the DB...');
             } else {
-                throw new Exception("Unable to delete annotation from ElasticSearch: ".$e->getMessage());
+                throw new Exception('Unable to delete annotation from ElasticSearch: '.$e->getMessage());
             }
         }
 
@@ -430,7 +430,7 @@ class Annotation extends Model implements ActivityInterface
             case static::ACTION_FLAG:
                 break;
             default:
-                throw new \InvalidArgumentException("Invalid Action to Add");
+                throw new \InvalidArgumentException('Invalid Action to Add');
         }
 
         $actionModel = NoteMeta::where('annotation_id', '=', $this->id)

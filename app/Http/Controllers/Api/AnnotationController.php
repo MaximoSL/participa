@@ -22,8 +22,8 @@ class AnnotationController extends AbstractApiController
     /**
      * Get annotations by document ID and annotation ID.
      *
-     * @param integer $docId
-     * @param string  $annotationId optional, if not provided get all
+     * @param int    $docId
+     * @param string $annotationId optional, if not provided get all
      *
      * @throws Exception
      */

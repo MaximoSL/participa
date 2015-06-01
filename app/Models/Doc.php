@@ -2,8 +2,8 @@
 
 namespace MXAbierto\Participa\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class Doc extends Model
 {
@@ -14,8 +14,8 @@ class Doc extends Model
 
     const TYPE = 'doc';
 
-    const SPONSOR_TYPE_INDIVIDUAL = "individual";
-    const SPONSOR_TYPE_GROUP = "group";
+    const SPONSOR_TYPE_INDIVIDUAL = 'individual';
+    const SPONSOR_TYPE_GROUP = 'group';
 
     public function __construct()
     {
@@ -69,7 +69,7 @@ class Doc extends Model
                 return $sponsor->userHasRole($user, Group::ROLE_EDITOR) || $sponsor->userHasRole($user, Group::ROLE_OWNER);
                 break;
             default:
-                throw new \Exception("Unknown Sponsor Type");
+                throw new \Exception('Unknown Sponsor Type');
         }
 
         return false;
@@ -148,7 +148,7 @@ class Doc extends Model
     public static function createEmptyDocument(array $params)
     {
         $defaults = [
-            'content'     => "New Document Content",
+            'content'     => 'New Document Content',
             'sponsor'     => null,
             'sponsorType' => null,
         ];
@@ -156,10 +156,10 @@ class Doc extends Model
         $params = array_replace_recursive($defaults, $params);
 
         if (is_null($params['sponsor'])) {
-            throw new \Exception("Sponsor Param Required");
+            throw new \Exception('Sponsor Param Required');
         }
 
-        $document = new Doc();
+        $document = new self();
 
         DB::transaction(function () use ($document, $params) {
             $document->title = $params['title'];
@@ -173,12 +173,12 @@ class Doc extends Model
                     $document->groupSponsor()->sync([$params['sponsor']]);
                     break;
                 default:
-                    throw new \Exception("Invalid Sponsor Type");
+                    throw new \Exception('Invalid Sponsor Type');
             }
 
             $template = new DocContent();
             $template->doc_id = $document->id;
-            $template->content = "New Document Content";
+            $template->content = 'New Document Content';
             $template->save();
 
             $document->init_section = $template->id;
@@ -215,7 +215,7 @@ class Doc extends Model
     {
         $rawDocs = DB::select(
             DB::raw(
-                "SELECT docs.* FROM
+                'SELECT docs.* FROM
 					(SELECT doc_id
 					   FROM doc_group, group_members
 					  WHERE doc_group.group_id = group_members.group_id
@@ -226,7 +226,7 @@ class Doc extends Model
 					  WHERE doc_user.user_id = ?
 				    ) DocUnion, docs
 				  WHERE docs.id = DocUnion.doc_id
-			   GROUP BY docs.id"
+			   GROUP BY docs.id'
             ),
             [$userId, $userId]
         );

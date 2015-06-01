@@ -355,7 +355,7 @@ class OldAnnotation
                           'flags'         => -1,
                     ];
 
-        $annotation = OldAnnotation::find($note_id);
+        $annotation = self::find($note_id);
 
         $meta = NoteMeta::where('user_id', $user_id)->where('annotation_id', '=', $note_id)->where('meta_key', '=', 'user_action');
 

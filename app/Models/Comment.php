@@ -79,7 +79,7 @@ class Comment extends Model implements ActivityInterface
             case static::ACTION_FLAG:
                 break;
             default:
-                throw new \InvalidArgumentException("Invalid Action to Add");
+                throw new \InvalidArgumentException('Invalid Action to Add');
         }
 
         $actionModel = CommentMeta::where('comment_id', '=', $this->id)
@@ -112,7 +112,7 @@ class Comment extends Model implements ActivityInterface
     {
         $comment['private'] = (!empty($comment['private']) && $comment['private'] != 'false') ? 1 : 0;
 
-        $obj = new Comment();
+        $obj = new self();
         $obj->text = $comment['text'];
         $obj->user_id = $comment['user']['id'];
         $obj->doc_id = $this->doc_id;
@@ -167,13 +167,12 @@ class Comment extends Model implements ActivityInterface
     public static function loadComments($docId, $commentId, $userId)
     {
         $user = Auth::user();
-        if(static::canUserEdit($user, $docId)) {
+        if (static::canUserEdit($user, $docId)) {
             $comments = static::withTrashed()->where('doc_id', '=', $docId)->with('user');
-        }else {
+        } else {
             $comments = static::where('doc_id', '=', $docId)->with('user');
 
-            $comments->where(function($query) use ($user)
-            {
+            $comments->where(function ($query) use ($user) {
                 $user_id = ($user) ? $user->id : 0;
 
                 $query->where('private', 0)
@@ -209,15 +208,18 @@ class Comment extends Model implements ActivityInterface
         return parent::toArray();
     }
 
-
     public static function canUserEdit($user, $docId)
     {
-        if(!$user) return false;
+        if (!$user) {
+            return false;
+        }
 
         $doc = Doc::find($docId);
-        $comment = (empty($this)) ? new Comment : $this;
+        $comment = (empty($this)) ? new self() : $this;
 
-        if($comment->user_id == $user->id || $doc->canUserEdit($user)) return true;
+        if ($comment->user_id == $user->id || $doc->canUserEdit($user)) {
+            return true;
+        }
 
         return false;
     }

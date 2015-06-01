@@ -147,26 +147,22 @@ class CommentController extends AbstractApiController
         $comment = Comment::withTrashed()->find($commentId);
         $user = Auth::user();
 
-        if ( ! $comment->canUserEdit($user, $docId) ) {
-            try
-            {
+        if (!$comment->canUserEdit($user, $docId)) {
+            try {
                 return Redirect::back()->with('error', ucfirst(strtolower(trans('messages.notauthorized'))));
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 return Redirect::to('/participa')->with('error', ucfirst(strtolower(trans('messages.notauthorized'))));
             }
         }
 
         $doc = Doc::find($docId);
 
-        if($comment->deleted_at && $doc->canUserEdit($user)) {
+        if ($comment->deleted_at && $doc->canUserEdit($user)) {
             $comment->restore();
-        } elseif(!$comment->deleted_at) {
+        } elseif (!$comment->deleted_at) {
             $comment->delete();
         }
 
         return Response::json($comment->loadArray());
-
     }
 }

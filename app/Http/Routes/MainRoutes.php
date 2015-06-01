@@ -23,69 +23,69 @@ class MainRoutes
         // Static Pages
         $router->get('/', [
             'as'   => 'home',
-            'uses' => 'PageController@getHome'
+            'uses' => 'PageController@getHome',
         ]);
         $router->get('about', [
             'as'   => 'about',
-            'uses' => 'PageController@getAbout'
+            'uses' => 'PageController@getAbout',
         ]);
         $router->get('faq', [
             'as'   => 'faq',
-            'uses' => 'PageController@getFaq'
+            'uses' => 'PageController@getFaq',
         ]);
         $router->get('privacy-policy', [
             'as'   => 'privacy-policy',
-            'uses' => 'PageController@getPrivacy'
+            'uses' => 'PageController@getPrivacy',
         ]);
         $router->get('terms-and-conditions', [
             'as'   => 'terms-and-conditions',
-            'uses' => 'PageController@getTerms'
+            'uses' => 'PageController@getTerms',
         ]);
         $router->get('copyright', [
             'as'   => 'copyright',
-            'uses' => 'PageController@getCopyright'
+            'uses' => 'PageController@getCopyright',
         ]);
 
         //User Routes
         //$router->controller('user', 'UserController');
         $router->get('auth/login', [
             'as'   => 'auth.login',
-            'uses' => 'AuthController@getLogin'
+            'uses' => 'AuthController@getLogin',
         ]);
         $router->post('auth/login', [
             'as'   => 'auth.login',
-            'uses' => 'AuthController@postLogin'
+            'uses' => 'AuthController@postLogin',
         ]);
         $router->get('auth/signup', [
             'as'   => 'auth.signup',
-            'uses' => 'AuthController@getSignup'
+            'uses' => 'AuthController@getSignup',
         ]);
         $router->post('auth/signup', [
-            'as'  => 'user.signup',
-            'uses' => 'AuthController@postSignup'
+            'as'   => 'user.signup',
+            'uses' => 'AuthController@postSignup',
         ]);
 
         $router->get('user/{user}', [
             'as'   => 'user/index',
-            'uses' => 'UserController@getIndex'
+            'uses' => 'UserController@getIndex',
         ]);
         $router->get('user/edit/{user}', [
-            'as' => 'editUser',
-            'uses' => 'UserController@getEdit'
+            'as'   => 'editUser',
+            'uses' => 'UserController@getEdit',
         ]);
         $router->put('user/edit/{user}', [
             'as'   => 'editUser',
-            'uses' => 'UserController@putEdit'
+            'uses' => 'UserController@putEdit',
         ]);
         $router->get('user/edit/{user}/notifications', [
             'as'   => 'editNotifications',
-            'uses' => 'UserController@editNotifications'
+            'uses' => 'UserController@editNotifications',
         ]);
 
         //Password Routes
         $router->get('password/remind', [
             'as'   => 'password/remind',
-            'uses' => 'RemindersController@getRemind'
+            'uses' => 'RemindersController@getRemind',
         ]);
         $router->post('password/remind', 'RemindersController@postRemind');
         $router->get('password/reset/{token}',  'RemindersController@getReset');
@@ -93,14 +93,13 @@ class MainRoutes
 
         // Confirmation email resend
         $router->get('verification/remind',  [
-            'as' =>   'verification/remind',
-            'uses' => 'RemindersController@getConfirmation'
+            'as'   => 'verification/remind',
+            'uses' => 'RemindersController@getConfirmation',
         ]);
         $router->post('verification/remind', [
-            'as' => 'verification/remind',
-            'uses' => 'RemindersController@postConfirmation'
+            'as'   => 'verification/remind',
+            'uses' => 'RemindersController@postConfirmation',
         ]);
-
 
         // // Modal Routes
         // $router->get('modals/annotation_thanks', [

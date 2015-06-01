@@ -243,7 +243,7 @@ class DashboardController extends AbstractController
 
                 $starter = new DocContent();
                 $starter->doc_id = $doc->id;
-                $starter->content = "New Doc Content";
+                $starter->content = 'New Doc Content';
                 $starter->save();
 
                 $doc->init_section = $starter->id;

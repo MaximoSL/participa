@@ -3,13 +3,13 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Model\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
-use Illuminate\Database\Model\Collection;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -513,7 +513,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->rules = $this->mergeRules();
 
         if (!$this->validate()) {
-            Log::error("Unable to validate user: ");
+            Log::error('Unable to validate user: ');
             Log::error($this->getErrors()->toArray());
             Log::error($this->attributes);
 
@@ -555,7 +555,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                     $merged = array_merge_recursive($rules['save'], $rules['social-signup']);
                     break;
                 default:
-                    throw new Exception("Unknown OAuth vendor: ".$this->oauth_vendor);
+                    throw new Exception('Unknown OAuth vendor: '.$this->oauth_vendor);
             }
         }
         //If we're creating a user via Madison
@@ -570,7 +570,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         foreach ($merged as $field => $rules) {
             if (is_array($rules)) {
-                $output[$field] = implode("|", $rules);
+                $output[$field] = implode('|', $rules);
             } else {
                 $output[$field] = $rules;
             }

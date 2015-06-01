@@ -8,7 +8,7 @@ class DevController extends AbstractController
     {
         Event::fire(MadisonEvent::TEST, Auth::user());
 
-        var_dump("HERE");
+        var_dump('HERE');
         exit;
     }
 }

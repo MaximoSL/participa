@@ -11,7 +11,7 @@ class CommentMeta extends Model
 {
     protected $table = 'comment_meta';
 
-    const TYPE_USER_ACTION = "user_action";
+    const TYPE_USER_ACTION = 'user_action';
 
     public function user()
     {

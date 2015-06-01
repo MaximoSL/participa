@@ -6,18 +6,15 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Validator;
 use MXAbierto\Participa\Events\UserHasRegisteredEvent;
 use MXAbierto\Participa\Models\User;
 
 class AuthController extends AbstractController
 {
     /**
-     * Displays the .
+     * Displays the login form.
      *
-     * Returns the login page view
-     *
-     * @param void
+     * @param \Illuminate\Http\Request $request
      *
      * @return Illuminate\View\View
      */
@@ -32,11 +29,10 @@ class AuthController extends AbstractController
         ]);
     }
 
-    /**
+   /**
+    * Handles POST requests for users logging in.
     *
-    * Handles POST requests for users logging in
-    *
-    * @param void
+    * @param  \Illuminate\Http\Request $request
     *
     * @return Illuminate\Http\RedirectResponse
     */
@@ -44,7 +40,7 @@ class AuthController extends AbstractController
    {
        //Rules for login form submission
        $this->validate($request, [
-           'email' => 'required|email',
+           'email'    => 'required|email',
            'password' => 'required',
         ]);
 
@@ -57,7 +53,7 @@ class AuthController extends AbstractController
        // Check that the user account exists
        $user = User::where('email', $email)->first();
 
-       if (! $user) {
+       if (!$user) {
            return redirect()->route('auth.login')->with('error', 'Ese email no existe.');
        }
 
@@ -69,7 +65,7 @@ class AuthController extends AbstractController
        //Attempt to log user in
        $credentials = ['email' => $email, 'password' => $password];
 
-       if (! Auth::attempt($credentials, $request->has('remember'))) {
+       if (!Auth::attempt($credentials, $request->has('remember'))) {
            return redirect()->route('auth.login')->with('error', 'Datos incorrectos')->withInput(['previous_page' => $previous_page]);
        }
 
@@ -84,13 +80,9 @@ class AuthController extends AbstractController
    }
 
    /**
-    * 	getSignup.
+    * Returns signup page form.
     *
-    *	Returns signup page view
-    *
-    *	@param void
-    *
-    *	@return Illuminate\View\View
+    * @return Illuminate\View\View
     */
    public function getSignup()
    {
@@ -103,10 +95,10 @@ class AuthController extends AbstractController
    }
 
    /**
-    * Handles POST requests for users signing up natively through Madison
-    * Fires MadisonEvent::NEW_USER_SIGNUP Event
+    * Handles POST requests for users signing up.
+    * Fires UserHasRegisteredEvent.
     *
-    * @param void
+    * @param  \Illuminate\Http\Request $request
     *
     * @return Illuminate\Http\RedirectResponse
     */
@@ -129,7 +121,7 @@ class AuthController extends AbstractController
        $user->lname = $lname;
        $user->token = $token;
 
-       if (! $user->save()) {
+       if (!$user->save()) {
            return redirect()->route('auth.signup')->withInput()->withErrors($user->getErrors());
        }
 

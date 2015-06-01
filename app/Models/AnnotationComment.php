@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnnotationComment extends Model
 {
-    protected $table = "annotation_comments";
+    protected $table = 'annotation_comments';
     protected $softDelete = true;
     public $incrementing = false;
     protected $fillable = ['id', 'user_id', 'annotation_id', 'text'];

@@ -1,6 +1,7 @@
 <?php
 
 namespace MXAbierto\Participa\Models;
+
 /**
  * 	Document meta model.
  */

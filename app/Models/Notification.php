@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
-    const TYPE_EMAIL = "email";
-    const TYPE_TEXT = "text";
+    const TYPE_EMAIL = 'email';
+    const TYPE_TEXT = 'text';
 
     protected $table = 'notifications';
     protected $softDelete = false;

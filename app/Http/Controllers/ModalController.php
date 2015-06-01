@@ -7,7 +7,7 @@ class ModalController extends AbstractController
     public function seenAnnotationThanksModal()
     {
         if (!Auth::check()) {
-            throw new Exception("Unauthorized");
+            throw new Exception('Unauthorized');
         }
 
         $userId = Auth::user()->id;

@@ -3,7 +3,6 @@
 namespace MXAbierto\Participa\Listeners;
 
 use Illuminate\Contracts\Mail\MailQueue;
-use Illuminate\Mail\Message;
 use MXAbierto\Participa\Events\UserHasRegisteredEvent;
 
 /**
@@ -14,7 +13,7 @@ class SendEmailConfirmationListener
     /**
      * Creates a new send email confirmation listener instance.
      *
-     * @param  \Illuminate\Contracts\Mail\MailQueue $mailer
+     * @param \Illuminate\Contracts\Mail\MailQueue $mailer
      *
      * @return void
      */
@@ -26,7 +25,7 @@ class SendEmailConfirmationListener
     /**
      * Handles the user has registered event.
      *
-     * @param  \MXAbierto\Participa\Events\UserHasRegisteredEvent $event;
+     * @param \MXAbierto\Participa\Events\UserHasRegisteredEvent $event;
      *
      * @return void
      */
@@ -44,5 +43,4 @@ class SendEmailConfirmationListener
             $message->to($mail['email']); // Recipient address
         });
     }
-
 }

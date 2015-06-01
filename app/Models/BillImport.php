@@ -85,7 +85,7 @@ class BillImport
     public function saveChildren($node, $parent_id, $child_priority)
     {
         if (!isset($parent_id) || $parent_id == 0) {
-            throw new Exception("Error saving content.");
+            throw new Exception('Error saving content.');
         }
 
         //Check the node is in the document structure elements
@@ -128,11 +128,11 @@ class BillImport
      */
     protected function getNodeContent($node)
     {
-        $content = "";
+        $content = '';
 
         foreach ($node->childNodes as $child) {
             if (in_array($child->nodeName, $this->text_tags)) {
-                $content .= " ".preg_replace('/\s+/', ' ', $child->nodeValue);
+                $content .= ' '.preg_replace('/\s+/', ' ', $child->nodeValue);
             }
         }
 
@@ -159,7 +159,7 @@ class BillImport
         //Retrieve Bill Title
         if (false === ($bill_title = $this->getBillMeta('short-title'))) {
             if (false === ($bill_title = $this->getBillMeta('legis-num'))) {
-                throw new Exception("Could not retrieve bill title");
+                throw new Exception('Could not retrieve bill title');
             }
         }
 
@@ -177,7 +177,7 @@ class BillImport
 
         $xml = file_get_contents($this->url);
         if (false === $xml) {
-            throw new Exception("Unable to retrieve url content");
+            throw new Exception('Unable to retrieve url content');
         }
 
         $this->rawXML = $xml;
@@ -192,7 +192,7 @@ class BillImport
     {
         $billMeta = $this->domdoc->getElementsByTagName($tag);
         if (get_class($billMeta) != 'DOMNodeList') {
-            throw new Exception("Incorrect bill meta object returned (".get_class($billMeta).") for tag ($tag)");
+            throw new Exception('Incorrect bill meta object returned ('.get_class($billMeta).") for tag ($tag)");
         }
 
         if (!is_object($billMeta->item(0))) {

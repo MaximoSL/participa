@@ -20,7 +20,7 @@ class UserController extends AbstractController
     public function putNotifications(User $user)
     {
         if (Auth::user()->id !== $user->id) {
-            return Response::json($this->growlMessage("No tienes permisos para editar la configuración de notificaciones de este usuario", "error"));
+            return Response::json($this->growlMessage('No tienes permisos para editar la configuración de notificaciones de este usuario', 'error'));
         }
 
         //Grab notification array
@@ -35,7 +35,7 @@ class UserController extends AbstractController
 
             //Ensure this is a known user event.
             if (!in_array($notification['event'], $events)) {
-                return Response::json($this->growlMessage("No ha sido posible guardar ajustes.  Evento desconocido: ".$notification['event'], "error"));
+                return Response::json($this->growlMessage('No ha sido posible guardar ajustes.  Evento desconocido: '.$notification['event'], 'error'));
             }
 
             //Grab this notification from the database
@@ -53,14 +53,14 @@ class UserController extends AbstractController
                     $model = new Notification();
                     $model->user_id = $user->id;
                     $model->event = $notification['event'];
-                    $model->type = "email";
+                    $model->type = 'email';
 
                     $model->save();
                 }
             }
         }
 
-        return Response::json($this->growlMessage("Configuraciones guardadas con éxito.", "success"));
+        return Response::json($this->growlMessage('Configuraciones guardadas con éxito.', 'success'));
     }
 
     /**
@@ -75,7 +75,7 @@ class UserController extends AbstractController
     public function getNotifications(User $user)
     {
         if (Auth::user()->id !== $user->id) {
-            return Response::json($this->growlMessage("No tienes permisos para ver la configuración de notificaciones de este usuario", "error"), 401);
+            return Response::json($this->growlMessage('No tienes permisos para ver la configuración de notificaciones de este usuario', 'error'), 401);
         }
 
         //Retrieve all valid user notifications as associative array (event => description)
@@ -133,14 +133,14 @@ class UserController extends AbstractController
 
         //Check authorization
         if (Auth::user()->id !== $user->id) {
-            return Response::json($this->growlMessage("No estás autorizado a cambiar el email del usuario", "error"));
+            return Response::json($this->growlMessage('No estás autorizado a cambiar el email del usuario', 'error'));
         }
 
         $user->email = Input::get('email');
         $user->password = Input::get('password');
 
         if ($user->save()) {
-            return Response::json($this->growlMessage("Email guardado exitosamente.  Gracias.", 'success'), 200);
+            return Response::json($this->growlMessage('Email guardado exitosamente.  Gracias.', 'success'), 200);
         } else {
             $errors = $user->getErrors();
             $messages = [];
@@ -442,7 +442,7 @@ class UserController extends AbstractController
         $user->fname = $fname;
         $user->lname = $lname;
         $user->token = $token;
-        if (! $user->save()) {
+        if (!$user->save()) {
             return Redirect::route('user/signup')->withInput()->withErrors($user->getErrors());
         }
 

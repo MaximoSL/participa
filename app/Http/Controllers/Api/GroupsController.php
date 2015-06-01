@@ -28,13 +28,13 @@ class GroupsController extends AbstractApiController
         $status = Input::get('status');
 
         if (!Group::isValidStatus($status)) {
-            throw new \Exception("Invalid value for verify request");
+            throw new \Exception('Invalid value for verify request');
         }
 
         $group = Group::where('id', '=', $request['id'])->first();
 
         if (!$group) {
-            throw new \Exception("Invalid Group");
+            throw new \Exception('Invalid Group');
         }
 
         $group->status = $status;

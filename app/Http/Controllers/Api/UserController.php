@@ -46,7 +46,7 @@ class UserController extends AbstractApiController
         $accepted = ['verified', 'denied'];
 
         if (!in_array($status, $accepted)) {
-            throw new Exception("Invalid value for verify request.");
+            throw new Exception('Invalid value for verify request.');
         }
 
         $meta = UserMeta::where('meta_key', '=', UserMeta::TYPE_INDEPENDENT_SPONSOR)

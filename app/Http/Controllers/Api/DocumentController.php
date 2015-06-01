@@ -78,7 +78,7 @@ class DocumentController extends AbstractApiController
         if (Input::has('q')) {
             $search = Input::get('q');
 
-            $docs->where('title', 'LIKE', '%' . $search . '%');
+            $docs->where('title', 'LIKE', '%'.$search.'%');
         }
 
         $docs = $docs->orderBy('updated_at', 'DESC')->paginate($perPage);
@@ -297,7 +297,7 @@ class DocumentController extends AbstractApiController
 
         $returned = new Date();
         $returned->label = $date['label'];
-        $returned->date = date("Y-m-d H:i:s", strtotime($date['date']));
+        $returned->date = date('Y-m-d H:i:s', strtotime($date['date']));
 
         $doc->dates()->save($returned);
 
@@ -326,7 +326,7 @@ class DocumentController extends AbstractApiController
             throw new Exception(ucfirst(strtolower(trans('messages.unable').' '.trans('messages.toupdate').' '.trans('messages.thefeminine').' '.trans('messages.date').'. '.trans('messages.the').' '.trans('messages.dateid').' $date '.trans('messages.notfound'))));
         }
 
-        $newDate = date("Y-m-d H:i:s", strtotime((string) $input['date']));
+        $newDate = date('Y-m-d H:i:s', strtotime((string) $input['date']));
 
         $date->label = $input['label'];
         $date->date = $newDate;
@@ -343,7 +343,7 @@ class DocumentController extends AbstractApiController
         $retval = [
             'success'  => false,
             'sponsors' => [],
-            'message'  => "",
+            'message'  => '',
         ];
 
         if (!Auth::check()) {

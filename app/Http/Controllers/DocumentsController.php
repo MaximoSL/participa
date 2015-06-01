@@ -173,7 +173,7 @@ class DocumentsController extends AbstractController
 
             return Redirect::to("documents/edit/{$document->id}")->with('success_message', trans('messages.saveddoc'));
         } catch (\Exception $e) {
-            return Redirect::to("documents")->withInput()->with('error', ucfirst(strtolower(trans('messages.sorry').', '.trans('messages.therewaserror')))." - {$e->getMessage()}");
+            return Redirect::to('documents')->withInput()->with('error', ucfirst(strtolower(trans('messages.sorry').', '.trans('messages.therewaserror')))." - {$e->getMessage()}");
         }
     }
 }

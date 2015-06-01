@@ -11,7 +11,7 @@ class NoteMeta extends Model
 {
     protected $table = 'note_meta';
 
-    const TYPE_USER_ACTION = "user_action";
+    const TYPE_USER_ACTION = 'user_action';
 
     public function user()
     {

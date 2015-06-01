@@ -26,19 +26,19 @@ class UserManageController extends AbstractApiController
 
         //Validate input against rules
         if ($validation->fails()) {
-            return Response::json([ 'status' => 'error', 'errors' => $validation->messages()->getMessages() ]);
+            return Response::json(['status' => 'error', 'errors' => $validation->messages()->getMessages()]);
         }
 
         //Check that the user account exists
         $user = User::where('email', $email)->first();
 
         if (!isset($user)) {
-            return Response::json([ 'status' => 'error', 'errors' => ['No such user'] ]);
+            return Response::json(['status' => 'error', 'errors' => ['No such user']]);
         }
 
         //If the user's token field isn't blank, he/she hasn't confirmed their account via email
         if ($user->token != '') {
-            return Response::json([ 'status' => 'error',
+            return Response::json(['status'  => 'error',
                 'errors'                     => ['Please click the link sent to your email to verify your account.'], ]);
         }
 
@@ -46,9 +46,9 @@ class UserManageController extends AbstractApiController
         $credentials = ['email' => $email, 'password' => $password];
 
         if (Auth::attempt($credentials)) {
-            return Response::json([ 'status' => 'ok', 'errors' => [] ]);
+            return Response::json(['status' => 'ok', 'errors' => []]);
         } else {
-            return Response::json([ 'status' => 'error',
+            return Response::json(['status'  => 'error',
                 'errors'                     => [Lang::get('messages.invalidcredentials')], ]);
         }
     }
@@ -81,7 +81,7 @@ class UserManageController extends AbstractApiController
                         ];
         $validation = Validator::make($user_details, $rules);
         if ($validation->fails()) {
-            return Response::json([ 'status' => 'error',
+            return Response::json(['status'  => 'error',
                 'errors'                     => $validation->messages()->getMessages(), ]);
         } else {
             //Create user token for email verification
@@ -103,7 +103,7 @@ class UserManageController extends AbstractApiController
                 $message->to($email); // Recipient address
             });
 
-            return Response::json([ 'status' => 'ok', 'errors' => [], 'message' => trans('messages.confirmationresent'),
+            return Response::json(['status' => 'ok', 'errors' => [], 'message' => trans('messages.confirmationresent'),
       ]);
         }
     }

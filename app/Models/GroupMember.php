@@ -29,7 +29,7 @@ class GroupMember extends Model
         $user = User::where('id', '=', $this->user_id)->first();
 
         if (!$user) {
-            throw new \Exception("Could not locate user with ID");
+            throw new \Exception('Could not locate user with ID');
         }
 
         return "{$user->fname} {$user->lname}";

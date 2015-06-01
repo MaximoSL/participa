@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnnotationTag extends Model
 {
-    protected $table = "annotation_tags";
+    protected $table = 'annotation_tags';
     protected $softDelete = true;
     protected $fillable = ['annotation_id', 'tag'];
 

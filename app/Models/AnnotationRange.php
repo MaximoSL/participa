@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnnotationRange extends Model
 {
-    protected $table = "annotation_ranges";
+    protected $table = 'annotation_ranges';
     protected $softDelete = true;
     public $incrementing = false;
     protected $fillable = ['start', 'end', 'start_offset', 'end_offset'];

@@ -1,6 +1,7 @@
 <?php
 
 namespace MXAbierto\Participa\Models;
+
 /**
  * @author Philipp Strazny <philipp at strazny dot com>
  * @copyleft (l) 2013  Philipp Strazny
@@ -70,14 +71,14 @@ class StringDiff
         } elseif (empty($b)) {
             return '<del>'.$a.'</del>';
         }
-        $lcs = StringDiff::longest_common_substring($a, $b);
+        $lcs = self::longest_common_substring($a, $b);
         if (empty($lcs)) {
             return '<del>'.$a.'</del><ins>'.$b.'</ins>';
         }
-        $atripartite = StringDiff::tripartite($a, $lcs);
-        $btripartite = StringDiff::tripartite($b, $lcs);
-        $headdiff = StringDiff::diff($atripartite[0], $btripartite[0]);
-        $taildiff = StringDiff::diff($atripartite[2], $btripartite[2]);
+        $atripartite = self::tripartite($a, $lcs);
+        $btripartite = self::tripartite($b, $lcs);
+        $headdiff = self::diff($atripartite[0], $btripartite[0]);
+        $taildiff = self::diff($atripartite[2], $btripartite[2]);
 
         return $headdiff.$lcs.$taildiff;
     }
@@ -99,14 +100,14 @@ class StringDiff
         } elseif (empty($b)) {
             return $a;
         }
-        $lcs = StringDiff::longest_common_substring($a, $b);
+        $lcs = self::longest_common_substring($a, $b);
         if (empty($lcs)) {
             return $a;
         }
-        $atripartite = StringDiff::tripartite($a, $lcs);
-        $btripartite = StringDiff::tripartite($b, $lcs);
-        $headdiff = StringDiff::overlap($atripartite[0], $btripartite[0]);
-        $taildiff = StringDiff::overlap($atripartite[2], $btripartite[2]);
+        $atripartite = self::tripartite($a, $lcs);
+        $btripartite = self::tripartite($b, $lcs);
+        $headdiff = self::overlap($atripartite[0], $btripartite[0]);
+        $taildiff = self::overlap($atripartite[2], $btripartite[2]);
 
         return $headdiff.'<overlap>'.$lcs.'</overlap>'.$taildiff;
     }
@@ -128,9 +129,9 @@ class StringDiff
         $schars = preg_split('//u', $s, -1, PREG_SPLIT_NO_EMPTY);
         $mchars = preg_split('//u', $middle, -1, PREG_SPLIT_NO_EMPTY);
         //$endmiddle = $startmiddle+mb_strlen($middle, 'utf-8');
-        $endmiddle = $startmiddle+count($mchars);
-        $head = ($startmiddle>0) ? implode(array_slice($schars, 0, $startmiddle)) : '';
-        $tail = ($endmiddle<count($schars)) ? implode(array_slice($schars, $endmiddle)) : '';
+        $endmiddle = $startmiddle + count($mchars);
+        $head = ($startmiddle > 0) ? implode(array_slice($schars, 0, $startmiddle)) : '';
+        $tail = ($endmiddle < count($schars)) ? implode(array_slice($schars, $endmiddle)) : '';
 
         return [$head, $middle, $tail];
     }
@@ -147,7 +148,7 @@ class StringDiff
     {
         $achars = preg_split('//u', $a, -1, PREG_SPLIT_NO_EMPTY);
         $bchars = preg_split('//u', $b, -1, PREG_SPLIT_NO_EMPTY);
-        $arr = StringDiff::longest_common_subarray($achars, $bchars);
+        $arr = self::longest_common_subarray($achars, $bchars);
 
         return implode($arr);
     }
@@ -170,16 +171,16 @@ class StringDiff
             $alen = $blen;
             $blen = $clen;
         }
-        $binverted = StringDiff::array_invert($bchars);
+        $binverted = self::array_invert($bchars);
         $longest_common_subarray = [];
-        $idmap = StringDiff::getIDMap($achars, $alen, $binverted);
-        $commonarrays = StringDiff::getCommonArrays($idmap, $alen, $achars);
+        $idmap = self::getIDMap($achars, $alen, $binverted);
+        $commonarrays = self::getCommonArrays($idmap, $alen, $achars);
         if (empty($commonarrays)) {
             return [];
         }
-        $longestarray = StringDiff::getLongestCommonArray($commonarrays);
-        if (count($longestarray) < ceil($alen/StringDiff::$divisor)
-            && count($longestarray) < ceil($blen/StringDiff::$divisor)) {
+        $longestarray = self::getLongestCommonArray($commonarrays);
+        if (count($longestarray) < ceil($alen / self::$divisor)
+            && count($longestarray) < ceil($blen / self::$divisor)) {
             return []; // overlap is too short
         }
 
@@ -229,11 +230,11 @@ class StringDiff
     public static function getCommonArrays(array $idmap, $alen, array $achars)
     {
         $commonarrays = [];
-        for ($i = 0; $i<$alen; $i++) {
+        for ($i = 0; $i < $alen; $i++) {
             if (isset($idmap[$i])) {
                 foreach ($idmap[$i] as $bkey) {
                     $key = $i.'-'.$bkey;
-                    $prevkey = ($i-1).'-'.($bkey-1);
+                    $prevkey = ($i - 1).'-'.($bkey - 1);
                     if (isset($commonarrays[$prevkey])) {
                         $commonarrays[$key] = $commonarrays[$prevkey];
                         $commonarrays[$key][] = $achars[$i];
@@ -268,7 +269,7 @@ class StringDiff
     public static function getIDMap(array $achars, $alen, array $binverted)
     {
         $idmap = [];
-        for ($i = 0; $i<$alen; $i++) {
+        for ($i = 0; $i < $alen; $i++) {
             if (isset($binverted[$achars[$i]])) {
                 $idmap[$i] = $binverted[$achars[$i]];
             } else {
@@ -300,7 +301,7 @@ class StringDiff
     {
         $inverted = [];
         $alen = count($a);
-        for ($i = 0; $i<$alen; $i++) {
+        for ($i = 0; $i < $alen; $i++) {
             if (!isset($inverted[$a[$i]])) {
                 $inverted[$a[$i]] = [];
             }
