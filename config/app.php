@@ -141,6 +141,7 @@ return [
          * Packages Service Providers...
          */
          'Zizaco\Entrust\EntrustServiceProvider',
+         'Roumen\Feed\FeedServiceProvider',
 
         /*
          * Application Service Providers...

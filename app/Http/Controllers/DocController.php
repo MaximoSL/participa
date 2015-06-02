@@ -5,14 +5,14 @@ namespace MXAbierto\Participa\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\Doc;
+use MXAbierto\Participa\Models\UserMeta;
+use Roumen\Feed\Facades\Feed;
 
 /**
  * 	Controller for Document actions.
  */
 class DocController extends AbstractController
 {
-    public $restful = true;
-
     public function __construct()
     {
         $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);
@@ -94,25 +94,34 @@ class DocController extends AbstractController
         }
     }
 
+    /**
+     * Get embeded doc by slug.
+     *
+     * @param  string $slug
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getEmbedded($slug = null)
     {
         $doc = Doc::findDocBySlug($slug);
 
-        if (is_null($doc)) {
-            App::abort('404');
+        if ($doc) {
+            abort('404');
         }
 
-        $view = View::make('doc.reader.embed', compact('doc'));
-
-        return $view;
+        return view('doc.reader.embed', compact('doc'));
     }
 
+    /**
+     * Search for a document.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getSearch()
     {
         $q = Input::get('q');
 
         $results = Doc::search(urldecode($q));
-        //$results = json_decode($results);
 
         $docs = [];
 
@@ -121,22 +130,20 @@ class DocController extends AbstractController
             array_push($docs, $doc);
         }
 
-        $data = [
-            'page_id'            => 'doc-search',
-            'page_title'         => 'Search Results',
-            'results'            => $docs,
-            'query'              => $q,
-        ];
-
-        return View::make('doc.search.index', $data);
+        return view('doc.search.index', [
+            'page_id'    => 'doc-search',
+            'page_title' => 'Resultados de la búsqueda',
+            'results'    => $docs,
+            'query'      => $q,
+        ]);
     }
 
     /**
-     *	Method to handle posting support/oppose clicks on a document.
+     * Method to handle posting support/oppose clicks on a document.
      *
-     * @param int $doc
+     * @param  int $doc
      *
-     * @return json array
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postSupport($doc)
     {
@@ -187,8 +194,8 @@ class DocController extends AbstractController
         $feed = Feed::make();
 
         $feed->title = $doc->title;
-        $feed->description = "Activity feed for '".$doc->title."'";
-        $feed->link = URL::to('docs/'.$slug);
+        $feed->description = "Activity feed for {$doc->title}";
+        $feed->link = route('docs.doc', $slug);
         $feed->pubdate = $doc->updated_at;
         $feed->lang = 'en';
 
