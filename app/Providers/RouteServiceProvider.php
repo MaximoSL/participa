@@ -25,9 +25,19 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        //
-
         parent::boot($router);
+
+        $this->registerBindings();
+    }
+
+    /**
+     * Register model bindings.
+     *
+     * @return void
+     */
+    protected function registerBindings()
+    {
+        $this->app->router->model('user', 'MXAbierto\Participa\Models\User');
     }
 
     /**

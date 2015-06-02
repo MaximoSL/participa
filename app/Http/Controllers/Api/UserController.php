@@ -2,6 +2,8 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use MXAbierto\Participa\Models\User;
+
 /**
  * 	Controller for User actions.
  */
@@ -12,11 +14,18 @@ class UserController extends AbstractApiController
         $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);
     }
 
-    public function getUser($user)
+    /**
+     * Returns a user.
+     *
+     * @param  \MXAbierto\Participa\Models\User  $user
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUser(User $user)
     {
         $user->load('docs', 'user_meta', 'comments', 'annotations');
 
-        return Response::json($user);
+        return response()->json($user);
     }
 
     public function getIndependentVerify()
