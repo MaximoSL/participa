@@ -215,8 +215,8 @@ class Doc extends Model
 
     public static function allOwnedBy($userId)
     {
-        $rawDocs = DB::select(
-            DB::raw(
+        $rawDocs = \DB::select(
+            \DB::raw(
                 'SELECT docs.* FROM
 					(SELECT doc_id
 					   FROM doc_group, group_members

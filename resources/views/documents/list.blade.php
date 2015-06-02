@@ -8,7 +8,7 @@
 					<li class="active">{{ trans('messages.document') }}s</li>
 				</ol>
 			</div>
-			@if(Auth::user()->hasRole('Independent Sponsor') || Auth::user()->groups()->exists())
+			@if($loggedUser->hasRole('Independent Sponsor') || $loggedUser->groups()->exists())
 				<div class="col-md-8 admin-document-list">
 					<h2>{{ trans('messages.document') }}s</h2>
 					<ul>
@@ -17,9 +17,9 @@
 						@else
 							{{ trans('messages.indiedocs') }}:
 							@foreach($documents['independent'] as $doc)
-								<li>
-									<?php echo HTML::link('participa/documents/edit/'.$doc->id, $doc->title); ?>
-								</li>
+							<li>
+								<a href="{{ route('documents.edit', $doc->id) }}">{{ $doc->title }}</a>
+							</li>
 							@endforeach
 							@foreach($documents['group'] as $groupname=>$groupdocuments)
 								{{ trans('messages.group') }} '{{ $groupname }}'
@@ -29,9 +29,9 @@
 								</li>
 								@endif
 								@foreach($groupdocuments as $doc)
-									<li>
-										<?php echo HTML::link('participa/documents/edit/'.$doc->id, $doc->title); ?>
-									</li>
+								<li>
+									<a href="{{ route('documents.edit', $doc->id) }}">{{ $doc->title }}</a>
+								</li>
 								@endforeach
 							@endforeach
 						@endif
@@ -39,12 +39,14 @@
 				</div>
 				<div class="col-md-4 admin-add-documents">
 					<h3>{{ trans('messages.createdoc') }}</h3>
-					{{ Form::open(array('url' => URL::route('documents/create'), 'method' => 'post', 'id' => 'create-document-form')) }}
-					<div class="form-group">
-						{{ Form::label('title', Lang::get('messages.title')) . Form::text('title', Input::old('title'), array('placeholder' =>  Lang::get('messages.doctitle'), 'class'=>'form-control')) }}
-					</div>
-					{{ Form::submit(Lang::get('messages.createdoc'), array('class' => 'btn', 'name' => 'createdoc')) }}
-					{{ Form::token() . Form::close() }}
+					<form action="{{ route('documents.create') }}" method="post" id="create-document-form">
+						{!! csrf_field() !!}
+						<div class="form-group">
+							<label for="title">{{ trans('messages.title') }}</label>
+							<input class="form-control" id="title" type="text" name="title" value="{{ old('title') }}" placeholder="{{ trans('messages.doctitle') }}">
+						</div>
+						<input class="btn" type="submit" name="createdoc" value="{{ trans('messages.createdoc') }}">
+					</form>
 				</div>
 			@else
 				<div class="col-md-12">

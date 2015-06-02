@@ -133,17 +133,23 @@ class MainRoutes
         $router->get('documents/search', 'DocumentsController@getSearch');
         $router->get('documents', [
             'as'   => 'documents',
-            'uses' => 'DocumentsController@listDocuments',
+            'uses' => 'DocumentsController@getList',
         ]);
-        $router->get('documents/view/{documentId}', 'DocumentsController@viewDocument');
-        $router->get('documents/edit/{documentId}', 'DocumentsController@editDocument');
+        $router->get('documents/view/{documentId}', [
+            'as'   => 'documents.view',
+            'uses' => 'DocumentsController@viewDocument',
+        ]);
+        $router->post('documents/create', [
+            'as'   => 'documents.create',
+            'uses' => 'DocumentsController@postCreateDocument',
+        ]);
+        $router->get('documents/edit/{documentId}', [
+            'as'   => 'documents.edit',
+            'uses' => 'DocumentsController@editDocument',
+        ]);
         $router->put('documents/edit/{documentId}', [
             'as'   => 'saveDocumentEdits',
             'uses' => 'DocumentsController@saveDocumentEdits',
-        ]);
-        $router->post('documents/create', [
-            'as'   => 'documents/create',
-            'uses' => 'DocumentsController@createDocument',
         ]);
         $router->post('documents/save', 'DocumentsController@saveDocument');
         $router->delete('documents/delete/{slug}', 'DocumentsController@deleteDocument');
