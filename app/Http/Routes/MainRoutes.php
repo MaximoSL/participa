@@ -58,7 +58,7 @@ class MainRoutes
         ]);
         $router->get('logout', [
             'as' => 'logout',
-            'uses' => 'AuthController@getLogout',    
+            'uses' => 'AuthController@getLogout',
         ]);
         $router->get('auth/signup', [
             'as'   => 'auth.signup',
@@ -106,7 +106,10 @@ class MainRoutes
         ]);
 
         // User Groups Routes
-        $router->get('groups', ['as' => 'groups', 'uses' => 'GroupsController@getIndex']);
+        $router->get('groups', [
+            'as'   => 'groups',
+            'uses' => 'GroupsController@getIndex',
+        ]);
         $router->put('groups/edit', 'GroupsController@putEdit');
         $router->get('groups/edit/{groupId?}', 'GroupsController@getEdit');
         $router->get('groups/members/{groupId}', 'GroupsController@getMembers');
@@ -119,33 +122,60 @@ class MainRoutes
         // Document Routes
         $router->get('docs', [
             'as'   => 'docs',
-            'uses' => 'DocController@index'
+            'uses' => 'DocController@index',
         ]);
         $router->get('docs/{slug}', [
             'as'   => 'docs.doc',
-            'uses' => 'DocController@getDoc'
+            'uses' => 'DocController@getDoc',
         ]);
         $router->get('docs/embed/{slug}', 'DocController@getEmbedded');
         $router->get('docs/{slug}/feed', 'DocController@getFeed');
         $router->get('documents/search', 'DocumentsController@getSearch');
-        $router->get('documents', ['as' => 'documents', 'uses' => 'DocumentsController@listDocuments']);
+        $router->get('documents', [
+            'as'   => 'documents',
+            'uses' => 'DocumentsController@listDocuments',
+        ]);
         $router->get('documents/view/{documentId}', 'DocumentsController@viewDocument');
         $router->get('documents/edit/{documentId}', 'DocumentsController@editDocument');
-        $router->put('documents/edit/{documentId}', ['as' => 'saveDocumentEdits', 'uses' => 'DocumentsController@saveDocumentEdits']);
-        $router->post('documents/create', ['as' => 'documents/create', 'uses' => 'DocumentsController@createDocument']);
+        $router->put('documents/edit/{documentId}', [
+            'as' => 'saveDocumentEdits',
+            'uses' => 'DocumentsController@saveDocumentEdits',
+        ]);
+        $router->post('documents/create', [
+            'as' => 'documents/create',
+            'uses' => 'DocumentsController@createDocument',
+        ]);
         $router->post('documents/save', 'DocumentsController@saveDocument');
-        $router->delete('/documents/delete/{slug}', 'DocumentsController@deleteDocument');
-        $router->get('/documents/sponsor/request', ['as' => 'sponsorRequest', 'uses' => 'SponsorController@getRequest']);
-        $router->post('/documents/sponsor/request', ['as' => 'sponsorRequest', 'uses' => 'SponsorController@postRequest']);
+        $router->delete('documents/delete/{slug}', 'DocumentsController@deleteDocument');
+        $router->get('documents/sponsor/request', [
+            'as' => 'sponsorRequest',
+            'uses' => 'SponsorController@getRequest',
+        ]);
+        $router->post('documents/sponsor/request', [
+            'as' => 'sponsorRequest',
+            'uses' => 'SponsorController@postRequest',
+        ]);
 
         //Dashboard Routes
-        $router->controller('dashboard', 'DashboardController');
-        $router->get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@getIndex']);
+        //$router->controller('dashboard', 'DashboardController');
+        $router->get('dashboard', [
+            'as'   => 'dashboard',
+            'uses' => 'DashboardController@getIndex',
+        ]);
 
         //Dashboard's Doc Routes
-        $router->get('dashboard/docs', ['as' => 'dashboard/docs', 'uses' => 'DashboardController@getDocs']);
-        $router->post('dashboard/docs', ['as' => 'dashboard/docs', 'uses' => 'DashboardController@postDocs']);
-        $router->get('dashboard/docs/{doc}', ['as' => 'dashboardShowsDoc', 'uses' => 'DashboardController@getDocs']);
+        $router->get('dashboard/docs', [
+            'as'   => 'dashboard/docs',
+            'uses' => 'DashboardController@getDocs',
+        ]);
+        $router->post('dashboard/docs', [
+            'as'   => 'dashboard/docs',
+            'uses' => 'DashboardController@postDocs',
+        ]);
+        $router->get('dashboard/docs/{doc}', [
+            'as' => 'dashboardShowsDoc',
+            'uses' => 'DashboardController@getDocs',
+        ]);
 
         // // Modal Routes
         // $router->get('modals/annotation_thanks', [
