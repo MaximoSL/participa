@@ -4,13 +4,15 @@ namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Doc extends Model
 {
+    use SoftDeletes;
+
     public static $timestamp = true;
 
     protected $index;
-    protected $softDelete = true;
 
     const TYPE = 'doc';
 

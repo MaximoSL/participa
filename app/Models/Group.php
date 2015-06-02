@@ -4,11 +4,11 @@ namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Model\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Group extends Model
 {
-    public static $timestamp = true;
-    protected $softDelete = true;
+    use SoftDeletes;
 
     const STATUS_ACTIVE = 'active';
     const STATUS_PENDING = 'pending';

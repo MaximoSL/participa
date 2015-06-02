@@ -3,11 +3,18 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model implements ActivityInterface
 {
+    use SoftDeletes;
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'comments';
-    protected $softDelete = true;
 
     const ACTION_LIKE = 'like';
     const ACTION_DISLIKE = 'dislike';

@@ -3,16 +3,21 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * 	Document meta model.
  */
 class DocMeta extends Model
 {
-    protected $table = 'doc_meta';
+    use SoftDeletes;
 
-    protected $softDelete = true;
-    public static $timestamp = true;
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'doc_meta';
 
     //Document this meta is describing
     public function doc()

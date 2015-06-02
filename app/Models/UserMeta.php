@@ -9,8 +9,18 @@ use Illuminate\Database\Eloquent\Model;
  */
 class UserMeta extends Model
 {
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'user_meta';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['user_id', 'meta_key'];
 
     const TYPE_SEEN_ANNOTATION_THANKS = 'seen_annotation_thanks';

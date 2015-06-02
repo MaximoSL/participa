@@ -7,6 +7,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Model\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
@@ -16,6 +17,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 {
     use Authenticatable, CanResetPassword;
     use EntrustUserTrait;
+    use SoftDeletes;
 
     /**
      * The database table used by the model.
@@ -39,7 +41,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'token', 'last_login', 'updated_at', 'deleted_at', 'oauth_vendor', 'oauth_id', 'oauth_update'];
 
     /**
-     *	Validation rules.
+     * Validation rules.
+     *
+     * @var string[]
      */
     protected static $rules = [
         'save' => [
@@ -71,7 +75,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     ];
 
     /**
-     *	Custom error messages for certain validation requirements.
+     * Custom error messages for certain validation requirements.
+     *
+     * @var string[]
      */
     protected static $customMessages = [
         'fname.required' => 'El campo de nombre es obligatorio.',
@@ -80,10 +86,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     ];
 
     /**
-     *	Constructor.
+     * Creates a new User instance.
      *
-     *	@param array $attributes
-     *	Extends Model constructor
+     * @param array $attributes
+     *
+     * @return void
      */
     public function __construct($attributes = [])
     {
@@ -156,11 +163,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	getDisplayName.
+     * Returns the user's display name
      *
-     *	Returns the user's display name
-     *
-     *	@param void
+     * @param void
      *
      * @return string
      */
@@ -170,11 +175,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	docs.
+     * Gets the docs relation
      *
-     *	Model one-to-many relationship for Doc
-     *
-     * @param void
      *
      * @return Illuminate\Database\Model\Relations\BelongsToMany
      */
@@ -184,16 +186,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	activeGroup.
+     * Returns current active group for this user
+     * Grabs the active group id from Session
      *
-     *	Returns current active group for this user
-     *		Grabs the active group id from Session
      *
-     *	@param void
+     * @return Group|| new Group
      *
-     *	@return Group|| new Group
-     *
-     *	@todo Why would this return a new group?  Should probalby return some falsy value.
+     * @todo Why would this return a new group?  Should probalby return some falsy value.
      */
     public function activeGroup()
     {
@@ -207,28 +206,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	setPasswordAttribute.
+     * Sets the password encrypted for a user.
      *
-     *	Mutator method for the password attribute
-     *		Hashes the password and sets the attribute
+     * @param  string $password
      *
-     *	@param string $password
-     *
-     *	@return void
+     * @return void
      */
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = Hash::make($password);
+        $this->attributes['password'] = bcrypt($password);
     }
 
     /**
-     *	groups.
+     * Model belongsToMany relationship for Group
      *
-     *	Model belongsToMany relationship for Group
-     *
-     *	@param void
-     *
-     *	@return Illuminate\Database\Model\Relations\BelongsToMany
+     * @return Illuminate\Database\Model\Relations\BelongsToMany
      */
     public function groups()
     {
@@ -236,13 +228,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	comments.
+     * Model hasMany relationship for Comment
      *
-     *	Model hasMany relationship for Comment
-     *
-     *	@param void
-     *
-     *	@return Illuminate\Database\Model\Relations\HasMany
+     * @return Illuminate\Database\Model\Relations\HasMany
      */
     public function comments()
     {
@@ -250,13 +238,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	annotations.
+     * Annotations relation.
      *
-     *	Model hasMany relationship for Annoation
-     *
-     *	@param void
-     *
-     *	@return Illuminate\Database\Model\Relations\HasMany
+     * @return Illuminate\Database\Model\Relations\HasMany
      */
     public function annotations()
     {
@@ -264,60 +248,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	getAuthIdentifier.
+     * Model belongsTo relationship for Organization
      *
-     *	Determines value used by Laravel's Auth class to identify users
-     *		Uses the user id
+     * @return Illuminate\Database\Model\Relations\BelongsTo
      *
-     *	@param void
-     *
-     *	@return int $this->id
-     */
-    public function getAuthIdentifier()
-    {
-        return $this->id;
-    }
-
-    /**
-     *	getAuthPassword.
-     *
-     *	Determines value used by Laravel's Auth class to authenticate users
-     *		Uses the user password
-     *
-     *	@param void
-     *
-     *	@return string $this->password
-     */
-    public function getAuthPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     *	getReminderEmail.
-     *
-     *	Determines value to use for reminder emails
-     *		Uses the user email
-     *
-     *	@param void
-     *
-     *	@return string $this->email
-     */
-    public function getReminderEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     *	organization.
-     *
-     *	Model belongsTo relationship for Organization
-     *
-     *	@param void
-     *
-     *	@return Illuminate\Database\Model\Relations\BelongsTo
-     *
-     *	@todo This can be removed as we use Groups in place of Organizations
+     * @todo This can be removed as we use Groups in place of Organizations
      */
     public function organization()
     {
@@ -325,13 +260,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	note_meta.
+     * Model hasMany relationship for NoteMeta
      *
-     *	Model hasMany relationship for NoteMeta
-     *
-     *	@param void
-     *
-     *	@return Illuminate\Database\Model\Relations\HasMany
+     * @return Illuminate\Database\Model\Relations\HasMany
      */
     public function note_meta()
     {
@@ -339,13 +270,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	user_meta.
+     * Model hasMany relationship for UserMeta
      *
-     *	Model hasMany relationship for UserMeta
-     *
-     *	@param void
-     *
-     *	@return Illuminate\Database\Model\Relations\HasMany
+     * @return Illuminate\Database\Model\Relations\HasMany
      */
     public function user_meta()
     {
@@ -353,15 +280,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	getSponsorStatus.
+     * Returns the value of the UserMeta for this user with key 'independent_sponsor'
+     * The value of this is either '1' or '0'
+     * If the user hasn't requested independent sponsor status, this will return null
      *
-     *	Returns the value of the UserMeta for this user with key 'independent_sponsor'
-     *		The value of this is either '1' or '0'
-     *		If the user hasn't requested independent sponsor status, this will return null
-     *
-     *	@param void
-     *
-     * @return string||null
+     * @return string|null
      */
     public function getSponsorStatus()
     {
@@ -369,15 +292,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	setIndependentAuthor.
+     * Sets the Independent Sponsor status for this user
+     * Sets / Creates a UserMeta for this user with key = 'independent_sponsor'
+     * and value '1'||'0' based on input boolean
      *
-     *	Sets the Independent Sponsor status for this user
-     *		Sets / Creates a UserMeta for this user with key = 'independent_sponsor'
-     *		and value '1'||'0' based on input boolean
+     * @param  bool $bool
      *
-     *	@param bool $bool
-     *
-     *	@return void
+     * @return void
      */
     public function setIndependentAuthor($bool)
     {
@@ -400,15 +321,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	admin_contact.
+     * Sets the user as an admin contact for the site
      *
-     *	Sets the user as an admin contact for the site
+     * @param  mixed $setting
      *
-     *	@param unknownType $setting
+     * @return bool|void
      *
-     *	@return bool||void
-     *
-     *	@todo References to this should be removed.  We're allowing all admins to determine notification subscriptions
+     * @todo References to this should be removed.  We're allowing all admins to determine notification subscriptions
      */
     public function admin_contact($setting = null)
     {
@@ -459,7 +378,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	getValidSponsors.
+     *	Get all valid sponsors.
      *
      *	@todo I'm not sure what exactly this does at first glance
      */
@@ -487,25 +406,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $collection;
     }
 
-    /*
-    *	findByRoleName
-    *
-    *	Returns all users with a given role
-    *
-    *	@param string $role
-    *	@return Illuminate\Database\Model\Collection
-    */
+    /**
+     * Returns all users with a given role
+     *
+     * @param string $role
+     *
+     * @return Illuminate\Database\Model\Collection
+     */
     public static function findByRoleName($role)
     {
         return Role::where('name', '=', $role)->first()->users()->get();
     }
 
     /**
-     *	beforeSave.
+     * Validates before saving.  Returns whether the User can be saved.
      *
-     *	Validates before saving.  Returns whether the User can be saved.
-     *
-     *	@param array $options
+     * @param  array $options
      *
      * @return bool
      */
@@ -513,7 +429,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $this->rules = $this->mergeRules();
 
-        if (!$this->validate()) {
+        if (! $this->validate()) {
             Log::error('Unable to validate user: ');
             Log::error($this->getErrors()->toArray());
             Log::error($this->attributes);
@@ -525,13 +441,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	mergeRules.
+     * Merge the rules arrays to form one set of rules
      *
-     *	Merge the rules arrays to form one set of rules
-     *
-     * @param void
-     *
-     * @return array $output
+     * @return string[] $output
      *
      * @todo handle social login / signup rule merges
      */
@@ -581,11 +493,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     *	Validate.
+     * Validate input against merged rules
      *
-     *	Validate input against merged rules
-     *
-     *	@param array $attributes
+     * @param  array $attributes
      *
      * @return bool
      */

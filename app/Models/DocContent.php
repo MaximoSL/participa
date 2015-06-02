@@ -3,11 +3,18 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DocContent extends Model
 {
+    use SoftDeletes;
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'doc_contents';
-    protected $softDelete = true;
 
     public function doc()
     {

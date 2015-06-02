@@ -3,13 +3,27 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AnnotationRange extends Model
 {
+    use SoftDeletes;
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'annotation_ranges';
-    protected $softDelete = true;
-    public $incrementing = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['start', 'end', 'start_offset', 'end_offset'];
+
+    public $incrementing = false;
 
     public function annotation()
     {

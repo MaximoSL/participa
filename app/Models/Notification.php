@@ -3,15 +3,21 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Notification extends Model
 {
+    use SoftDeletes;
+    
     const TYPE_EMAIL = 'email';
     const TYPE_TEXT = 'text';
 
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'notifications';
-    protected $softDelete = false;
-    public $timestamps = false;
 
     public function group()
     {

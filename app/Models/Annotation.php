@@ -3,9 +3,12 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Annotation extends Model implements ActivityInterface
 {
+    use SoftDeletes;
+
     const INDEX_TYPE = 'annotation';
 
     const ANNOTATION_CONSUMER = 'Madison';
@@ -14,11 +17,32 @@ class Annotation extends Model implements ActivityInterface
     const ACTION_DISLIKE = 'dislike';
     const ACTION_FLAG = 'flag';
 
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'annotations';
-    protected $fillable = ['quote', 'text', 'uri', 'seen'];
-    protected $softDelete = true;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['quote', 'text', 'uri', 'seen'];
+
+    /**
+     * The ElasticSearch instance.
+     *
+     * @var \ElasticSearch\Client
+     */
     protected static $_esInstance = null;
+
+    /**
+     * The ElasticSearch index.
+     *
+     * @var mixed
+     */
     protected static $_esIndex;
 
     public static function getEsClient()
@@ -52,6 +76,7 @@ class Annotation extends Model implements ActivityInterface
 
         return static::$_esInstance;
     }
+
 
     public function user()
     {

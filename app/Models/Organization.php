@@ -3,14 +3,14 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * 	Organization Model.
  */
 class Organization extends Model
 {
-    public static $timestamp = true;
-    protected $softDelete = true;
+    use SoftDeletes;
 
     //Users belonging to this organization
     public function users()
