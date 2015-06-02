@@ -4,7 +4,10 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h2>{{ trans('messages.editprofile') }}</h2>
-				{{ Form::open(array('url'=> URL::route('editUser', $user->id), 'method'=>'PUT' )) }}
+				<form class="" action="{{ route('user.edit', $user->id) }}" method="post">
+					{!! csrf_field() !!}
+					<input type="hidden" name="_method" value="put">
+
 					<!-- First Name -->
 					<div class="form-group">
 						<label for="fname">{{ trans('messages.fname') }}:</label>
@@ -67,8 +70,7 @@
 						<a href="https://gravatar.com" target="_blank">{{ trans('messages.chggravatar') }} Gravatar.com</a>
 					</div>
 					<button type="submit" class="btn btn-primary" id="submit">{{ trans('messages.submit') }}</button>
-					{{ Form::token() }}
-				{{ Form::close() }}
+				</form>
 			</div>
 		</div>
 	</div>

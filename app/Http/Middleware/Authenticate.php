@@ -10,14 +10,14 @@ class Authenticate
     /**
      * The Guard implementation.
      *
-     * @var Guard
+     * @var \Illuminate\Contracts\Auth\Guard
      */
     protected $auth;
 
     /**
      * Create a new filter instance.
      *
-     * @param Guard $auth
+     * @param \Illuminate\Contracts\Auth\Guard $auth
      *
      * @return void
      */
@@ -40,7 +40,7 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('auth/login');
+                return redirect()->guest(route('auth.login'));
             }
         }
 

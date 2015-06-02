@@ -10,14 +10,14 @@ class RedirectIfAuthenticated
     /**
      * The Guard implementation.
      *
-     * @var Guard
+     * @var \Illuminate\Contracts\Auth\Guard
      */
     protected $auth;
 
     /**
      * Create a new filter instance.
      *
-     * @param Guard $auth
+     * @param  \Illuminate\Contracts\Auth\Guard $auth
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
-            return redirect('/home');
+            return redirect()->route('home');
         }
 
         return $next($request);

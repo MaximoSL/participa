@@ -2,12 +2,24 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use MXAbierto\Participa\Models\User;
 
 class UserController extends AbstractController
 {
+    /**
+     * Creates a new user controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      *	API PUT Route to update a user's notification settings.
      *
@@ -117,20 +129,18 @@ class UserController extends AbstractController
      */
     public function editNotifications(User $user)
     {
-        //Render view and return
-        return View::make('single');
+        return view('single');
     }
 
     /**
      *	Api route to edit user's email.
      *
-     * @param User $user
+     * @param  \MXAbierto\Participa\Models\User  $user
      *
-     * @return array $response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function editEmail(User $user)
     {
-
         //Check authorization
         if (Auth::user()->id !== $user->id) {
             return Response::json($this->growlMessage('No estás autorizado a cambiar el email del usuario', 'error'));
@@ -139,9 +149,7 @@ class UserController extends AbstractController
         $user->email = Input::get('email');
         $user->password = Input::get('password');
 
-        if ($user->save()) {
-            return Response::json($this->growlMessage('Email guardado exitosamente.  Gracias.', 'success'), 200);
-        } else {
+        if (! $user->save()) {
             $errors = $user->getErrors();
             $messages = [];
 
@@ -149,19 +157,18 @@ class UserController extends AbstractController
                 array_push($messages, $error);
             }
 
-            return Response::json($this->growlMessage($messages, 'error'), 500);
+            return response()->json($this->growlMessage($messages, 'error'), 500);
         }
+
+        return response()->json($this->growlMessage('Email guardado exitosamente.  Gracias.', 'success'), 200);
     }
 
     /**
-     *	getIndex.
+     * Retrieve user by id and display user page
      *
-     *	Retrieve user by id and display user page
-     *		Passes User $user to the view
+     * @param  \MXAbierto\Participa\Models\User $user
      *
-     *	@param User $user
-     *
-     *	@return Illuminate\View\View
+     * @return Illuminate\View\View
      */
     public function getIndex(User $user)
     {
@@ -173,37 +180,27 @@ class UserController extends AbstractController
         ];
 
         //Render view and return
-        return View::make('user.index', $data);
+        return view('user.index', $data);
     }
 
     /**
-     *	getEdit.
+     * Allow user to edit their profile
      *
-     *	Allow user to edit their profile
-     *		Passes User $user to the view
+     * @param  \MXAbierto\Participa\Models\User $user
      *
-     *	@param User $user
-     *
-     *	@return Illuminate\View|View
+     * @return Illuminate\View|View
      */
     public function getEdit(User $user)
     {
-        if (!Auth::check()) {
-            return Redirect::to('user/login')->with('error', 'Por favor ingresa para editar el perfil de usario');
-        } elseif (Auth::user()->id != $user->id) {
-            return Redirect::back()->with('error', 'No tienes acceso a ese perfil.');
-        } elseif ($user == null) {
-            return Response::error('404');
+        if (Auth::user()->id != $user->id) {
+            return redirect()->back()->with('error', 'No tienes acceso a ese perfil.');
         }
 
-        //Set data array
-        $data = [
-            'page_id'             => 'edit_profile',
-            'page_title'          => 'Edit Your Profile',
-            'user'                => $user,
-        ];
-
-        return View::make('user.edit.index', $data);
+        return view('user.edit.index', [
+            'page_id'    => 'edit_profile',
+            'page_title' => 'Editar Perfil',
+            'user'       => $user,
+        ]);
     }
 
     /**
@@ -211,18 +208,14 @@ class UserController extends AbstractController
      *
      *	User's put request to update their profile
      *
-     *	@param User $user
+     *	@param  \MXAbierto\Participa\Models\User $user
      *
      *	@return Illuminate\Http\RedirectResponse
      */
     public function putEdit(User $user)
     {
-        if (!Auth::check()) {
-            return Redirect::to('user/login')->with('error', 'Por favor ingresa para editar el perfil de usario');
-        } elseif (Auth::user()->id != $user->id) {
+        if (Auth::user()->id != $user->id) {
             return Redirect::back()->with('error', 'No tienes acceso a ese perfil.');
-        } elseif ($user == null) {
-            return Response::error('404');
         }
 
         if (strlen(Input::get('password_1')) > 0 || strlen(Input::get('password_2')) > 0) {
@@ -294,150 +287,6 @@ class UserController extends AbstractController
     public function postIndex($id = null)
     {
         return Response::error('404');
-    }
-
-    /**
-     *	getLogin.
-     *
-     *	Returns the login page view
-     *
-     *	@param void
-     *
-     *	@return Illuminate\View\View
-     */
-    public function getLogin()
-    {
-        $previous_page = Input::old('previous_page');
-
-        if (!isset($previous_page)) {
-            $previous_page = URL::previous();
-        }
-
-        $data = [
-            'page_id'          => 'login',
-            'page_title'       => 'Log In',
-            'previous_page'    => $previous_page,
-        ];
-
-        return View::make('login.index', $data);
-    }
-
-    /**
-     *	postLogin.
-     *
-     *	Handles POST requests for users logging in
-     *
-     *	@param void
-     *
-     *	@return Illuminate\Http\RedirectResponse
-     */
-    public function postLogin()
-    {
-        //Retrieve POST values
-        $email = Input::get('email');
-        $password = Input::get('password');
-        $previous_page = Input::get('previous_page');
-        $remember = Input::get('remember');
-        $user_details = Input::all();
-
-        //Rules for login form submission
-        $rules = ['email' => 'required', 'password' => 'required'];
-        $validation = Validator::make($user_details, $rules);
-
-        //Validate input against rules
-        if ($validation->fails()) {
-            return Redirect::route('user/login')->withInput()->withErrors($validation);
-        }
-
-        //Check that the user account exists
-        $user = User::where('email', $email)->first();
-
-        if (!isset($user)) {
-            return Redirect::route('user/login')->with('error', 'Ese email no existe.');
-        }
-
-        //If the user's token field isn't blank, he/she hasn't confirmed their account via email
-        if ($user->token != '') {
-            return Redirect::route('user/login')->with('error', 'Por favor, haz click en el enlace enviado a tu email para verificar la cuenta.');
-        }
-
-        //Attempt to log user in
-        $credentials = ['email' => $email, 'password' => $password];
-
-        if (Auth::attempt($credentials, ($remember == 'true') ? true : false)) {
-            Auth::user()->last_login = new DateTime();
-            Auth::user()->save();
-            if (isset($previous_page)) {
-                return Redirect::to($previous_page)->with('message', 'Has ingresado exitosamente.');
-            } else {
-                return Redirect::route('docs')->with('message', 'Has ingresado exitosamente.');
-            }
-        } else {
-            return Redirect::route('user/login')->with('error', 'Datos incorrectos')->withInput(['previous_page' => $previous_page]);
-        }
-    }
-
-    /**
-     * 	getSignup.
-     *
-     *	Returns signup page view
-     *
-     *	@param void
-     *
-     *	@return Illuminate\View\View
-     */
-    public function getSignup()
-    {
-        $data = [
-            'page_id'        => 'signup',
-            'page_title'     => 'Sign Up for Madison',
-        ];
-
-        return View::make('login.signup', $data);
-    }
-
-    /**
-     * 	postSignup.
-     *
-     *	Handles POST requests for users signing up natively through Madison
-     *		Fires MadisonEvent::NEW_USER_SIGNUP Event
-     *
-     *	@param void
-     *
-     *	@return Illuminate\Http\RedirectResponse
-     */
-    public function postSignup()
-    {
-        //Retrieve POST values
-        $email = Input::get('email');
-        $password = Input::get('password');
-        $fname = Input::get('fname');
-        $lname = Input::get('lname');
-
-        //Create user token for email verification
-        $token = str_random();
-
-        //Create new user
-        $user = new User();
-        $user->email = $email;
-        $user->password = $password;
-        $user->fname = $fname;
-        $user->lname = $lname;
-        $user->token = $token;
-        if (!$user->save()) {
-            return Redirect::route('user/signup')->withInput()->withErrors($user->getErrors());
-        }
-
-        Event::fire(MadisonEvent::NEW_USER_SIGNUP, $user);
-
-        //Send email to user for email account verification
-        Mail::queue('email.signup', ['token' => $token], function ($message) use ($email, $fname) {
-      $message->subject(trans('messages.confirmationtitle'));
-            $message->from(trans('messages.emailfrom'), trans('messages.emailfromname'));
-            $message->to($email); // Recipient address
-        });
-
-        return Redirect::route('user/login')->with('message', trans('messages.confirmationresent'));
     }
 
     /**

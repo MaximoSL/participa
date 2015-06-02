@@ -74,15 +74,15 @@ class MainRoutes
             'uses' => 'UserController@getIndex',
         ]);
         $router->get('user/edit/{user}', [
-            'as'   => 'editUser',
+            'as'   => 'user.edit',
             'uses' => 'UserController@getEdit',
         ]);
         $router->put('user/edit/{user}', [
-            'as'   => 'editUser',
+            'as'   => 'user.edit',
             'uses' => 'UserController@putEdit',
         ]);
         $router->get('user/edit/{user}/notifications', [
-            'as'   => 'editNotifications',
+            'as'   => 'user.edit.notifications',
             'uses' => 'UserController@editNotifications',
         ]);
 

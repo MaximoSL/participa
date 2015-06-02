@@ -29,8 +29,8 @@
               @if($loggedUser->hasRole('Independent Sponsor') || $loggedUser->groups()->exists())
                 <li class="link-settings"><a href="{{ route('documents') }}" target="_self">{{ trans('messages.mydocs') }}</a>
               @endif
-              <li class="link-settings"><a href="{{ route('editUser', $loggedUser->id) }}" target="_self">{{ trans('messages.accountsettings') }}</a></li>
-              <li><a href="{{ route('editNotifications', $loggedUser->id) }}" target="_self">{{ trans('messages.notifsettings') }}</a></li>
+              <li class="link-settings"><a href="{{ route('user.edit', $loggedUser->id) }}" target="_self">{{ trans('messages.accountsettings') }}</a></li>
+              <li><a href="{{ route('user.edit.notifications', $loggedUser->id) }}" target="_self">{{ trans('messages.notifsettings') }}</a></li>
               <li class="link-settings"><a href="{{ route('groups') }}" target="_self">{{ trans('messages.groupmanagement') }}</a></li>
               @if($loggedUser->hasRole('Admin'))
                 <li><a href="{{ route('dashboard') }}" target="_self">{{ trans('messages.admin') }}</a></li>
