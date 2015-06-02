@@ -11,7 +11,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ URL::route('home') }}">
+      <a class="navbar-brand" href="{{ route('home') }}">
         <img src="{{ url('svg/gob-mx-logo.svg') }}" width="75" height="23" alt="gob.mx">
       </a>
     </div>
@@ -23,25 +23,25 @@
           <a class="dropdown-trigger" href="#" data-toggle="dropdown">{{ trans('messages.sitename') }}<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li class="link-about">
-              <a href="{{ URL::route('about') }}" target="_self">{{ trans('messages.about') }}</a>
+              <a href="{{ route('about') }}" target="_self">{{ trans('messages.about') }}</a>
             </li>
-            @if(Auth::check())
-              @if(Auth::user()->hasRole('Independent Sponsor') || Auth::user()->groups()->exists())
-                <li class="link-settings"><a href="{{ URL::route('documents') }}" target="_self">{{ trans('messages.mydocs') }}</a>
+            @if($loggedUser)
+              @if($loggedUser->hasRole('Independent Sponsor') || $loggedUser->groups()->exists())
+                <li class="link-settings"><a href="{{ route('documents') }}" target="_self">{{ trans('messages.mydocs') }}</a>
               @endif
-              <li class="link-settings"><a href="{{ URL::route('editUser', Auth::user()->id) }}" target="_self">{{ trans('messages.accountsettings') }}</a></li>
-              <li><a href="{{ URL::route('editNotifications', Auth::user()->id) }}" target="_self">{{ trans('messages.notifsettings') }}</a></li>
-              <li class="link-settings"><a href="{{ URL::route('groups') }}" target="_self">{{ trans('messages.groupmanagement') }}</a></li>
-              @if(Auth::user()->hasRole('Admin'))
-                <li><a href="{{ URL::route('dashboard') }}" target="_self">{{ trans('messages.admin') }}</a></li>
+              <li class="link-settings"><a href="{{ route('editUser', $loggedUser->id) }}" target="_self">{{ trans('messages.accountsettings') }}</a></li>
+              <li><a href="{{ route('editNotifications', $loggedUser->id) }}" target="_self">{{ trans('messages.notifsettings') }}</a></li>
+              <li class="link-settings"><a href="{{ route('groups') }}" target="_self">{{ trans('messages.groupmanagement') }}</a></li>
+              @if($loggedUser->hasRole('Admin'))
+                <li><a href="{{ route('dashboard') }}" target="_self">{{ trans('messages.admin') }}</a></li>
               @endif
-              <?php $userGroups = Auth::user()->groups(); ?>
+              <?php $userGroups = $loggedUser->groups(); ?>
               <?php if ($userGroups->count() > 0): ?>
                 <li class="dropdown-submenu pull-left">
                   <a class="dropdown-trigger" href="#" data-toggle="dropdown">{{ trans('messages.useas') }}</a>
                   <ul class="dropdown-menu" role="menu">
                     <?php if ($activeGroupId !== 0): ?>
-                      <li class="link-settings"><a href="./groups/active/0" target="_self">{{ Auth::user()->fname }} {{ Auth::user()->lname }}</a></li>
+                      <li class="link-settings"><a href="./groups/active/0" target="_self">{{ $loggedUser->fname }} {{ $loggedUser->lname }}</a></li>
                     <?php endif; ?>
                     <li class="divider"></li>
                     <?php foreach ($userGroups->get() as $group): ?>
@@ -50,10 +50,10 @@
                   </ul>
                 </li>
               <?php endif; ?>
-              <li class="link-logout"><a href="{{ URL::route('logout') }}" target="_self">{{ trans('messages.logout') }}</a></li>
+              <li class="link-logout"><a href="{{ route('logout') }}" target="_self">{{ trans('messages.logout') }}</a></li>
             @else
-              <li class="link-login"><a href="{{ URL::route('auth.login') }}" target="_self">{{ trans('messages.login') }}</a></li>
-              <li class="link-signup"><a href="{{ URL::route('auth.signup') }}" target="_self">{{ trans('messages.signup') }}</a></li>
+              <li class="link-login"><a href="{{ route('auth.login') }}" target="_self">{{ trans('messages.login') }}</a></li>
+              <li class="link-signup"><a href="{{ route('auth.signup') }}" target="_self">{{ trans('messages.signup') }}</a></li>
             @endif
           </ul>
         </li>

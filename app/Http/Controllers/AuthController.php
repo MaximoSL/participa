@@ -129,4 +129,17 @@ class AuthController extends AbstractController
 
        return redirect()->route('auth.login')->with('message', trans('messages.confirmationresent'));
    }
+
+   /**
+    * Logouts out a user from it's account.
+    *
+    * @return \Illuminate\Http\RedirectResponse
+    */
+   public function getLogout()
+   {
+       Auth::logout();    //Logout the current user
+       session()->flush(); //delete the session
+
+       return redirect()->route('home')->with('message', 'Has salido exitosamente.');
+   }
 }

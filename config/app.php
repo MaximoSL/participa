@@ -138,11 +138,17 @@ return [
         'Illuminate\View\ViewServiceProvider',
 
         /*
+         * Packages Service Providers...
+         */
+         'Zizaco\Entrust\EntrustServiceProvider',
+
+        /*
          * Application Service Providers...
          */
         'MXAbierto\Participa\Providers\AppServiceProvider',
         'MXAbierto\Participa\Providers\EventServiceProvider',
         'MXAbierto\Participa\Providers\RouteServiceProvider',
+        'MXAbierto\Participa\Providers\ComposerServiceProvider',
 
     ],
 

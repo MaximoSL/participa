@@ -56,6 +56,10 @@ class MainRoutes
             'as'   => 'auth.login',
             'uses' => 'AuthController@postLogin',
         ]);
+        $router->get('logout', [
+            'as' => 'logout',
+            'uses' => 'AuthController@getLogout',    
+        ]);
         $router->get('auth/signup', [
             'as'   => 'auth.signup',
             'uses' => 'AuthController@getSignup',
@@ -101,7 +105,18 @@ class MainRoutes
             'uses' => 'RemindersController@postConfirmation',
         ]);
 
-        //Document Routes
+        // User Groups Routes
+        $router->get('groups', ['as' => 'groups', 'uses' => 'GroupsController@getIndex']);
+        $router->put('groups/edit', 'GroupsController@putEdit');
+        $router->get('groups/edit/{groupId?}', 'GroupsController@getEdit');
+        $router->get('groups/members/{groupId}', 'GroupsController@getMembers');
+        $router->get('groups/member/{memberId}/delete', 'GroupsController@removeMember');
+        $router->post('groups/member/{memberId}/role', 'GroupsController@changeMemberRole');
+        $router->get('groups/invite/{groupId}', 'GroupsController@inviteMember');
+        $router->put('groups/invite/{groupId}', 'GroupsController@processMemberInvite');
+        $router->get('groups/active/{groupId}', 'GroupsController@setActiveGroup');
+
+        // Document Routes
         $router->get('docs', [
             'as'   => 'docs',
             'uses' => 'DocController@index'
@@ -123,6 +138,15 @@ class MainRoutes
         $router->get('/documents/sponsor/request', ['as' => 'sponsorRequest', 'uses' => 'SponsorController@getRequest']);
         $router->post('/documents/sponsor/request', ['as' => 'sponsorRequest', 'uses' => 'SponsorController@postRequest']);
 
+        //Dashboard Routes
+        $router->controller('dashboard', 'DashboardController');
+        $router->get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@getIndex']);
+
+        //Dashboard's Doc Routes
+        $router->get('dashboard/docs', ['as' => 'dashboard/docs', 'uses' => 'DashboardController@getDocs']);
+        $router->post('dashboard/docs', ['as' => 'dashboard/docs', 'uses' => 'DashboardController@postDocs']);
+        $router->get('dashboard/docs/{doc}', ['as' => 'dashboardShowsDoc', 'uses' => 'DashboardController@getDocs']);
+
         // // Modal Routes
         // $router->get('modals/annotation_thanks', [
         //     'uses'   => 'ModalController@getAnnotationThanksModal',
@@ -131,47 +155,11 @@ class MainRoutes
         //
         // $router->post('modals/annotation_thanks', 'ModalController@seenAnnotationThanksModal');
         //
-        // $router->get('groups', ['as' => 'groups', 'uses' => 'GroupsController@getIndex']);
-        // $router->put('groups/edit', 'GroupsController@putEdit');
-        // $router->get('groups/edit/{groupId?}', 'GroupsController@getEdit');
-        // $router->get('groups/members/{groupId}', 'GroupsController@getMembers');
-        // $router->get('groups/member/{memberId}/delete', 'GroupsController@removeMember');
-        // $router->post('groups/member/{memberId}/role', 'GroupsController@changeMemberRole');
-        // $router->get('groups/invite/{groupId}', 'GroupsController@inviteMember');
-        // $router->put('groups/invite/{groupId}', 'GroupsController@processMemberInvite');
-        // $router->get('groups/active/{groupId}', 'GroupsController@setActiveGroup');
-        //
-        //
-        // //User Routes
-        // $router->get('user/{user}', 'UserController@getIndex');
-        // $router->get('user/edit/{user}', ['as' => 'editUser', 'uses' => 'UserController@getEdit']);
-        // $router->put('user/edit/{user}', ['as' => 'editUser', 'uses' => 'UserController@putEdit']);
-        // $router->get('user/edit/{user}/notifications', ['as' => 'editNotifications', 'uses' => 'UserController@editNotifications']);
-        // $router->controller('user', 'UserController');
-        // $router->get('user/login', ['as' => 'user/login', 'uses' => 'UserController@getLogin']);
-        // $router->get('user/signup', ['as' => 'user/signup', 'uses' => 'UserController@getSignup']);
-        // $router->post('user/login', ['as' => 'user/login', 'uses' => 'UserController@postLogin']);
-        // $router->post('user/signup', ['as' => 'user/signup', 'uses' => 'UserController@postSignup']);
-        //
         //
         // //Annotation Routes
         // $router->get('annotation/{annotation}', 'AnnotationController@getIndex');
         //
-        // //Dashboard Routes
-        // $router->controller('dashboard', 'DashboardController');
-        // $router->get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@getIndex']);
         //
-        // //Dashboard's Doc Routes
-        // $router->get('dashboard/docs', ['as' => 'dashboard/docs', 'uses' => 'DashboardController@getDocs']);
-        // $router->post('dashboard/docs', ['as' => 'dashboard/docs', 'uses' => 'DashboardController@postDocs']);
-        // $router->get('dashboard/docs/{doc}', ['as' => 'dashboardShowsDoc', 'uses' => 'DashboardController@getDocs']);
-        //
-        // //Logout Route
-        // $router->get('logout', ['as' => 'logout', function () {
-        //     Auth::logout();    //Logout the current user
-        //     Session::flush(); //delete the session
-        //     return Redirect::route('home')->with('message', 'Has salido exitosamente.');
-        // }]);
         //
         // $router->get('docs/feed', [
         //     'as'   => 'dashboardShowsDoc',
