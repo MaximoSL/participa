@@ -110,9 +110,26 @@ class MainRoutes
             'as'   => 'groups',
             'uses' => 'GroupsController@getIndex',
         ]);
-        $router->put('groups/edit', 'GroupsController@putEdit');
-        $router->get('groups/edit/{groupId?}', 'GroupsController@getEdit');
-        $router->get('groups/members/{groupId}', 'GroupsController@getMembers');
+        $router->get('groups/new', [
+            'as'   => 'groups.new',
+            'uses' => 'GroupsController@getNew',
+        ]);
+        $router->post('groups/new', [
+            'as'   => 'groups.new',
+            'uses' => 'GroupsController@postNew',
+        ]);
+        $router->put('groups/edit', [
+            'as'   => 'groups.edit',
+            'uses' => 'GroupsController@putEdit',
+        ]);
+        $router->get('groups/edit/{groupId?}', [
+            'as'   => 'groups.edit',
+            'uses' => 'GroupsController@getEdit',
+        ]);
+        $router->get('groups/members/{groupId}', [
+            'as'   => 'groups.members',
+            'uses' => 'GroupsController@getMembers',
+        ]);
         $router->get('groups/member/{memberId}/delete', 'GroupsController@removeMember');
         $router->post('groups/member/{memberId}/role', 'GroupsController@changeMemberRole');
         $router->get('groups/invite/{groupId}', 'GroupsController@inviteMember');
