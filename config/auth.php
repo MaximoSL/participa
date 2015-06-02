@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => 'MXAbierto\Participa\User',
+    'model' => 'MXAbierto\Participa\Models\User',
 
     /*
     |--------------------------------------------------------------------------
