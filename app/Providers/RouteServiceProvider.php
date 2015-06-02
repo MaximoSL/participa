@@ -28,6 +28,21 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot($router);
 
         $this->registerBindings();
+        $this->registerPatterns();
+    }
+
+    /**
+     * Register model patterns.
+     *
+     * @return void
+     */
+    protected function registerPatterns()
+    {
+        $this->app->router->pattern('annotation', '[0-9a-zA-Z_-]+');
+        $this->app->router->pattern('comment', '[0-9a-zA-Z_-]+');
+        $this->app->router->pattern('doc', '[0-9]+');
+        $this->app->router->pattern('user', '[0-9]+');
+        $this->app->router->pattern('date', '[0-9]+');
     }
 
     /**
