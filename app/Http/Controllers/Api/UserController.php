@@ -24,7 +24,7 @@ class UserController extends AbstractApiController
      */
     public function getCurrent(Guard $auth)
     {
-        if (! $auth->check()) {
+        if (!$auth->check()) {
             return response()->json(null);
         }
 
@@ -36,7 +36,7 @@ class UserController extends AbstractApiController
     /**
      * Returns a user.
      *
-     * @param  \MXAbierto\Participa\Models\User  $user
+     * @param \MXAbierto\Participa\Models\User $user
      *
      * @return \Illuminate\Http\JsonResponse
      */

@@ -57,7 +57,7 @@ class MainRoutes
             'uses' => 'AuthController@postLogin',
         ]);
         $router->get('logout', [
-            'as' => 'logout',
+            'as'   => 'logout',
             'uses' => 'AuthController@getLogout',
         ]);
         $router->get('auth/signup', [
@@ -138,21 +138,21 @@ class MainRoutes
         $router->get('documents/view/{documentId}', 'DocumentsController@viewDocument');
         $router->get('documents/edit/{documentId}', 'DocumentsController@editDocument');
         $router->put('documents/edit/{documentId}', [
-            'as' => 'saveDocumentEdits',
+            'as'   => 'saveDocumentEdits',
             'uses' => 'DocumentsController@saveDocumentEdits',
         ]);
         $router->post('documents/create', [
-            'as' => 'documents/create',
+            'as'   => 'documents/create',
             'uses' => 'DocumentsController@createDocument',
         ]);
         $router->post('documents/save', 'DocumentsController@saveDocument');
         $router->delete('documents/delete/{slug}', 'DocumentsController@deleteDocument');
         $router->get('documents/sponsor/request', [
-            'as' => 'sponsorRequest',
+            'as'   => 'sponsorRequest',
             'uses' => 'SponsorController@getRequest',
         ]);
         $router->post('documents/sponsor/request', [
-            'as' => 'sponsorRequest',
+            'as'   => 'sponsorRequest',
             'uses' => 'SponsorController@postRequest',
         ]);
 
@@ -173,7 +173,7 @@ class MainRoutes
             'uses' => 'DashboardController@postDocs',
         ]);
         $router->get('dashboard/docs/{doc}', [
-            'as' => 'dashboardShowsDoc',
+            'as'   => 'dashboardShowsDoc',
             'uses' => 'DashboardController@getDocs',
         ]);
 

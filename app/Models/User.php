@@ -163,7 +163,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Returns the user's display name
+     * Returns the user's display name.
      *
      * @param void
      *
@@ -175,7 +175,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Gets the docs relation
+     * Gets the docs relation.
      *
      *
      * @return Illuminate\Database\Model\Relations\BelongsToMany
@@ -187,7 +187,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * Returns current active group for this user
-     * Grabs the active group id from Session
+     * Grabs the active group id from Session.
      *
      *
      * @return Group|| new Group
@@ -208,7 +208,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Sets the password encrypted for a user.
      *
-     * @param  string $password
+     * @param string $password
      *
      * @return void
      */
@@ -218,7 +218,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Model belongsToMany relationship for Group
+     * Model belongsToMany relationship for Group.
      *
      * @return Illuminate\Database\Model\Relations\BelongsToMany
      */
@@ -228,7 +228,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Model hasMany relationship for Comment
+     * Model hasMany relationship for Comment.
      *
      * @return Illuminate\Database\Model\Relations\HasMany
      */
@@ -248,7 +248,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Model belongsTo relationship for Organization
+     * Model belongsTo relationship for Organization.
      *
      * @return Illuminate\Database\Model\Relations\BelongsTo
      *
@@ -260,7 +260,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Model hasMany relationship for NoteMeta
+     * Model hasMany relationship for NoteMeta.
      *
      * @return Illuminate\Database\Model\Relations\HasMany
      */
@@ -270,7 +270,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Model hasMany relationship for UserMeta
+     * Model hasMany relationship for UserMeta.
      *
      * @return Illuminate\Database\Model\Relations\HasMany
      */
@@ -282,7 +282,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Returns the value of the UserMeta for this user with key 'independent_sponsor'
      * The value of this is either '1' or '0'
-     * If the user hasn't requested independent sponsor status, this will return null
+     * If the user hasn't requested independent sponsor status, this will return null.
      *
      * @return string|null
      */
@@ -294,9 +294,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Sets the Independent Sponsor status for this user
      * Sets / Creates a UserMeta for this user with key = 'independent_sponsor'
-     * and value '1'||'0' based on input boolean
+     * and value '1'||'0' based on input boolean.
      *
-     * @param  bool $bool
+     * @param bool $bool
      *
      * @return void
      */
@@ -321,9 +321,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Sets the user as an admin contact for the site
+     * Sets the user as an admin contact for the site.
      *
-     * @param  mixed $setting
+     * @param mixed $setting
      *
      * @return bool|void
      *
@@ -407,7 +407,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Returns all users with a given role
+     * Returns all users with a given role.
      *
      * @param string $role
      *
@@ -421,7 +421,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Validates before saving.  Returns whether the User can be saved.
      *
-     * @param  array $options
+     * @param array $options
      *
      * @return bool
      */
@@ -429,7 +429,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $this->rules = $this->mergeRules();
 
-        if (! $this->validate()) {
+        if (!$this->validate()) {
             Log::error('Unable to validate user: ');
             Log::error($this->getErrors()->toArray());
             Log::error($this->attributes);
@@ -441,7 +441,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Merge the rules arrays to form one set of rules
+     * Merge the rules arrays to form one set of rules.
      *
      * @return string[] $output
      *
@@ -493,9 +493,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Validate input against merged rules
+     * Validate input against merged rules.
      *
-     * @param  array $attributes
+     * @param array $attributes
      *
      * @return bool
      */

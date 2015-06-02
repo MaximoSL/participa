@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Notification extends Model
 {
     use SoftDeletes;
-    
+
     const TYPE_EMAIL = 'email';
     const TYPE_TEXT = 'text';
 

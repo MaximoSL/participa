@@ -77,7 +77,6 @@ class Annotation extends Model implements ActivityInterface
         return static::$_esInstance;
     }
 
-
     public function user()
     {
         return $this->belongsTo('MXAbierto\Participa\Models\User');

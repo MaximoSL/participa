@@ -3,8 +3,8 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Model\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Model\Collection;
 
 class Group extends Model
 {

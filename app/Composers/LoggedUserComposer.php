@@ -2,8 +2,8 @@
 
 namespace MXAbierto\Participa\Composers;
 
-use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\View\View;
 
 class LoggedUserComposer
 {
@@ -17,7 +17,7 @@ class LoggedUserComposer
     /**
      * Create a new filter instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Guard $auth
+     * @param \Illuminate\Contracts\Auth\Guard $auth
      *
      * @return void
      */

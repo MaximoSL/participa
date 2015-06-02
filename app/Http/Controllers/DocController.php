@@ -39,7 +39,7 @@ class DocController extends AbstractController
     /**
      * Get a doc by slug.
      *
-     * @param  string $slug
+     * @param string $slug
      *
      * @return \Illuminate\Http\Response
      */
@@ -49,7 +49,7 @@ class DocController extends AbstractController
             //Retrieve requested document
             $doc = Doc::where('slug', $slug)->with('statuses')->with('userSponsor')->with('groupSponsor')->with('categories')->with('dates')->first();
 
-            if (! $doc) {
+            if (!$doc) {
                 abort('404');
             }
 
@@ -97,7 +97,7 @@ class DocController extends AbstractController
     /**
      * Get embeded doc by slug.
      *
-     * @param  string $slug
+     * @param string $slug
      *
      * @return \Illuminate\Http\Response
      */
@@ -141,7 +141,7 @@ class DocController extends AbstractController
     /**
      * Method to handle posting support/oppose clicks on a document.
      *
-     * @param  int $doc
+     * @param int $doc
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -181,11 +181,11 @@ class DocController extends AbstractController
     }
 
     /**
-     *	Method to handle document RSS feeds.
+     * Method to handle document RSS feeds.
      *
-     *	@param string $slug
+     * @param string $slug
      *
-     * @return view $feed->render()
+     * @return \Illuminate\Http\Response
      */
     public function getFeed($slug)
     {
