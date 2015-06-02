@@ -1,6 +1,33 @@
 {
   "name": "Participa",
   "dependencies": {
-    "compass-mixins": "~1.0.2"
+    "compass-mixins": "~1.0.2",
+    "jquery": "~1.11.3",
+    "jquery.ui": "~1.11.4",
+    "bootstrap": "~3.3.4",
+    "underscore": "~1.8.3",
+    "annotator": "~1.2.9",
+    "angular": "~1.2.28",
+    "angular-animate": "~1.2.28",
+    "angular-bootstrap": "~0.12.1",
+    "angular-bootstrap-datetimepicker": "~0.2.4",
+    "angular-cookie": "~4.0.6",
+    "angular-cookies": "~1.2.28",
+    "angular-growl-2": "~0.7.4",
+    "angular-i18n": "~1.2.28",
+    "angular-route": "~1.2.28",
+    "angular-resource": "~1.2.28",
+    "angular-sanitize": "~1.2.28",
+    "angular-translate": "~2.7.2",
+    "angular-ui": "~0.4.0",
+    "angular-ui-select": "~0.12.0",
+    "select2": "~4.0.0",
+    "moment": "~2.10.3",
+    "crypto-js": "http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js",
+    "google-diff-match-patch-js": "~1.0.0",
+    "google-translate": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
+    "pagedown": "~1.1.0",
+    "showdown": "~1.0.2",
+    "zeroclipboard": "~2.2.0"
   }
 }
