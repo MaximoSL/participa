@@ -101,6 +101,28 @@ class MainRoutes
             'uses' => 'RemindersController@postConfirmation',
         ]);
 
+        //Document Routes
+        $router->get('docs', [
+            'as'   => 'docs',
+            'uses' => 'DocController@index'
+        ]);
+        $router->get('docs/{slug}', [
+            'as'   => 'docs.doc',
+            'uses' => 'DocController@getDoc'
+        ]);
+        $router->get('docs/embed/{slug}', 'DocController@getEmbedded');
+        $router->get('docs/{slug}/feed', 'DocController@getFeed');
+        $router->get('documents/search', 'DocumentsController@getSearch');
+        $router->get('documents', ['as' => 'documents', 'uses' => 'DocumentsController@listDocuments']);
+        $router->get('documents/view/{documentId}', 'DocumentsController@viewDocument');
+        $router->get('documents/edit/{documentId}', 'DocumentsController@editDocument');
+        $router->put('documents/edit/{documentId}', ['as' => 'saveDocumentEdits', 'uses' => 'DocumentsController@saveDocumentEdits']);
+        $router->post('documents/create', ['as' => 'documents/create', 'uses' => 'DocumentsController@createDocument']);
+        $router->post('documents/save', 'DocumentsController@saveDocument');
+        $router->delete('/documents/delete/{slug}', 'DocumentsController@deleteDocument');
+        $router->get('/documents/sponsor/request', ['as' => 'sponsorRequest', 'uses' => 'SponsorController@getRequest']);
+        $router->post('/documents/sponsor/request', ['as' => 'sponsorRequest', 'uses' => 'SponsorController@postRequest']);
+
         // // Modal Routes
         // $router->get('modals/annotation_thanks', [
         //     'uses'   => 'ModalController@getAnnotationThanksModal',
@@ -119,23 +141,6 @@ class MainRoutes
         // $router->put('groups/invite/{groupId}', 'GroupsController@processMemberInvite');
         // $router->get('groups/active/{groupId}', 'GroupsController@setActiveGroup');
         //
-        // //Static Pages
-        //
-        // //Document Routes
-        // $router->get('docs', ['as' => 'docs', 'uses' => 'DocController@index']);
-        // $router->get('docs/{slug}', 'DocController@index');
-        // $router->get('docs/embed/{slug}', 'DocController@getEmbedded');
-        // $router->get('docs/{slug}/feed', 'DocController@getFeed');
-        // $router->get('documents/search', 'DocumentsController@getSearch');
-        // $router->get('documents', ['as' => 'documents', 'uses' => 'DocumentsController@listDocuments']);
-        // $router->get('documents/view/{documentId}', 'DocumentsController@viewDocument');
-        // $router->get('documents/edit/{documentId}', 'DocumentsController@editDocument');
-        // $router->put('documents/edit/{documentId}', ['as' => 'saveDocumentEdits', 'uses' => 'DocumentsController@saveDocumentEdits']);
-        // $router->post('documents/create', ['as' => 'documents/create', 'uses' => 'DocumentsController@createDocument']);
-        // $router->post('documents/save', 'DocumentsController@saveDocument');
-        // $router->delete('/documents/delete/{slug}', 'DocumentsController@deleteDocument');
-        // $router->get('/documents/sponsor/request', ['as' => 'sponsorRequest', 'uses' => 'SponsorController@getRequest']);
-        // $router->post('/documents/sponsor/request', ['as' => 'sponsorRequest', 'uses' => 'SponsorController@postRequest']);
         //
         // //User Routes
         // $router->get('user/{user}', 'UserController@getIndex');

@@ -95,7 +95,7 @@
       <div class="col-md-4">
         <div class="doc-content-sidebar">
           <div class="sidebar-unit">
-            <h4>{{ trans('messages.howtoparticipate'); }}</h4>
+            <h4>{{ trans('messages.howtoparticipate') }}</h4>
             <hr class="red">
             <ol>
               <li>{{ trans('messages.readpolicy') }}</li>

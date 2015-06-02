@@ -1,15 +1,16 @@
-angular.module( 'madisonApp.controllers' )
-    .controller( 'AppController', [ '$rootScope', '$scope', 'ipCookie', 'UserService', function ( $rootScope, $scope, ipCookie, UserService ) {
-        //Update page title
-        $rootScope.$on('$routeChangeSuccess', function ( event, current, previous ) {
+angular.module('madisonApp.controllers')
+    .controller('AppController', ['$rootScope', '$scope', 'ipCookie', 'UserService', function ($rootScope, $scope, ipCookie, UserService) {
+        // Update page title
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             $rootScope.pageTitle = current.$$route.title;
         });
-        //Watch for user data change
+
+        // Watch for user data change
         $scope.$on('userUpdated', function () {
             $scope.user = UserService.user;
         });
 
-        //Load user data
+        // Load user data
         UserService.getUser();
 
         //Set up Angular Tour
@@ -21,7 +22,7 @@ angular.module( 'madisonApp.controllers' )
             step_4: 'Sugiere cambios específicos al texto. Sólo selecciona un fragmento del documento y agrega tus sugerencias.'
         };
 
-        $scope.currentStep = ipCookie( 'myTour' ) || 0;
+        $scope.currentStep = ipCookie('myTour') || 0;
 
         $scope.stepComplete = function () {
             ipCookie('myTour', $scope.currentStep, {path: '/', expires: 10*365});

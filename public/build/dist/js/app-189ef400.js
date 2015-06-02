@@ -79008,18 +79008,19 @@ angular.module( 'madisonApp.controllers' )
                 });
         };
     }]);
-angular.module( 'madisonApp.controllers' )
-    .controller( 'AppController', [ '$rootScope', '$scope', 'ipCookie', 'UserService', function ( $rootScope, $scope, ipCookie, UserService ) {
-        //Update page title
-        $rootScope.$on('$routeChangeSuccess', function ( event, current, previous ) {
+angular.module('madisonApp.controllers')
+    .controller('AppController', ['$rootScope', '$scope', 'ipCookie', 'UserService', function ($rootScope, $scope, ipCookie, UserService) {
+        // Update page title
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             $rootScope.pageTitle = current.$$route.title;
         });
-        //Watch for user data change
+
+        // Watch for user data change
         $scope.$on('userUpdated', function () {
             $scope.user = UserService.user;
         });
 
-        //Load user data
+        // Load user data
         UserService.getUser();
 
         //Set up Angular Tour
@@ -79031,7 +79032,7 @@ angular.module( 'madisonApp.controllers' )
             step_4: 'Sugiere cambios específicos al texto. Sólo selecciona un fragmento del documento y agrega tus sugerencias.'
         };
 
-        $scope.currentStep = ipCookie( 'myTour' ) || 0;
+        $scope.currentStep = ipCookie('myTour') || 0;
 
         $scope.stepComplete = function () {
             ipCookie('myTour', $scope.currentStep, {path: '/', expires: 10*365});
@@ -79040,6 +79041,7 @@ angular.module( 'madisonApp.controllers' )
             ipCookie('myTour', 99, {path: '/', expires: 10*365});
         };
     }]);
+
 angular.module( 'madisonApp.controllers' )
     .controller( 'CommentController', [ '$scope', '$sce', '$http', 'annotationService', 'createLoginPopup', 'growl', '$location', '$filter', '$timeout', function ( $scope, $sce, $http, annotationService, createLoginPopup, growl, $location, $filter, $timeout ) {
         $scope.comments             = [];
@@ -80640,21 +80642,22 @@ angular.module( 'madisonApp.services' )
             return $modal.open( tempModalDefaults ).result;
         };
     }]);
-angular.module( 'madisonApp.services' )
-    .factory( 'UserService', [ '$rootScope', '$http', function ( $rootScope, $http ) {
-        var UserService     = {};
-        UserService.user    = {};
+angular.module('madisonApp.services')
+    .factory('UserService', ['$rootScope', '$http', function ($rootScope, $http) {
+        var UserService  = {};
+        UserService.user = {};
 
         UserService.getUser = function () {
-            UserService.exists  = $http.get(    '/api/user/current' )
+            UserService.exists = $http.get('/api/user/current')
                 .success(function ( data ) {
-                    UserService.user    = data.user;
-                    $rootScope.$broadcast( 'userUpdated' );
+                    UserService.user = data.user;
+                    $rootScope.$broadcast('userUpdated');
                 });
         };
 
         return UserService;
     }]);
+
 angular.module( 'madisonApp.directives', []);
 angular.module( 'madisonApp.directives' )
     .directive( 'activitySubComment', [ 'growl', '$anchorScroll', '$timeout', function ( growl, $anchorScroll, $timeout ) {
@@ -80956,7 +80959,7 @@ app.config(function ($httpProvider) {
           request.url = "/participa/" + request.url;
           request.url = request.url.replace(/\/\//g, "/");
         } else {
-          request.url = "/participa-assets/" + request.url;
+          request.url = "/" + request.url;
           request.url = request.url.replace(/\/\//g, "/");
         }
         return request || $q.when(request);

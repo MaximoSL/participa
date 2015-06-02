@@ -21,7 +21,7 @@ class Doc extends Model
     {
         parent::__construct();
 
-        $this->index = Config::get('elasticsearch.annotationIndex');
+        $this->index = config('elasticsearch.annotationIndex');
     }
 
     public function getEmbedCode()

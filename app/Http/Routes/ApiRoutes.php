@@ -95,14 +95,14 @@ class ApiRoutes
             $router->get('docs/', 'DocumentController@getDocs');
 
             //User Routes
-            $router->get('user/{user}', 'UserController@getUser');
-            $router->get('user/verify/', 'UserController@getVerify');
-            $router->post('user/verify/', 'UserController@postVerify');
-            $router->get('user/admin/', 'UserController@getAdmins');
-            $router->post('user/admin/', 'UserController@postAdmin');
-            $router->get('user/independent/verify/', 'UserController@getIndependentVerify');
-            $router->post('user/independent/verify/', 'UserController@postIndependentVerify');
             $router->get('user/current', 'UserController@getCurrent');
+            $router->get('user/{user}', 'UserController@getUser');
+            $router->get('user/verify', 'UserController@getVerify');
+            $router->post('user/verify', 'UserController@postVerify');
+            $router->get('user/admin', 'UserController@getAdmins');
+            $router->post('user/admin', 'UserController@postAdmin');
+            $router->get('user/independent/verify', 'UserController@getIndependentVerify');
+            $router->post('user/independent/verify', 'UserController@postIndependentVerify');
             $router->put('user/{user}/edit/email', 'UserController@editEmail');
             $router->get('user/{user}/notifications', 'UserController@getNotifications');
             $router->put('user/{user}/notifications', 'UserController@putNotifications');

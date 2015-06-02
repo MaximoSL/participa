@@ -2,6 +2,10 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use MXAbierto\Participa\Models\Doc;
+
 /**
  * 	Controller for Document actions.
  */
@@ -14,42 +18,39 @@ class DocController extends AbstractController
         $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);
     }
 
-    public function getEmbedded($slug = null)
+    /**
+     * Get docs index.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $doc = Doc::findDocBySlug($slug);
+        $perPage = Input::get('per_page', 20);
 
-        if (is_null($doc)) {
-            App::abort('404');
-        }
+        $docs = Doc::paginate($perPage);
 
-        $view = View::make('doc.reader.embed', compact('doc'));
-
-        return $view;
+        return view('doc.index', [
+            'docs'       => $docs,
+            'page_id'    => 'docs',
+            'page_title' => 'All Documents',
+        ]);
     }
 
-    //GET document view
-    public function index($slug = null)
+    /**
+     * Get a doc by slug.
+     *
+     * @param  string $slug
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDoc($slug)
     {
-        //No document requested, list documents
-        if (null == $slug) {
-            $docs = Doc::all();
-
-            $data = [
-                'docs'            => $docs,
-                'page_id'         => 'docs',
-                'page_title'      => 'All Documents',
-            ];
-
-            return View::make('doc.index', $data);
-        }
-
         try {
-
             //Retrieve requested document
             $doc = Doc::where('slug', $slug)->with('statuses')->with('userSponsor')->with('groupSponsor')->with('categories')->with('dates')->first();
 
-            if (!isset($doc)) {
-                App::abort('404');
+            if (! $doc) {
+                abort('404');
             }
 
             $showAnnotationThanks = false;
@@ -77,21 +78,33 @@ class DocController extends AbstractController
             ];
 
             //Render the cofemer view and return
-            if (in_array('cofemer', $doc->categories->lists('name', 'id'))) {
-                return View::make('doc.reader.cofemer.index', $data);
+            if (in_array('cofemer', $doc->categories->lists('name', 'id')->all())) {
+                return view('doc.reader.cofemer.index', $data);
             }
 
             //Render the votes view and return
-            if (in_array('votos', $doc->categories->lists('name', 'id'))) {
-                return View::make('doc.reader.votes.index', $data);
+            if (in_array('votos', $doc->categories->lists('name', 'id')->all())) {
+                return view('doc.reader.votes.index', $data);
             }
 
             //Render view and return
-            return View::make('doc.reader.index', $data);
+            return view('doc.reader.index', $data);
         } catch (Exception $e) {
             return Redirect::to('/participa')->with('error', $e->getMessage());
         }
-        App::abort('404');
+    }
+
+    public function getEmbedded($slug = null)
+    {
+        $doc = Doc::findDocBySlug($slug);
+
+        if (is_null($doc)) {
+            App::abort('404');
+        }
+
+        $view = View::make('doc.reader.embed', compact('doc'));
+
+        return $view;
     }
 
     public function getSearch()

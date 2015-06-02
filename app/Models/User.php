@@ -10,11 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Model\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
-    use Zizaco\Entrust\HasRole;
+    use EntrustUserTrait;
 
     /**
      * The database table used by the model.

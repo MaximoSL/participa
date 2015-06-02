@@ -139,9 +139,9 @@ class Comment extends Model implements ActivityInterface
      */
     public function getLink()
     {
-        $slug = DB::table('docs')->where('id', $this->doc_id)->pluck('slug');
+        $slug = \DB::table('docs')->where('id', $this->doc_id)->pluck('slug');
 
-        return URL::to('docs/'.$slug.'#comment_'.$this->id);
+        return route('docs.doc', $slug).'#comment_'.$this->id;
     }
 
     /**

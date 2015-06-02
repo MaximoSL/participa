@@ -2,6 +2,7 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use Illuminate\Contracts\Auth\Guard;
 use MXAbierto\Participa\Models\User;
 
 /**
@@ -12,6 +13,24 @@ class UserController extends AbstractApiController
     public function __construct()
     {
         $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);
+    }
+
+    /**
+     * Api route to get the session logged in user.
+     *
+     * @param \Illuminate\
+     *
+     * @return JSON user
+     */
+    public function getCurrent(Guard $auth)
+    {
+        if (! $auth->check()) {
+            return response()->json(null);
+        }
+
+        return response()->json([
+            'user' => $auth->user()->toArray(),
+        ]);
     }
 
     /**
