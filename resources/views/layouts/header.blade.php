@@ -25,35 +25,18 @@
             <li class="link-about">
               <a href="{{ route('about') }}" target="_self">{{ trans('messages.about') }}</a>
             </li>
-            @if($loggedUser)
-              @if($loggedUser->hasRole('Independent Sponsor') || $loggedUser->groups()->exists())
+            @if(!$loggedUser)
+              <li class="link-login"><a href="{{ route('auth.login') }}" target="_self">{{ trans('messages.login') }}</a></li>
+              <li class="link-signup"><a href="{{ route('auth.signup') }}" target="_self">{{ trans('messages.signup') }}</a></li>
+            @else
+              @if($loggedUser->hasRole('Independent Sponsor'))
                 <li class="link-settings"><a href="{{ route('documents') }}" target="_self">{{ trans('messages.mydocs') }}</a>
               @endif
               <li class="link-settings"><a href="{{ route('user.edit', $loggedUser->id) }}" target="_self">{{ trans('messages.accountsettings') }}</a></li>
               <li><a href="{{ route('user.edit.notifications', $loggedUser->id) }}" target="_self">{{ trans('messages.notifsettings') }}</a></li>
-              <li class="link-settings"><a href="{{ route('groups') }}" target="_self">{{ trans('messages.groupmanagement') }}</a></li>
               @if($loggedUser->hasRole('Admin'))
                 <li><a href="{{ route('dashboard') }}" target="_self">{{ trans('messages.admin') }}</a></li>
               @endif
-              <?php $userGroups = $loggedUser->groups(); ?>
-              <?php if ($userGroups->count() > 0): ?>
-                <li class="dropdown-submenu pull-left">
-                  <a class="dropdown-trigger" href="#" data-toggle="dropdown">{{ trans('messages.useas') }}</a>
-                  <ul class="dropdown-menu" role="menu">
-                    <?php if ($activeGroupId !== 0): ?>
-                      <li class="link-settings"><a href="./groups/active/0" target="_self">{{ $loggedUser->fname }} {{ $loggedUser->lname }}</a></li>
-                    <?php endif; ?>
-                    <li class="divider"></li>
-                    <?php foreach ($userGroups->get() as $group): ?>
-                      <li class="link-settings"><a href="./groups/active/{{ $group->id }}" target="_self">{{ $group->getDisplayName() }} {{ $group->id == $activeGroupId ? '(active)' : '' }}</a></li>
-                    <?php endforeach;?>
-                  </ul>
-                </li>
-              <?php endif; ?>
-              <li class="link-logout"><a href="{{ route('logout') }}" target="_self">{{ trans('messages.logout') }}</a></li>
-            @else
-              <li class="link-login"><a href="{{ route('auth.login') }}" target="_self">{{ trans('messages.login') }}</a></li>
-              <li class="link-signup"><a href="{{ route('auth.signup') }}" target="_self">{{ trans('messages.signup') }}</a></li>
             @endif
           </ul>
         </li>

@@ -218,16 +218,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Model belongsToMany relationship for Group.
-     *
-     * @return Illuminate\Database\Model\Relations\BelongsToMany
-     */
-    public function groups()
-    {
-        return $this->belongsToMany('MXAbierto\Participa\Models\Group', 'group_members');
-    }
-
-    /**
      * Model hasMany relationship for Comment.
      *
      * @return Illuminate\Database\Model\Relations\HasMany
@@ -245,18 +235,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function annotations()
     {
         return $this->hasMany('MXAbierto\Participa\Models\Annotation');
-    }
-
-    /**
-     * Model belongsTo relationship for Organization.
-     *
-     * @return Illuminate\Database\Model\Relations\BelongsTo
-     *
-     * @todo This can be removed as we use Groups in place of Organizations
-     */
-    public function organization()
-    {
-        return $this->belongsTo('MXAbierto\Participa\Models\Organization');
     }
 
     /**
@@ -280,90 +258,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Returns the value of the UserMeta for this user with key 'independent_sponsor'
-     * The value of this is either '1' or '0'
-     * If the user hasn't requested independent sponsor status, this will return null.
-     *
-     * @return string|null
-     */
-    public function getSponsorStatus()
-    {
-        return $this->user_meta()->where('meta_key', '=', UserMeta::TYPE_INDEPENDENT_SPONSOR)->first();
-    }
-
-    /**
-     * Sets the Independent Sponsor status for this user
-     * Sets / Creates a UserMeta for this user with key = 'independent_sponsor'
-     * and value '1'||'0' based on input boolean.
-     *
-     * @param bool $bool
-     *
-     * @return void
-     */
-    public function setIndependentAuthor($bool)
-    {
-        if ($bool) {
-            DB::transaction(function () {
-                $metaKey = UserMeta::where('user_id', '=', $this->id)
-                                   ->where('meta_key', '=', UserMeta::TYPE_INDEPENDENT_SPONSOR)
-                                   ->first();
-
-                if (!$metaKey) {
-                    $metakey = new UserMeta();
-                    $metaKey->user_id = $this->id;
-                    $metaKey->meta_key = 'independent_author';
-                }
-
-                $metaKey->meta_value = $bool ? 1 : 0;
-                $metaKey->save();
-            });
-        }
-    }
-
-    /**
-     * Sets the user as an admin contact for the site.
-     *
-     * @param mixed $setting
-     *
-     * @return bool|void
-     *
-     * @todo References to this should be removed.  We're allowing all admins to determine notification subscriptions
-     */
-    public function admin_contact($setting = null)
-    {
-        if (isset($setting)) {
-            $meta = $this->user_meta()->where('meta_key', '=', 'admin_contact')->first();
-
-            if (!isset($meta)) {
-                $meta = new UserMeta();
-                $meta->user_id = $this->id;
-                $meta->meta_key = 'admin_contact';
-                $meta->meta_value = $setting;
-                $meta->save();
-
-                return true;
-            } else {
-                $meta->meta_value = $setting;
-                $meta->save();
-
-                return true;
-            }
-        }
-
-        if (!$this->hasRole('Admin')) {
-            return false;
-        }
-
-        $meta = $this->user_meta()->where('meta_key', '=', 'admin_contact')->first();
-
-        if (isset($meta)) {
-            $this->admin_contact = $meta->meta_value == '1' ? true : false;
-        } else {
-            $this->admin_contact = false;
-        }
-    }
-
-    /**
      *	doc_meta.
      *
      *	Model hasMany relationship for DocMeta
@@ -375,35 +269,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function doc_meta()
     {
         return $this->hasMany('MXAbierto\Participa\Models\DocMeta');
-    }
-
-    /**
-     *	Get all valid sponsors.
-     *
-     *	@todo I'm not sure what exactly this does at first glance
-     */
-    public function getValidSponsors()
-    {
-        $collection = new Collection();
-
-        $groups = GroupMember::where('user_id', '=', $this->id)
-                             ->whereIn('role', [Group::ROLE_EDITOR, Group::ROLE_OWNER])
-                             ->get();
-
-        foreach ($groups as $groupMember) {
-            $collection->add($groupMember->group()->first());
-        }
-
-        $users = UserMeta::where('user_id', '=', $this->id)
-                          ->where('meta_key', '=', UserMeta::TYPE_INDEPENDENT_SPONSOR)
-                          ->where('meta_value', '=', '1')
-                          ->get();
-
-        foreach ($users as $userMeta) {
-            $collection->add($userMeta->user()->first());
-        }
-
-        return $collection;
     }
 
     /**
