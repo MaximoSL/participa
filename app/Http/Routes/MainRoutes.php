@@ -69,21 +69,21 @@ class MainRoutes
             'uses' => 'AuthController@postSignup',
         ]);
 
-        $router->get('user/{user}', [
-            'as'   => 'user/index',
-            'uses' => 'UserController@getIndex',
+        $router->get('user/account', [
+            'as'   => 'user.account',
+            'uses' => 'AccountController@getEdit',
         ]);
-        $router->get('user/edit/{user}', [
-            'as'   => 'user.edit',
-            'uses' => 'UserController@getEdit',
+        $router->patch('user/account', [
+            'as'   => 'user.account',
+            'uses' => 'AccountController@patchAccount',
         ]);
-        $router->put('user/edit/{user}', [
-            'as'   => 'user.edit',
-            'uses' => 'UserController@putEdit',
+        $router->get('user/notifications', [
+            'as'   => 'user.notifications',
+            'uses' => 'NotificationsController@editNotifications',
         ]);
-        $router->get('user/edit/{user}/notifications', [
-            'as'   => 'user.edit.notifications',
-            'uses' => 'UserController@editNotifications',
+        $router->patch('user/notifications', [
+            'as'   => 'user.notifications',
+            'uses' => 'NotificationsController@editNotifications',
         ]);
 
         //Password Routes

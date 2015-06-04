@@ -4,10 +4,14 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h2>{{ trans('messages.editprofile') }}</h2>
-				<form class="" action="{{ route('user.edit', $user->id) }}" method="post">
+				<form class="" action="{{ route('user.account') }}" method="post">
 					{!! csrf_field() !!}
-					<input type="hidden" name="_method" value="put">
-
+					<input type="hidden" name="_method" value="patch">
+					<div class="form-group">
+						<!-- Change avatar at gravatar.com -->
+						<img src="{{ $user->gravatar() }}" alt="{{ $user->name }}" />
+						<a href="https://gravatar.com" target="_blank">{{ trans('messages.chggravatar') }} Gravatar.com</a>
+					</div>
 					<!-- First Name -->
 					<div class="form-group">
 						<label for="fname">{{ trans('messages.fname') }}:</label>
@@ -55,10 +59,6 @@
 								<input name="verify" id="verify" type="checkbox"> {{ trans('messages.reqveraccount') }}'
 							</label>
 						@endif
-					</div>
-					<div class="form-group">
-						<!-- Change avatar at gravatar.com -->
-						<a href="https://gravatar.com" target="_blank">{{ trans('messages.chggravatar') }} Gravatar.com</a>
 					</div>
 					<button type="submit" class="btn btn-primary" id="submit">{{ trans('messages.submit') }}</button>
 				</form>

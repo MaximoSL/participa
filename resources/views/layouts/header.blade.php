@@ -1,7 +1,3 @@
-<?php
-  $activeGroupId = Session::get('activeGroupId');
-?>
-
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -32,8 +28,8 @@
               @if($loggedUser->hasRole('Independent Sponsor'))
                 <li class="link-settings"><a href="{{ route('documents') }}" target="_self">{{ trans('messages.mydocs') }}</a>
               @endif
-              <li class="link-settings"><a href="{{ route('user.edit', $loggedUser->id) }}" target="_self">{{ trans('messages.accountsettings') }}</a></li>
-              <li><a href="{{ route('user.edit.notifications', $loggedUser->id) }}" target="_self">{{ trans('messages.notifsettings') }}</a></li>
+              <li class="link-settings"><a href="{{ route('user.account') }}" target="_self">{{ trans('messages.accountsettings') }}</a></li>
+              <li><a href="{{ route('user.notifications') }}" target="_self">{{ trans('messages.notifsettings') }}</a></li>
               @if($loggedUser->hasRole('Admin'))
                 <li><a href="{{ route('dashboard') }}" target="_self">{{ trans('messages.admin') }}</a></li>
               @endif

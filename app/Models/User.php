@@ -165,13 +165,33 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Returns the user's display name.
      *
-     * @param void
-     *
      * @return string
      */
     public function getDisplayName()
     {
         return "{$this->fname} {$this->lname}";
+    }
+
+    /**
+     * Returns the user's name.
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return $this->getDisplayName();
+    }
+
+    /**
+     * Returns a Gravatar URL for the users email address.
+     *
+     * @param int $size
+     *
+     * @return string
+     */
+    public function gravatar($size = 200)
+    {
+        return sprintf('https://www.gravatar.com/avatar/%s?size=%d', md5($this->email), $size);
     }
 
     /**
