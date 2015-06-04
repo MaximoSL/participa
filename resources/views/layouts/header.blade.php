@@ -33,6 +33,7 @@
               @if($loggedUser->hasRole('Admin'))
                 <li><a href="{{ route('dashboard') }}" target="_self">{{ trans('messages.admin') }}</a></li>
               @endif
+              <li class="link-logout"><a href="{{ URL::route('logout') }}" target="_self">{{ trans('messages.logout') }}</a></li>
             @endif
           </ul>
         </li>

@@ -6,6 +6,7 @@
 			<div class="content">
 				<h1>{{ trans('messages.resendconfemail') }}</h1>
 				<form class="reset-form" action="{{ action('RemindersController@postConfirmation') }}" method="POST">
+					{!! csrf_field() !!}
 					<p>{{ trans('messages.presendpass') }}</p>
 					<div class="form-group">
 						<label for="email">{{ trans('messages.emailaddress') }}</label>

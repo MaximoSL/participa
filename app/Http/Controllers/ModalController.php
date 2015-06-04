@@ -2,14 +2,23 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use MXAbierto\Participa\Models\UserMeta;
+
 class ModalController extends AbstractController
 {
+    /**
+     * Creates a new modal controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function seenAnnotationThanksModal()
     {
-        if (!Auth::check()) {
-            throw new Exception('Unauthorized');
-        }
-
         $userId = Auth::user()->id;
 
         $userMeta = UserMeta::firstOrNew([

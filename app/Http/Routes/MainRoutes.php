@@ -65,7 +65,7 @@ class MainRoutes
             'uses' => 'AuthController@getSignup',
         ]);
         $router->post('auth/signup', [
-            'as'   => 'user.signup',
+            'as'   => 'auth.signup',
             'uses' => 'AuthController@postSignup',
         ]);
 
@@ -88,7 +88,7 @@ class MainRoutes
 
         //Password Routes
         $router->get('password/remind', [
-            'as'   => 'password/remind',
+            'as'   => 'password.remind',
             'uses' => 'RemindersController@getRemind',
         ]);
         $router->post('password/remind', 'RemindersController@postRemind');
@@ -97,11 +97,11 @@ class MainRoutes
 
         // Confirmation email resend
         $router->get('verification/remind',  [
-            'as'   => 'verification/remind',
+            'as'   => 'verification.remind',
             'uses' => 'RemindersController@getConfirmation',
         ]);
         $router->post('verification/remind', [
-            'as'   => 'verification/remind',
+            'as'   => 'verification.remind',
             'uses' => 'RemindersController@postConfirmation',
         ]);
 

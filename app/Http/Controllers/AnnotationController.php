@@ -2,48 +2,40 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use Illuminate\Support\Facades\Annotation;
+
 /**
  * 	Controller for note actions.
  */
 class AnnotationController extends AbstractController
 {
-    public function __construct()
-    {
-        //Require the user to be signed in to create, update notes
-        $this->beforeFilter('auth', ['on' => ['post', 'put']]);
-
-        //Run CSRF filter before all POSTS
-        $this->beforeFilter('csrf', ['on' => 'post']);
-    }
-
     /**
-     * 	GET note view.
+     * GET note view.
+     *
+     * @return \Illuminate\View\View
      */
     public function getIndex($id = null)
     {
         //Return 404 if no id is passed
         if ($id == null) {
-            App::abort(404, trans('messages.noteidnotfound'));
+            abort(404, trans('messages.noteidnotfound'));
         }
 
         //Invalid note id
         $annotation = Annotation::find($id);
-        $user = $annotation->user()->first();
 
-        if (!isset($annotation)) {
-            App::abort(404, ucfirst(strtolower(trans('messages.unable').' '.trans('messages.toretrieve').' '.trans('messages.the').' '.trans('messages.note'))));
+        if (!$annotation) {
+            abort(404, ucfirst(strtolower(trans('messages.unable').' '.trans('messages.toretrieve').' '.trans('messages.the').' '.trans('messages.note'))));
         }
 
-        //Retrieve note information
+        $user = $annotation->user()->first();
 
-        $data = [
+        //Render view and return to user
+        return view('annotation.index', [
             'page_id'             => 'Annotation',
             'page_title'          => 'View Annotation',
             'annotation'          => $annotation,
             'user'                => $user,
-        ];
-
-        //Render view and return to user
-        return View::make('annotation.index', $data);
+        ]);
     }
 }

@@ -6,6 +6,7 @@
 			<div class="content">
 				<h1>{{ trans('messages.forgotpassword') }}</h1>
 				<form class="reset-form" action="{{ action('RemindersController@postReset') }}" method="POST">
+					{!! csrf_field() !!}
 					<p>{{ trans('messages.presetpass') }}</p>
 					<div class="form-group">
 						<label for="email">{{ trans('messages.emailaddress') }}</label>

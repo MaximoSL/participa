@@ -2,6 +2,13 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
+use MXAbierto\Participa\Models\User;
+
 class RemindersController extends AbstractController
 {
     /**
@@ -11,30 +18,33 @@ class RemindersController extends AbstractController
      */
     public function getRemind()
     {
-        $data = [
+        return view('password.remind', [
             'page_id'        => 'dashboard',
             'page_title'     => 'Dashboard',
-        ];
-
-        return View::make('password.remind', $data);
+        ]);
     }
 
     /**
-     * Handle a POST request to remind a user of their password.
+     * Send a reset link to the given user.
      *
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function postRemind()
+    public function postRemind(Request $request)
     {
-        switch ($response = Password::remind(Input::only('email'), function ($message) {
+        $this->validate($request, ['email' => 'required|email']);
+
+        $response = Password::sendResetLink($request->only('email'), function (Message $message) {
             $message->subject(trans('messages.resetemailtitle'));
-        })) {
+        });
+
+        switch ($response) {
+            case Password::RESET_LINK_SENT:
+                return redirect()->back()->with('status', trans($response));
 
             case Password::INVALID_USER:
-                return Redirect::back()->with('error', Lang::get($response));
-
-            case Password::REMINDER_SENT:
-                return Redirect::back()->with('message', trans('messages.remindersent'));
+                return redirect()->back()->withErrors(['email' => trans('messages.remindersent')]);
         }
     }
 
@@ -48,78 +58,96 @@ class RemindersController extends AbstractController
     public function getReset($token = null)
     {
         if (is_null($token)) {
-            App::abort(404);
+            abort(404);
         }
 
-        $data = [
+        return view('password.reset', [
             'page_id'        => 'reset',
             'page_title'     => 'Reset Password',
-        ];
-
-        return View::make('password.reset', $data)->with('token', $token);
+        ])->with('token', $token);
     }
 
     /**
-     * Handle a POST request to reset a user's password.
+     * Reset the given user's password.
      *
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function postReset()
+    public function postReset(Request $request)
     {
-        $credentials = Input::only(
+        $this->validate($request, [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+        ]);
+
+        $credentials = $request->only(
             'email', 'password', 'password_confirmation', 'token'
         );
 
         $response = Password::reset($credentials, function ($user, $password) {
-            $user->password = $password;
-            $user->save();
+            $this->resetPassword($user, $password);
         });
 
         switch ($response) {
-            case Password::INVALID_PASSWORD:
-            case Password::INVALID_TOKEN:
-            case Password::INVALID_USER:
-                return Redirect::back()->with('error', Lang::get($response));
-
             case Password::PASSWORD_RESET:
-                return Redirect::to('/participa')->with('message', trans('messages.passresetsuccess'));
+                return redirect()->route('home')->with('message', trans('messages.passresetsuccess'));
+
+            default:
+                return redirect()->back()
+                            ->withInput($request->only('email'))
+                            ->withErrors(['email' => trans($response)]);
         }
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->password = bcrypt($password);
+
+        $user->save();
+
+        Auth::login($user);
     }
 
     public function getConfirmation()
     {
-        $data = [
+        return view('password.resend', [
             'page_id'        => 'dashboard',
             'page_title'     => 'Resend confirmation email',
-        ];
-
-        return View::make('password.resend', $data);
+        ]);
     }
 
     /**
      * Handle a POST request to remind a user of their password.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function postConfirmation()
     {
         // 3 error cases - user already confirmed, email does not exist, password not correct
         // (prevents people from brute-forcing email addresses to see who is registered)
-
         $email = Input::get('email');
         $password = Input::get('password');
         $user = User::where('email', $email)->first();
 
         if (!isset($user)) {
-            return Redirect::route('verification/remind')->with('error', 'Ese correo no fue registrado.');
+            return redirect()->route('verification.remind')->with('error', 'Ese correo no fue registrado.');
         }
 
         if (empty($user->token)) {
-            return Redirect::route('user/login')->with('error', 'El usuario ya estaba confirmado.');
+            return redirect()->route('auth.login')->with('error', 'El usuario ya estaba confirmado.');
         }
 
         if (!Hash::check($password, $user->password)) {
-            return Redirect::route('verification/remind')->with('error', 'La contraseña para ese correo es incorrecta.');
+            return redirect()->route('verification.remind')->with('error', 'La contraseña para ese correo es incorrecta.');
         }
 
         $token = $user->token;
@@ -127,12 +155,12 @@ class RemindersController extends AbstractController
         $fname = $user->fname;
 
         //Send email to user for email account verification
-        Mail::queue('email.signup', ['token' => $token], function ($message) use ($email, $fname) {
+        Mail::queue('email.signup', ['token' => $token], function (Message $message) use ($email, $fname) {
             $message->subject(trans('messages.confirmationtitle'));
             $message->from(trans('messages.emailfrom'), trans('messages.emailfromname'));
             $message->to($email);
         });
 
-        return Redirect::route('user/login')->with('message', trans('messages.confirmationresent'));
+        return redirect()->route('user/login')->with('message', trans('messages.confirmationresent'));
     }
 }

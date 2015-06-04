@@ -20,10 +20,6 @@ class UserController extends AbstractController
         $this->middleware('auth');
     }
 
-
-
-
-
     /**
      *	Api route to edit user's email.
      *

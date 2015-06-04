@@ -6,7 +6,7 @@
 			<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
 				<div class="content">
 					<h1>{{ trans('messages.signup') }}</h1>
-					<form class="" action="{{ route('user.signup') }}" method="post">
+					<form class="" action="{{ route('auth.signup') }}" method="post">
 						{!! csrf_field() !!}
 						<!-- First Name -->
 						<div class="form-group">
