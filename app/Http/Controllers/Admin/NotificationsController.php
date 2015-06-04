@@ -13,19 +13,10 @@ use MXAbierto\Participa\Models\Notification;
 class NotificationsController extends AbstractController
 {
     /**
-     * Creates a new dashboard controller instance.
+     * Gets the available notifications form.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        //Filter to ensure user is signed in has an admin role
-        $this->beforeFilter('admin');
-
-        //Run csrf filter before all posts
-        $this->beforeFilter('csrf', ['on' => 'post']);
-    }
-
     public function getNotifications()
     {
         $notifications = Notification::where('user_id', '=', Auth::user()->id)->get();

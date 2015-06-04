@@ -20,19 +20,11 @@ class AdminRoutes
      */
     public function map(Registrar $router)
     {
-        $router->group(['namespace' => 'Admin'], function (Registrar $router) {
+        $router->group(['namespace' => 'Admin', 'middleware' => ['auth', 'auth.role:Admin']], function (Registrar $router) {
             //Dashboard Routes
             $router->get('dashboard', [
                 'as'   => 'dashboard',
                 'uses' => 'DashboardController@getIndex',
-            ]);
-            $router->get('dashboard/settings', [
-                'as'   => 'dashboard.settings',
-                'uses' => 'SettingsController@getSettings',
-            ]);
-            $router->post('dashboard/settings', [
-                'as'   => 'dashboard.settings',
-                'uses' => 'SettingsController@postSettings',
             ]);
             $router->get('dashboard/notifications', [
                 'as'   => 'dashboard.notifications',

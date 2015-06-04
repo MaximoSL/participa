@@ -27,6 +27,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth'       => 'MXAbierto\Participa\Http\Middleware\Authenticate',
+        'auth.role'  => 'MXAbierto\Participa\Http\Middleware\RoleAuthentication',
         'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
         'guest'      => 'MXAbierto\Participa\Http\Middleware\RedirectIfAuthenticated',
     ];

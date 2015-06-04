@@ -33,15 +33,15 @@ class MadisonEvent
     public static function validAdminNotifications()
     {
         return [
-            static::DOC_COMMENT_COMMENTED => Lang::get('messages.commentoncomment'),
-            static::DOC_COMMENTED         => Lang::get('messages.commentondocument'),
-            static::DOC_ANNOTATED         => Lang::get('messages.commentondocannotated'),
-            static::DOC_EDITED            => Lang::get('messages.documentedited'),
-            static::NEW_DOCUMENT          => Lang::get('messages.newdoccreated'),
-            static::NEW_USER_SIGNUP       => Lang::get('messages.newusersignsup'),
-            static::VERIFY_REQUEST_ADMIN  => Lang::get('messages.newadminverifreq'),
-            static::VERIFY_REQUEST_GROUP  => Lang::get('messages.newgroupverifreq'),
-            static::VERIFY_REQUEST_USER   => Lang::get('messages.newindieverifreq'),
+            static::DOC_COMMENT_COMMENTED => trans('messages.commentoncomment'),
+            static::DOC_COMMENTED         => trans('messages.commentondocument'),
+            static::DOC_ANNOTATED         => trans('messages.commentondocannotated'),
+            static::DOC_EDITED            => trans('messages.documentedited'),
+            static::NEW_DOCUMENT          => trans('messages.newdoccreated'),
+            static::NEW_USER_SIGNUP       => trans('messages.newusersignsup'),
+            static::VERIFY_REQUEST_ADMIN  => trans('messages.newadminverifreq'),
+            static::VERIFY_REQUEST_GROUP  => trans('messages.newgroupverifreq'),
+            static::VERIFY_REQUEST_USER   => trans('messages.newindieverifreq'),
         ];
     }
 
@@ -54,10 +54,10 @@ class MadisonEvent
     public static function validUserNotifications()
     {
         return [
-            static::NEW_GROUP_DOCUMENT => Lang::get('messages.newgroupdoc'),
+            static::NEW_GROUP_DOCUMENT => trans('messages.newgroupdoc'),
             //static::NEW_DOC_VERSION => "When a new version of a document is posted that a user has interacted with",
-            static::NEW_ACTIVITY_VOTE    => Lang::get('messages.votepost'),
-            static::NEW_ACTIVITY_COMMENT => Lang::get('messages.commentactivity'),
+            static::NEW_ACTIVITY_VOTE    => trans('messages.votepost'),
+            static::NEW_ACTIVITY_COMMENT => trans('messages.commentactivity'),
         ];
     }
 }
