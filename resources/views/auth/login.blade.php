@@ -46,4 +46,4 @@
 			<div social-login message="{{ trans('messages.sociallogin') }}"></div>
 		</div>
 	</div>
-@endsection
+@stop

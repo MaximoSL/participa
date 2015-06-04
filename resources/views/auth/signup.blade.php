@@ -38,4 +38,4 @@
 			<div social-login message="{{ trans('messages.signupwith') }}"></div>
 		</div>
 	</div>
-@endsection
+@stop

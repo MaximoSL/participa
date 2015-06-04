@@ -1,14 +1,16 @@
 <?php
 
-namespace MXAbierto\Participa\Http\Controllers;
+namespace MXAbierto\Participa\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
+use MXAbierto\Participa\Http\Controllers\AbstractController;
+use MXAbierto\Participa\Models\Doc;
 
 /**
  * 	Controller for admin dashboard.
  */
-class DashboardController extends AbstractController
+class DocumentsController extends AbstractController
 {
     /**
      * Creates a new dashboard controller instance.
@@ -24,83 +26,21 @@ class DashboardController extends AbstractController
         $this->beforeFilter('csrf', ['on' => 'post']);
     }
 
-    /**
-     * 	Dashboard Index View.
-     */
-    public function getIndex()
+    public function showDoc($id)
     {
-        return view('dashboard.index', [
-            'page_id'        => 'dashboard',
-            'page_title'     => 'Dashboard',
+        $doc = Doc::find($id);
+
+        if (!$doc) {
+            abort(404);
+        }
+
+        return view('documents.edit', [
+            'page_id'        => 'edit_doc',
+            'page_title'     => 'Edit '.$doc->title,
+            'doc'            => $doc,
+            // Just get the first content element.  We only have one, now.
+            'contentItem' => $doc->content()->where('parent_id')->first(),
         ]);
-    }
-
-    public function getNotifications()
-    {
-        $notifications = Notification::where('user_id', '=', Auth::user()->id)->get();
-        $validNotifications = Notification::getValidNotifications();
-
-        $selectedNotifications = [];
-        foreach ($notifications as $n) {
-            $selectedNotifications[] = $n->event;
-        }
-
-        return view('dashboard.notifications', compact('selectedNotifications', 'validNotifications'));
-    }
-
-    public function postNotifications()
-    {
-        $notifications = Input::get('notifications');
-
-        if (!is_array($notifications)) {
-            return Redirect::to('/participa/dashboard/notifications');
-        }
-
-        Notification::where('user_id', '=', Auth::user()->id)
-                    ->whereIn('event', array_keys(Notification::getValidNotifications()))
-                    ->delete();
-
-        foreach ($notifications as $n) {
-            Notification::addNotificationForUser($n, Auth::user()->id);
-        }
-
-        return Redirect::to('/participa/dashboard/notifications')->with('success_message', trans('messages.updatednotif'));
-    }
-
-    /**
-     *	Settings page.
-     */
-    public function getSettings()
-    {
-        $data = [
-            'page_id'        => 'settings',
-            'page_title'     => 'Settings',
-        ];
-
-        $user = Auth::user();
-
-        if (!$user->can('admin_manage_settings')) {
-            return Redirect::to('/participa/dashboard')->with('message', trans('messages.nopermission'));
-        }
-
-        return view('dashboard.settings', $data);
-    }
-
-    public function postSettings()
-    {
-        $user = Auth::user();
-
-        if (!$user->can('admin_manage_settings')) {
-            return Redirect::to('/participa/dashboard')->with('message', trans('messages.nopermission'));
-        }
-
-        $adminEmail = Input::get('contact-email');
-
-        $adminContact = User::where('email', '$adminEmail');
-
-        if (!isset($adminContact)) {
-            return Redirect::back()->with('error', trans('messages.noadminaccountwithemail'));
-        }
     }
 
     /**
@@ -111,7 +51,7 @@ class DashboardController extends AbstractController
         $user = Auth::user();
 
         if (!$user->can('admin_manage_documents')) {
-            return Redirect::to('/participa/dashboard')->with('message', trans('messages.nopermission'));
+            return redirect()->route('dashboard')->with('message', trans('messages.nopermission'));
         }
 
         if ($id == '') {
@@ -124,21 +64,6 @@ class DashboardController extends AbstractController
             ];
 
             return view('dashboard.docs', $data);
-        } else {
-            $doc = Doc::find($id);
-            if (isset($doc)) {
-                $data = [
-                        'page_id'        => 'edit_doc',
-                        'page_title'     => 'Edit '.$doc->title,
-                        'doc'            => $doc,
-                        // Just get the first content element.  We only have one, now.
-                        'contentItem' => $doc->content()->where('parent_id')->first(),
-                ];
-
-                return view('documents.edit', $data);
-            } else {
-                return Response::error('404');
-            }
         }
     }
 

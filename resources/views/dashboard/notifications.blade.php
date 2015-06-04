@@ -2,7 +2,7 @@
 @section('content')
 	<div class="row">
 		<ol class="breadcrumb">
-			<li><a href="/dashboard">{{ trans('messages.dashboard') }}</a></li>
+			<li><a href="{{ route('dashboard') }}">{{ trans('messages.dashboard') }}</a></li>
 			<li class="active">{{ trans('messages.notifications') }}</li>
 		</ol>
 	</div>
@@ -17,4 +17,4 @@
 			</div>
 		</form>
 	</div>
-@endsection
+@stop

@@ -47,7 +47,7 @@ class DocController extends AbstractController
     {
         try {
             //Retrieve requested document
-            $doc = Doc::where('slug', $slug)->with('statuses')->with('userSponsor')->with('groupSponsor')->with('categories')->with('dates')->first();
+            $doc = Doc::with('statuses', 'userSponsor', 'categories', 'dates')->where('slug', $slug)->first();
 
             if (!$doc) {
                 abort('404');

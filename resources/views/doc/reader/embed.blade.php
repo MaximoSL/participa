@@ -8,4 +8,4 @@
 	<?php endif; ?>
 	<div id="ogDocContent">{{ $doc->get_content('html') }}</div>
 </div>
-@endsection
+@stop

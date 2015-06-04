@@ -57,15 +57,6 @@
 						@endif
 					</div>
 					<div class="form-group">
-						@if($user->hasRole('Independent Sponsor'))
-							<p><span class="glyphicon glyphicon-check"></span> {{ trans('messages.sponsorasindividual') }}</p>
-						@elseif($user->getSponsorStatus() && $user->getSponsorStatus()->meta_value == 0)
-							<p>{{ trans('messages.indiesponsorpending') }}</p>
-						@else
-							<p>{{ trans('messages.besponsor') }} <a href="/participa/documents/sponsor/request">{{ trans('messages.reqindepsponsor') }}</a></p>
-						@endif
-					</div>
-					<div class="form-group">
 						<!-- Change avatar at gravatar.com -->
 						<a href="https://gravatar.com" target="_blank">{{ trans('messages.chggravatar') }} Gravatar.com</a>
 					</div>
@@ -74,4 +65,4 @@
 			</div>
 		</div>
 	</div>
-@endsection
+@stop

@@ -30,7 +30,7 @@ class Doc extends Model
     {
         $dom = new \DOMDocument();
 
-        $docSrc = URL::to('docs/embed', $this->slug);
+        $docSrc = route('docs.embed', $this->slug);
 
         $insertElement = $dom->createElement('div');
 
@@ -58,34 +58,20 @@ class Doc extends Model
 
     public function canUserEdit($user)
     {
-        $sponsor = $this->sponsor()->first();
-
         if ($user->hasRole('Admin')) {
             return true;
         }
 
-        switch (true) {
-            case $sponsor instanceof User:
-                return $sponsor->id == $user->id && $sponsor->hasRole('Independent Sponsor');
-            case $sponsor instanceof Group:
-                return $sponsor->userHasRole($user, Group::ROLE_EDITOR) || $sponsor->userHasRole($user, Group::ROLE_OWNER);
-                break;
-            default:
-                throw new \Exception('Unknown Sponsor Type');
+        if (in_array($user->id, $this->authors->lists('id')->all())) {
+            return true;
         }
 
         return false;
     }
 
-    public function sponsor()
+    public function authors()
     {
-        $sponsor = $this->belongsToMany('MXAbierto\Participa\Models\Group')->first();
-
-        if (!$sponsor) {
-            return $this->belongsToMany('MXAbierto\Participa\Models\User');
-        }
-
-        return $this->belongsToMany('MXAbierto\Participa\Models\Group');
+        return $this->belongsToMany('MXAbierto\Participa\Models\User');
     }
 
     public function userSponsor()
@@ -93,18 +79,12 @@ class Doc extends Model
         return $this->belongsToMany('MXAbierto\Participa\Models\User');
     }
 
-    public function groupSponsor()
-    {
-        return $this->belongsToMany('MXAbierto\Participa\Models\Group');
-    }
-
     public function sponsorName()
     {
         $sponsor = $this->sponsor->first();
+
         if ($sponsor instanceof User) {
             $display_name = $sponsor->fname.' '.$sponsor->lname;
-        } elseif ($sponsor instanceof Group) {
-            $display_name = $sponsor->name;
         } else {
             $display_name = '';
         }

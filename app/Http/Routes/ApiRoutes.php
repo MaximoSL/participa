@@ -5,7 +5,7 @@ namespace MXAbierto\Participa\Http\Routes;
 use Illuminate\Contracts\Routing\Registrar;
 
 /**
- * This is the main routes class.
+ * This is the api routes class.
  *
  * @author Joseph Cohen <joseph.cohen@dinkbit.com>
  */

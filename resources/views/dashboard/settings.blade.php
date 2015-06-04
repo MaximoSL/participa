@@ -3,7 +3,7 @@
 	<div class="container">
 		<div class="row">
 			<ol class="breadcrumb">
-				<li><a href="/dashboard">{{ trans('messages.dashboard') }}</a></li>
+				<li><a href="{{ route('dashboard') }}">{{ trans('messages.dashboard') }}</a></li>
 				<li class="active">{{ trans('messages.settings') }}</li>
 			</ol>
 			<div class="col-md-12">
@@ -29,4 +29,4 @@
 			</div>
 		</div>
 	</div>
-@endsection
+@stop

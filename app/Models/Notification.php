@@ -3,12 +3,9 @@
 namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Notification extends Model
 {
-    use SoftDeletes;
-
     const TYPE_EMAIL = 'email';
     const TYPE_TEXT = 'text';
 
@@ -19,11 +16,7 @@ class Notification extends Model
      */
     protected $table = 'notifications';
 
-    public function group()
-    {
-        return $this->belongsTo('MXAbierto\Participa\Models\Group', 'group_id');
-    }
-
+    
     public function user()
     {
         return $this->belongsTo('MXAbierto\Participa\Models\User', 'user_id');

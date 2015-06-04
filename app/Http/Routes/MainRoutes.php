@@ -114,7 +114,10 @@ class MainRoutes
             'as'   => 'docs.doc',
             'uses' => 'DocController@getDoc',
         ]);
-        $router->get('docs/embed/{slug}', 'DocController@getEmbedded');
+        $router->get('docs/embed/{slug}', [
+            'as'   => 'docs.embed',
+            'uses' => 'DocController@getEmbedded',
+        ]);
         $router->get('docs/{slug}/feed', 'DocController@getFeed');
         $router->get('documents/search', 'DocumentsController@getSearch');
         $router->get('documents', [
@@ -146,27 +149,6 @@ class MainRoutes
         $router->post('documents/sponsor/request', [
             'as'   => 'sponsorRequest',
             'uses' => 'SponsorController@postRequest',
-        ]);
-
-        //Dashboard Routes
-        //$router->controller('dashboard', 'DashboardController');
-        $router->get('dashboard', [
-            'as'   => 'dashboard',
-            'uses' => 'DashboardController@getIndex',
-        ]);
-
-        //Dashboard's Doc Routes
-        $router->get('dashboard/docs', [
-            'as'   => 'dashboard/docs',
-            'uses' => 'DashboardController@getDocs',
-        ]);
-        $router->post('dashboard/docs', [
-            'as'   => 'dashboard/docs',
-            'uses' => 'DashboardController@postDocs',
-        ]);
-        $router->get('dashboard/docs/{doc}', [
-            'as'   => 'dashboardShowsDoc',
-            'uses' => 'DashboardController@getDocs',
         ]);
 
         // // Modal Routes

@@ -13,4 +13,4 @@
 			@endforeach
 		@endif
 	</div>
-@endsection
+@stop
