@@ -10,9 +10,14 @@ use MXAbierto\Participa\Models\User;
  */
 class UserController extends AbstractApiController
 {
+    /**
+     * Creates a new user controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);
+        $this->middleware('auth', ['except' => ['getCurrent']]);
     }
 
     /**

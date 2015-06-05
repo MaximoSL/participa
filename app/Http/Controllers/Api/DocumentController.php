@@ -2,16 +2,22 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Input;
+use MXAbierto\Participa\Models\Doc;
+
 /**
  * 	Controller for Document actions.
  */
 class DocumentController extends AbstractApiController
 {
+    /**
+     * Creates a new document controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        parent::__construct();
-
-        $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);
+        $this->middleware('auth', ['except' => ['getDoc', 'getDocs']]);
     }
 
     public function getDoc($doc)
@@ -20,7 +26,52 @@ class DocumentController extends AbstractApiController
 
         $doc = Doc::with('content')->with('categories')->with('introtext')->find($doc);
 
-        return Response::json($doc);
+        return response()->json($doc);
+    }
+
+    public function getDocs()
+    {
+        $perPage = Input::get('per_page', 20);
+        $orderBy = Input::get('order', 'updated_at');
+
+        $availableFilters = ['categories', 'statuses', 'dates'];
+
+        $docs = Doc::with($availableFilters);
+
+        if (Input::has('q')) {
+            $search = Input::get('q');
+
+            $docs->where('title', 'LIKE', '%'.$search.'%');
+        }
+
+        if (Input::has('filter')) {
+            $filter = explode(':', Input::get('filter'));
+
+            if (in_array($filter[0], $availableFilters)) {
+                $docs->whereHas($filter[0], function($query) use ($filter) {
+                    $query->where('id', '=', $filter[1]);
+                });
+            }
+        }
+
+        $docs = $docs->orderBy($orderBy, 'DESC')->paginate($perPage);
+
+        $response = [];
+        $response['results'] = [];
+
+        $response['pagination']['per_page'] = $docs->perPage();
+        $response['pagination']['page'] = $docs->currentPage();
+        $response['pagination']['count'] = $docs->total();
+
+        foreach ($docs as $doc) {
+            $return_doc = $doc->toArray();
+            $return_doc['updated_at'] = date('c', strtotime($return_doc['updated_at']));
+            $return_doc['created_at'] = date('c', strtotime($return_doc['created_at']));
+
+            $response['results'][] = $return_doc;
+        }
+
+        return response()->json($response);
     }
 
     public function postTitle($id)
@@ -31,7 +82,7 @@ class DocumentController extends AbstractApiController
 
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.title').' '.trans('messages.ofmale').' '.trans('messages.document').' '.trans('messages.saved'))), 'severity' => 'info'];
 
-        return Response::json($response);
+        return response()->json($response);
     }
 
     public function postSlug($id)
@@ -50,7 +101,7 @@ class DocumentController extends AbstractApiController
             $response['messages'][0] = ['text' => trans('messages.invalidslugcharacter'), 'severity' => 'error'];
         }
 
-        return Response::json($response);
+        return response()->json($response);
     }
 
     public function postContent($id)
@@ -66,46 +117,7 @@ class DocumentController extends AbstractApiController
 
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.doccontent').' '.trans('messages.saved'))), 'severity' => 'info'];
 
-        return Response::json($response);
-    }
-
-    public function getDocs()
-    {
-        $perPage = Input::get('per_page', 20);
-
-        $docs = Doc::with('categories', 'sponsor', 'statuses', 'dates');
-
-        if (Input::has('q')) {
-            $search = Input::get('q');
-
-            $docs->where('title', 'LIKE', '%'.$search.'%');
-        }
-
-        $docs = $docs->orderBy('updated_at', 'DESC')->paginate($perPage);
-
-        $response = [];
-        $response['results'] = [];
-
-        $response['pagination']['per_page'] = $docs->getPerPage();
-        $response['pagination']['page'] = $docs->getCurrentPage();
-        $response['pagination']['count'] = $docs->getTotal();
-
-        foreach ($docs as $doc) {
-            // try {
-            // 	$doc->setActionCount();
-            // } catch(Exception $e) {
-            // 	throw $e;
-            // }
-
-            $return_doc = $doc->toArray();
-
-            $return_doc['updated_at'] = date('c', strtotime($return_doc['updated_at']));
-            $return_doc['created_at'] = date('c', strtotime($return_doc['created_at']));
-
-            $response['results'][] = $return_doc;
-        }
-
-        return Response::json($response);
+        return response()->json($response);
     }
 
     public function getRecent($query = null)
@@ -122,7 +134,7 @@ class DocumentController extends AbstractApiController
             $doc->setActionCount();
         }
 
-        return Response::json($docs);
+        return response()->json($docs);
     }
 
     public function getCategories($doc = null)
@@ -134,7 +146,7 @@ class DocumentController extends AbstractApiController
             $categories = $doc->categories()->get();
         }
 
-        return Response::json($categories);
+        return response()->json($categories);
     }
 
     public function postCategories($doc)
@@ -160,14 +172,14 @@ class DocumentController extends AbstractApiController
         $doc->categories()->sync($categoryIds);
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.categories').' '.trans('messages.savedfeminineplural'))), 'severity' => 'info'];
 
-        return Response::json($response);
+        return response()->json($response);
     }
 
     public function getIntroText($doc)
     {
         $introText = DocMeta::where('meta_key', '=', 'intro-text')->where('doc_id', '=', $doc)->first();
 
-        return Response::json($introText);
+        return response()->json($introText);
     }
 
     public function postIntroText($doc)
@@ -187,14 +199,14 @@ class DocumentController extends AbstractApiController
 
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.docintrotext').' '.trans('messages.saved'))), 'severity' => 'info'];
 
-        return Response::json($response);
+        return response()->json($response);
     }
 
     public function hasSponsor($doc, $sponsor)
     {
         $result = Doc::find($doc)->sponsor()->find($sponsor);
 
-        return Response::json($result);
+        return response()->json($result);
     }
 
     public function getSponsor($doc)
@@ -205,10 +217,10 @@ class DocumentController extends AbstractApiController
         if ($sponsor) {
             $sponsor->sponsorType = get_class($sponsor);
 
-            return Response::json($sponsor);
+            return response()->json($sponsor);
         }
 
-        return Response::json();
+        return response()->json();
     }
 
     public function postSponsor($doc)
@@ -241,7 +253,7 @@ class DocumentController extends AbstractApiController
 
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.sponsor').' '.trans('messages.saved'))), 'severity' => 'info'];
 
-        return Response::json($response);
+        return response()->json($response);
     }
 
     public function getStatus($doc)
@@ -250,7 +262,7 @@ class DocumentController extends AbstractApiController
 
         $status = $doc->statuses()->first();
 
-        return Response::json($status);
+        return response()->json($status);
     }
 
     public function postStatus($doc)
@@ -277,7 +289,7 @@ class DocumentController extends AbstractApiController
 
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.document').' '.trans('messages.saved'))), 'severity' => 'info'];
 
-        return Response::json($response);
+        return response()->json($response);
     }
 
     public function getDates($doc)
@@ -286,7 +298,7 @@ class DocumentController extends AbstractApiController
 
         $dates = $doc->dates()->get();
 
-        return Response::json($dates);
+        return response()->json($dates);
     }
 
     public function postDate($doc)
@@ -301,7 +313,7 @@ class DocumentController extends AbstractApiController
 
         $doc->dates()->save($returned);
 
-        return Response::json($returned);
+        return response()->json($returned);
     }
 
     public function deleteDate($doc, $date)
@@ -314,7 +326,7 @@ class DocumentController extends AbstractApiController
 
         $date->delete();
 
-        return Response::json();
+        return response()->json();
     }
 
     public function putDate($date)
@@ -335,7 +347,7 @@ class DocumentController extends AbstractApiController
 
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.document').' '.trans('messages.saved'))), 'severity' => 'info'];
 
-        return Response::json($response);
+        return response()->json($response);
     }
 
     public function getAllSponsorsForUser()
@@ -349,7 +361,7 @@ class DocumentController extends AbstractApiController
         if (!Auth::check()) {
             $retval['message'] = ucfirst(strtolower(trans('messages.needlogin').' '.trans('messages.toperformcall')));
 
-            return Response::json($retval);
+            return response()->json($retval);
         }
 
         $sponsors = Auth::user()->getValidSponsors();
@@ -377,7 +389,7 @@ class DocumentController extends AbstractApiController
 
         $retval['success'] = true;
 
-        return Response::json($retval);
+        return response()->json($retval);
     }
 
     public function getAllSponsors()
@@ -385,7 +397,7 @@ class DocumentController extends AbstractApiController
         $doc = Doc::with('sponsor')->first();
         $sponsors = $doc->sponsor;
 
-        return Response::json($sponsors);
+        return response()->json($sponsors);
     }
 
     public function getAllStatuses()
@@ -394,6 +406,6 @@ class DocumentController extends AbstractApiController
 
         $statuses = $doc->statuses;
 
-        return Response::json($statuses);
+        return response()->json($statuses);
     }
 }

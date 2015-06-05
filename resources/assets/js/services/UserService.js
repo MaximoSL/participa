@@ -4,7 +4,7 @@ angular.module('madisonApp.services')
         UserService.user = {};
 
         UserService.getUser = function () {
-            UserService.exists = $http.get('/api/user/current')
+            UserService.exists = $http.get(_baseUrl + '/api/user/current')
                 .success(function ( data ) {
                     UserService.user = data.user;
                     $rootScope.$broadcast('userUpdated');

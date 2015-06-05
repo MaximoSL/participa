@@ -13,6 +13,11 @@ use Roumen\Feed\Facades\Feed;
  */
 class DocController extends AbstractController
 {
+    /**
+     * Creates a new doc controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);

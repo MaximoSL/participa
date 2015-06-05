@@ -5,19 +5,6 @@ namespace MXAbierto\Participa\Http\Controllers;
 class PageController extends AbstractController
 {
     /**
-     * Display the home page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getHome()
-    {
-        return view('page.index', [
-            'page_id'    => 'home',
-            'page_title' => 'gob.mx/participa',
-        ]);
-    }
-
-    /**
      * Display the about page.
      *
      * @return \Illuminate\Http\Response

@@ -11,7 +11,7 @@ elixir(function(mix) {
         'bower_components/underscore/underscore.js',
         'bower_components/jquery.ui/ui/effect.js',
         'bower_components/jquery.ui/ui/effect-highlight.js',
-        'bower_components/select2/dist/js/select2.js',
+        'bower_components/select2/select2.js',
 
         //'bower_components/google-diff-match-patch-js/diff_match_patch.js',
         'bower_components/angular/angular.js',
@@ -20,6 +20,7 @@ elixir(function(mix) {
         'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
         'bower_components/angular-cookies/angular-cookies.js',
         'bower_components/angular-ui/build/angular-ui.js',
+        'bower_components/angular-ui-select/dist/select.js',
         'bower_components/zeroclipboard/dist/ZeroClipboard.js',
         'bower_components/angular-growl-2/build/angular-growl.js',
         'bower_components/angular-sanitize/angular-sanitize.js',

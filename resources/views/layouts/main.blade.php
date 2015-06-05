@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="madisonApp"  ng-controller="AppController" lang="en">
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="madisonApp" ng-controller="AppController" lang="en">
 	<head>
 		<meta charset="utf-8" />
 		@if(isset($page_title))
@@ -28,26 +28,29 @@
 		@include('layouts.socials')
 		@include('layouts.assets')
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-	<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+		<script type="text/javascript">
+			var _sf_startpt=(new Date()).getTime();
+			var _baseUrl = '{{ route('home') }}';
+		</script>
 	</head>
 	<body>
 		@include('layouts.analytics')
 		<!--[if lt IE 8]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
-		<tour step="currentStep" post-tour="tourComplete()" post-step="stepComplete()">
-			<div growl></div>
-			@include('layouts.header')
-			@include('errors')
-			@include('message')
-			@include('success')
-			<div profile-completion-message></div>
-			<main>
-				@yield('content')
-			</main>
-			@include('layouts.footer')
-		</tour>
-			<script type="text/javascript">
+		<div growl></div>
+		@include('layouts.header')
+		@include('errors')
+		@include('message')
+		@include('success')
+		<div profile-completion-message></div>
+		<main>
+			@yield('content')
+		</main>
+		@include('layouts.footer')
+		<!-- Scripts -->
+		<script src="{{ elixir('dist/js/app.js') }}"></script>
+		<script type="text/javascript">
 			var _sf_async_config = { uid: 43659, domain: 'www.gob.mx', useCanonical: true };
 			(function() {
 			  function loadChartbeat() {

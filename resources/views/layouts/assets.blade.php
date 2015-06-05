@@ -5,12 +5,8 @@
 <script src="/polyfills/html5shiv.js"></script>
 <![endif]-->
 
-
 <!-- Stylesheets -->
 <link type="text/css" rel="stylesheet" href="{{ elixir('dist/css/app.css') }}">
-
-<!-- Scripts -->
-<script src="{{ elixir('dist/js/app.js') }}"></script>
 
 <?php
 $fs = new Illuminate\Filesystem\Filesystem();

@@ -22,13 +22,14 @@
     "angular-translate": "~2.7.2",
     "angular-ui": "~0.4.0",
     "angular-ui-select": "~0.12.0",
-    "select2": "~4.0.0",
+    "select2": "~3.3.2",
     "moment": "~2.10.3",
     "crypto-js": "http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js",
     "google-diff-match-patch-js": "~1.0.0",
     "google-translate": "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit",
     "pagedown": "~1.1.0",
     "showdown": "~1.0.2",
-    "zeroclipboard": "~2.2.0"
+    "zeroclipboard": "~2.2.0",
+    "select2-bootstrap-css": "~1.4.6"
   }
 }

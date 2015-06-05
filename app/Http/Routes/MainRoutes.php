@@ -23,7 +23,7 @@ class MainRoutes
         // Static Pages
         $router->get('/', [
             'as'   => 'home',
-            'uses' => 'PageController@getHome',
+            'uses' => 'HomeController@getHome',
         ]);
         $router->get('about', [
             'as'   => 'about',
@@ -108,7 +108,7 @@ class MainRoutes
         // Document Routes
         $router->get('docs', [
             'as'   => 'docs',
-            'uses' => 'DocController@index',
+            'uses' => 'HomeController@getHome',
         ]);
         $router->get('docs/{slug}', [
             'as'   => 'docs.doc',
