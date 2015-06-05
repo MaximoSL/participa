@@ -1,32 +1,6 @@
-@extends('layouts/main')
-@section('content')
-@if(Auth::check())
-<script>
-  var user = {
-    id: {{ Auth::user()->id }},
-    email: '{{ Auth::user()->email }}',
-    name: '{{ Auth::user()->fname . ' ' . substr(Auth::user()->lname, 0, 1) }}'
-  };
-</script>
-@else
-<script>
-  var user = {
-    id: '',
-    email: '',
-    name: ''
-  }
-</script>
-@endif
-<script>
-  var doc = {{ $doc->toJSON() }};
-  @if($showAnnotationThanks)
-  $.showAnnotationThanks = true;
-  @else
-  $.showAnnotationThanks = false;
-  @endif
-</script>
-<script src="/participa-assets/js/doc.js"></script>
+@extends('layouts.main')
 
+@section('content')
 <div class="modal fade" id="annotationThanks" tabindex="-1" role="dialog" aria-labelledby="annotationThanks" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -86,7 +60,7 @@
       <div class="col-md-8">
         <ul class="nav nav-tabs" role="tablist" tourtip="@{{ step_messages.step_3 }}" tourtip-step="3" tourtip-next-label="Siguiente">
           <li ng-class="{'active':secondtab == false}"><a href="#tab-discussion" target="_self" role="tab" data-toggle="tab">Comentarios a la Propuesta</a></li>
-          <a href="{{ $doc->slug }}/feed" class="rss-link" target="_self"><img src="/participa-assets/img/rss-fade.png" class="rss-icon" alt="RSS Icon"></a>
+          <a href="{{ route('docs.feed', $doc->slug) }}" class="rss-link" target="_self"><img src="{{ url('img/rss-fade.png') }}" class="rss-icon" alt="RSS Icon"></a>
         </ul>
 
         <div class="tab-content">
@@ -108,7 +82,7 @@
               <li>{{ trans('messages.signupnaddvoice') }}</li>
               <li>{{ trans('messages.anncommsuppopp') }}</li>
             </ol>
-            <img src="/participa-assets/img/como-comentar.gif" class="how-to-annotate-img img-responsive" />
+            <img src="{{ url('img/como-comentar.gif') }}" class="how-to-annotate-img img-responsive" />
           </div>
 
           <div class="sidebar-unit" ng-controller="DocumentTocController" ng-show="headings.length > 0">
@@ -136,8 +110,24 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </div>
+@stop
+
+@section('js')
+  <script>
+    var user = {
+      id: '{{ $loggedUser ? $loggedUser->id : '' }}',
+      email: '{{ $loggedUser ? $loggedUser->email : '' }}',
+      name: '{{ $loggedUser ? $loggedUser->fname . ' ' . substr($loggedUser->lname, 0, 1) : '' }}'
+    };
+  </script>
+  <script>
+    var doc = {!! $doc->toJSON() !!};
+    @if($showAnnotationThanks)
+    $.showAnnotationThanks = true;
+    @else
+    $.showAnnotationThanks = false;
+    @endif
+  </script>
 @stop

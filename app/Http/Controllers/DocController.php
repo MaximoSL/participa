@@ -194,7 +194,7 @@ class DocController extends AbstractController
      */
     public function getFeed($slug)
     {
-        $doc = Doc::where('slug', $slug)->with('comments', 'annotations', 'userSponsor', 'groupSponsor')->first();
+        $doc = Doc::where('slug', $slug)->with('comments', 'annotations')->first();
 
         $feed = Feed::make();
 

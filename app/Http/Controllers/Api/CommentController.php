@@ -2,33 +2,38 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
+use MXAbierto\Participa\Models\Comment;
+use MXAbierto\Participa\Models\Doc;
+use MXAbierto\Participa\Models\MadisonEvent;
+use Exception;
+
 /**
  * 	Controller for Document actions.
  */
 class CommentController extends AbstractApiController
 {
+    /**
+     * Creates a new api comment controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        parent::__construct();
-
         $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);
     }
 
     public function getIndex($doc, $comment = null)
     {
         try {
-            $userId = null;
-            if (Auth::check()) {
-                $userId = Auth::user()->id;
-            }
-
-            $results = Comment::loadComments($doc, $comment, $userId);
+            $results = Comment::loadComments($doc, $comment, Auth::user());
         } catch (Exception $e) {
-            throw $e;
-            App::abort(500, $e->getMessage());
+            abort(500, $e->getMessage());
         }
 
-        return Response::json($results);
+        return response()->json($results);
     }
 
     public function postIndex($doc)
@@ -44,11 +49,11 @@ class CommentController extends AbstractApiController
         $newComment->private = $comment['private'];
         $newComment->save();
 
-        Event::fire(MadisonEvent::DOC_COMMENTED, $newComment);
+        event(MadisonEvent::DOC_COMMENTED, $newComment);
 
         $return = Comment::loadComments($newComment->doc_id, $newComment->id, $newComment->user_id);
 
-        return Response::json($return);
+        return response()->json($return);
     }
 
     public function postSeen($docId, $commentId)
@@ -84,7 +89,7 @@ class CommentController extends AbstractApiController
             $message->to($email); // Recipient address
         });
 
-        return Response::json($comment);
+        return response()->json($comment);
     }
 
     public function postLikes($docId, $commentId)
@@ -96,9 +101,9 @@ class CommentController extends AbstractApiController
         $comment->load('user');
         $comment->type = 'comment';
 
-        Event::fire(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'like', 'activity' => $comment, 'user'    => Auth::user()]);
+        event(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'like', 'activity' => $comment, 'user'    => Auth::user()]);
 
-        return Response::json($comment->loadArray());
+        return response()->json($comment->loadArray());
     }
 
     public function postDislikes($docId, $commentId)
@@ -110,9 +115,9 @@ class CommentController extends AbstractApiController
         $comment->load('user');
         $comment->type = 'comment';
 
-        Event::fire(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'dislike', 'activity' => $comment, 'user'    => Auth::user()]);
+        event(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'dislike', 'activity' => $comment, 'user' => Auth::user()]);
 
-        return Response::json($comment->loadArray());
+        return response()->json($comment->loadArray());
     }
 
     public function postFlags($docId, $commentId)
@@ -120,7 +125,7 @@ class CommentController extends AbstractApiController
         $comment = Comment::find($commentId);
         $comment->saveUserAction(Auth::user()->id, Comment::ACTION_FLAG);
 
-        return Response::json($comment->loadArray());
+        return response()->json($comment->loadArray());
     }
 
     public function postComments($docId, $commentId)
@@ -137,9 +142,9 @@ class CommentController extends AbstractApiController
         //Returns the new saved Comment with the User relationship loaded
         $result = $parent->addOrUpdateComment($comment);
 
-        Event::fire(MadisonEvent::DOC_SUBCOMMENT, ['comment' => $result, 'parent' => $parent]);
+        event(MadisonEvent::DOC_SUBCOMMENT, ['comment' => $result, 'parent' => $parent]);
 
-        return Response::json($result);
+        return response()->json($result);
     }
 
     public function destroy($docId, $commentId)
@@ -149,9 +154,9 @@ class CommentController extends AbstractApiController
 
         if (!$comment->canUserEdit($user, $docId)) {
             try {
-                return Redirect::back()->with('error', ucfirst(strtolower(trans('messages.notauthorized'))));
+                return redirect()->back()->with('error', ucfirst(strtolower(trans('messages.notauthorized'))));
             } catch (Exception $e) {
-                return Redirect::to('/participa')->with('error', ucfirst(strtolower(trans('messages.notauthorized'))));
+                return redirect()->to('/participa')->with('error', ucfirst(strtolower(trans('messages.notauthorized'))));
             }
         }
 
@@ -163,6 +168,6 @@ class CommentController extends AbstractApiController
             $comment->delete();
         }
 
-        return Response::json($comment->loadArray());
+        return response()->json($comment->loadArray());
     }
 }

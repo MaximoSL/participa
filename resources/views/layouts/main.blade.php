@@ -51,6 +51,10 @@
 		<!-- Scripts -->
 		<script src="{{ elixir('dist/js/app.js') }}"></script>
 		<script type="text/javascript">
+			ZeroClipboard.config( { swfPath: '{{ url('swf/ZeroClipboard.swf') }}' } );
+		</script>
+		@yield('js')
+		<script type="text/javascript">
 			var _sf_async_config = { uid: 43659, domain: 'www.gob.mx', useCanonical: true };
 			(function() {
 			  function loadChartbeat() {

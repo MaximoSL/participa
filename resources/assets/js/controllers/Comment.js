@@ -35,7 +35,7 @@ angular.module( 'madisonApp.controllers' )
         $scope.notifyAuthor     = function ( activity ) {
             // If the current user is a sponsor and the activity hasn't been seen yet,
             // post to API route depending on comment/annotation label
-            $http.post( '/api/docs/' + doc.id + '/' + 'comments/' + activity.id + '/' + 'seen' )
+            $http.post(_baseUrl + '/api/docs/' + doc.id + '/' + 'comments/' + activity.id + '/' + 'seen' )
                 .success( function ( data ) {
                     activity.seen = data.seen;
                 }).error( function ( data ) {
@@ -100,7 +100,7 @@ angular.module( 'madisonApp.controllers' )
             // Get all doc comments, regardless of nesting level
             $http({
                 method  : 'GET',
-                url     : '/api/docs/' + docId + '/comments'
+                url     : _baseUrl + '/api/docs/' + docId + '/comments'
             })
                 .success( function ( data ) {
                     // Build child-parent relationships for each comment
@@ -157,7 +157,7 @@ angular.module( 'madisonApp.controllers' )
             comment.user    = $scope.user;
             comment.doc     = $scope.doc;
 
-            $http.post('/api/docs/' + comment.doc.id + '/comments', {
+            $http.post(_baseUrl + '/api/docs/' + comment.doc.id + '/comments', {
                 'comment': comment
             })
                 .success( function ( data ) {
@@ -178,7 +178,7 @@ angular.module( 'madisonApp.controllers' )
         };
         $scope.addAction        = function ( activity, action, $event ) {
             if ( $scope.user.id !== '' ) {
-                $http.post( '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
+                $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
                     .success( function ( data ) {
                         activity.likes  = data.likes;
                         activity.dislikes   = data.dislikes;
@@ -215,7 +215,7 @@ angular.module( 'madisonApp.controllers' )
 
             subcomment.user = $scope.user;
 
-            $.post( '/participa/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/comments', {
+            $.post(_baseUrl + _baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/comments', {
                 'comment': subcomment
             })
                 .success( function ( data ) {

@@ -171,9 +171,8 @@ class Comment extends Model implements ActivityInterface
         return $item;
     }
 
-    public static function loadComments($docId, $commentId, $userId)
+    public static function loadComments($docId, $commentId, $user)
     {
-        $user = Auth::user();
         if (static::canUserEdit($user, $docId)) {
             $comments = static::withTrashed()->where('doc_id', '=', $docId)->with('user');
         } else {

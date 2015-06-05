@@ -118,7 +118,10 @@ class MainRoutes
             'as'   => 'docs.embed',
             'uses' => 'DocController@getEmbedded',
         ]);
-        $router->get('docs/{slug}/feed', 'DocController@getFeed');
+        $router->get('docs/{slug}/feed', [
+            'as'   => 'docs.feed',
+            'uses' => 'DocController@getFeed',
+        ]);
         $router->get('documents/search', 'DocumentsController@getSearch');
         $router->get('documents', [
             'as'   => 'documents',
