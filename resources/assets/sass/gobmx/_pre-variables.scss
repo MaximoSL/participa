@@ -1,0 +1,164 @@
+$icon-font-path: "../../../fonts/" !default;
+
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+$gray-base:              #000 !default;
+$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:              lighten($gray-base, 20%) !default;   // #333
+$gray:                   lighten($gray-base, 33.5%) !default; // #555
+$gray-light:             lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+
+//$brand-primary:         #428bca;
+$brand-primary:         #4A90E2;
+$brand-success:         #5cb85c;
+$brand-info:            #5bc0de;
+$brand-warning:         #f0ad4e;
+$brand-danger:          #d9534f;
+
+$brand-gray:			#393C3E;
+$brand-red:				#D0021B;
+$white:					#fff;
+$black:					#000;
+$border-color:			#DCE0E0;
+$footer-brand:			#28292A;
+$brand-blue:			#4A90E2;
+//** Global textual link color.
+
+$text-color:  			#545454;
+$text-light-color:  	#929292;
+$link-color:            #1122CC;
+$link-hover-background:	#F5A623;
+$link-active-color:     #10C7E0;
+//** Link hover color set via `darken()` function.
+$link-hover-color:      #7B9CF0;
+//** Link hover decoration.
+$link-hover-decoration: underline;
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+$font-family-base:        "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$font-size-base:          18px;
+$font-size-large:         ceil(($font-size-base * 1.15)) !default; // ~18px
+$font-size-small:         ceil(($font-size-base * 0.75)); // ~14px
+
+$font-size-h1:            floor(($font-size-base * 3.0)); // ~54px
+$font-size-h2:            floor(($font-size-base * 2.15)); // ~38px
+$font-size-h3:            ceil(($font-size-base * 1.55)); // ~28px
+$font-size-h4:            ceil(($font-size-base * 1.29)); // ~24px
+$font-size-h5:            $font-size-base !default;
+$font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
+
+
+
+
+$headings-font-weight:    600;
+
+//== Navbar
+$navbar-height:                    			46px;
+$navbar-border-radius:             			0px;
+$navbar-inverse-color:                      $white;
+$navbar-inverse-bg:                         $brand-gray;
+$navbar-inverse-border:                     transparent;
+
+// Inverted navbar links
+$navbar-inverse-link-color:                 $white;
+$navbar-inverse-link-hover-color:           lighten($gray-light, 15%);
+$navbar-inverse-link-hover-bg:              transparent !default;
+$navbar-inverse-link-active-color:          $navbar-inverse-link-hover-color !default;
+$navbar-inverse-link-active-bg:             darken($navbar-inverse-bg, 10%) !default;
+$navbar-inverse-link-disabled-color:        #444 !default;
+$navbar-inverse-link-disabled-bg:           transparent !default;
+
+// Inverted navbar brand label
+$navbar-inverse-brand-color:                $navbar-inverse-link-color !default;
+$navbar-inverse-brand-hover-color:          #fff !default;
+$navbar-inverse-brand-hover-bg:             transparent !default;
+
+// Inverted navbar toggle
+$navbar-inverse-toggle-hover-bg:            #333 !default;
+$navbar-inverse-toggle-icon-bar-bg:         #fff !default;
+$navbar-inverse-toggle-border-color:        #333 !default;
+
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+$btn-font-weight:                300;
+
+$btn-default-color:              #333 !default;
+$btn-default-bg:                 #fff !default;
+$btn-default-border:             #ccc !default;
+
+$btn-primary-color:              #fff;
+$btn-primary-bg:                 $brand-primary;
+$btn-primary-border:             darken($btn-primary-bg, 5%) !default;
+
+$btn-success-color:              #fff !default;
+$btn-success-bg:                 $brand-success !default;
+$btn-success-border:             darken($btn-success-bg, 5%) !default;
+
+$btn-info-color:                 #fff !default;
+$btn-info-bg:                    $brand-info !default;
+$btn-info-border:                darken($btn-info-bg, 5%) !default;
+
+$btn-warning-color:              #fff !default;
+$btn-warning-bg:                 $brand-warning !default;
+$btn-warning-border:             darken($btn-warning-bg, 5%) !default;
+
+$btn-danger-color:               #fff !default;
+$btn-danger-bg:                  $brand-danger !default;
+$btn-danger-border:              darken($btn-danger-bg, 5%) !default;
+
+$btn-link-disabled-color:        $gray-light !default;
+
+
+//== Breadcrumbs
+//
+//##
+
+$breadcrumb-padding-vertical:   8px !default;
+$breadcrumb-padding-horizontal: 0px;
+//** Breadcrumb background color
+$breadcrumb-bg:                 transparent;
+//** Breadcrumb text color
+$breadcrumb-color:              #ccc !default;
+//** Text color of current page in the breadcrumb
+$breadcrumb-active-color:       $brand-gray;
+//** Textual separator for between breadcrumb elements
+$breadcrumb-separator:          "\e080";
+
+//== Wells
+//
+//##
+
+$well-bg:                     #F8F8F8;
+$well-border:                 #EFEFEF;
+
+//== Alerts
+//
+//## Define alert colors, border radius, and padding.
+$alert-danger-text:           $text-color;
+$alert-danger-border:         $brand-red;
+
+
+
+
+//== Carousel
+//
+//##
+
+$carousel-text-shadow:                        none;
+
+$carousel-control-color:                      #fff;
+$carousel-control-width:                      15%;
+$carousel-control-opacity:                    .5;
+$carousel-control-font-size:                  20px;
+
+$carousel-indicator-active-bg:                #fff;
+$carousel-indicator-border-color:             #fff;
+
+$carousel-caption-color:                      $text-color;

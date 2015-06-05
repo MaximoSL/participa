@@ -1,0 +1,192 @@
+//** helper classes
+.red { color: $brand-red; }
+.neutral { color: $gray-light;}
+.giant { font-size:90px; text-transform: uppercase; margin:0; font-weight:700; text-indent: -6px; line-height:67%; margin-bottom: 20px;}
+.bottom-buffer { margin-bottom: $brand-margin;}
+.top-buffer { margin-top: $brand-margin;}
+.vertical-buffer { margin-top: $brand-margin;  margin-bottom: $brand-margin;}
+.small-bottom-buffer { margin-bottom: $small-margin;}
+.small-top-buffer { margin-top: $small-margin;}
+.small-top-buffer.special { margin-top: 36px;}
+
+.no-margin { margin:0 !important;}
+hr.red { 
+  margin: 10px 0 70px; border-top-color: $border-color; position: relative;
+  &:before { content: " "; width:35px; height: 5px; background-color: $brand-red; display:block; position: absolute; }
+
+}
+
+hr {
+	&.no-top { margin-top: 0;}
+}
+
+ul.format {
+	margin-bottom: 52px;
+	li {
+		margin-bottom: 20px;
+	}
+}
+
+.list-spacing {
+	li {margin-bottom: $small-margin/2;}
+}
+
+.list-icons {
+
+	[class^="icon-"], [class*=" icon-"] {
+		margin-right: 18px;
+	}
+	.icon-ayuda { 
+		margin-right: 22px;
+	}
+}
+
+.ic-fw {
+width: 1.28571429em;
+text-align: center;
+}
+
+.search {
+	& > p { 
+		margin-bottom: 0; margin-top: 0;
+		
+	}
+	& > a { 
+		font-size: $font-size-small; 
+		h5 { margin-top: 0; margin-bottom: 5px;}
+	}
+	&.border-box {
+		padding: 20px;
+		& > p {
+			margin-bottom: 15px;font-size: $font-size-base; 
+		}
+		& > a { 
+			font-size: $font-size-base; 
+		}
+	}
+}
+
+.more-search{
+	border-bottom: 1px solid darken($gray-lighter, 10%); padding-bottom: 20px; margin-bottom: 20px;
+	h5 {line-height:1.3;}
+}
+
+.mas-tramites {
+	padding: 0; margin:0; padding-left: 35px; position:static; display:block;
+	&:before { content:"";}
+	&:after { content:"" !important;}
+}
+
+.vertical-line{
+	 
+}
+
+.big-circle {
+	background-color:$white; border: 2px solid $gray-light; border-radius:50%; width:40px; height:40px; position:relative;
+	.small-circle {
+		background-color:$gray-light;  position:absolute; left:50%; top:50%; margin-left: -8px; margin-top: -8px;
+	}
+}
+
+.small-circle {
+	background-color:$white;  border-radius:50%; width:16px; height:16px;  border: 2px solid $gray-light; 
+}
+
+.text-color {
+	color: $text-color; text-decoration: none; 
+	&:hover { text-decoration: none; color: $text-color;}
+}
+
+.box {
+	padding: 25px;
+	p {
+		margin-bottom: 15px;
+	}
+	h4, h5, dt{
+		font-weight: 400;
+	}
+	dd { margin-bottom: 15px;}
+	dl { margin-bottom: 0px;}
+	dl, dd, p{ font-size: $font-size-small; }
+	a {display:block; }
+
+
+	&.inverted {
+		background-color:$gray; color:$white; position:relative;
+		&:before {
+			content:" "; display:none; 
+		}
+		a {color:$white; }
+	}
+	&.light {
+		background-color: lighten($gray-lighter, 3%); margin-bottom: 25px;
+	}
+
+	&.bordered {
+		border: 1px solid darken($gray-lighter, 10%);  margin-bottom: 25px; border-radius:5px;
+		&.blue {
+			border-color:$brand-blue; color: $brand-blue;
+		
+		}
+
+	}
+}
+
+.box-simple {
+	padding: 0; margin-bottom: 40px; 
+	&.inverted {
+		background-color:darken($gray, 10%); color:$white; position:relative;	border-radius:3px;	
+		a {color:$white; }
+		.dropdown-menu {
+			width:100%;
+			a { color: $text-color; text-decoration: none; font-weight: 300; }
+		}
+		.btn {
+			[class^="icon-"], [class*=" icon-"] {
+				font-size:26px; margin-right: 15px; position: relative; top: 3px; line-height: .7;
+			}
+		}
+	}
+}
+
+
+.dl-wide {
+	display: table; width:100%; border-bottom:1px solid lighten($gray-light, 10%); margin-bottom: 15px; padding-bottom: 20px;
+	&.last { border-bottom:none; margin-bottom: 40px; }
+	dt, dd {  display:table-cell; vertical-align: top;  }
+	dt { width: 48%; font-weight: 400; }
+	dd { padding-left: 2%; width:48%; font-weight: 300; }
+	&.left-larger {
+		dt { width: 68%; font-weight: 300; }
+		dd { padding-left: 4%; width:26%; font-weight: 300; }
+	}
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $screen-sm-min) { 
+	.box {
+		&.inverted { 
+			&:before {
+				content:" "; display:block; width: 0; height: 0; border-style: solid; border-width: 25px 25px 25px 0; border-color: transparent $gray transparent transparent; position:absolute; left:-25px; top:50px;
+			}
+		}
+	}
+
+	
+}	
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+	.giant { font-size:100px; text-indent: -6px; line-height:67%; margin-bottom: 25px;}
+	.box-simple {
+		padding: $small-margin; margin-top: 0; margin-bottom: 0;
+
+	}
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $screen-lg-min) {
+
+}

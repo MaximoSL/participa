@@ -1,0 +1,97 @@
+//** footer 
+
+.social-icon {
+	background-image: url(../images/icons_full.png); display:block; text-indent: -9999px; margin-right: 5px;
+	&.facebook {
+		width: 14px; height:20px; background-position: 0px 0px;
+	}
+	&.twitter {
+		width: 24px; height:20px; background-position: -34px 0px;
+	}
+	&.instagram {
+		width: 22px; height:20px; background-position: -12px 0px;
+	}
+	&.youtube {
+		width: 22px; height:20px; background-position: -60px 0px;
+	}
+	&.flickr {
+		width: 22px; height:20px; background-position: -141px 0px;
+	}
+	&.feed {
+		width: 20px; height:20px; background-position: -120px 0px;
+	}
+
+	&:hover { opacity: 0.5; }
+}
+
+.main-footer {
+  	background-color:$footer-brand; min-height: 56px; color:$white; padding: 20px 0 30px;  text-align: left;
+	
+	.list-info {
+		line-height: auto; background-color: lighten($footer-brand, 7%); padding: 30px 0px 70px; margin-bottom: 30px;
+		form {
+			label { font-weight: 300; margin-bottom: 15px; line-height: 110%;}
+			.form-group-icon { max-width:none; font-size: $font-size-small;}
+			.form-control {font-size: $font-size-small; }
+		}
+		
+		h5 { font-weight: 300; margin-bottom: 20px; }
+		a { color: $brand-primary; font-size: $font-size-small;
+			&:hover { text-decoration: none; }
+		}
+		p { margin-bottom: 15px;}
+		ul {
+			margin: 0px 0px 60px; padding: 0px;
+			li { 
+				list-style-type: none; margin: 0px; padding: 0px; line-height:110%;
+				a { color: $white; text-decoration: none; font-size: $font-size-small; 
+					&:hover { text-decoration: underline;}
+				}
+			}
+		}
+	}
+
+
+  	.row {
+	  	& > div { margin-bottom: 15px; }
+	}
+	p {  margin:0; font-size:$font-size-small; line-height:136%; height:auto; position: static;  }
+}
+
+.gobmx-footer {
+	margin-top: 15px;
+}
+
+.message-subscribe {
+
+}
+
+@media (min-width: $screen-sm-min) {
+
+	.main-footer { 
+		text-align: left; 
+		.list-info {
+			form {				
+				.form-group-icon { max-width:300px;}
+			}
+		}
+		.row {
+		  	& > div {
+		  		margin-bottom: 0px;
+		  	}
+		}
+		p {
+			//position:relative; top:5px;
+		}	  	
+	}
+
+}
+
+@media (min-width: $screen-lg-min) {
+
+	.main-footer { 
+		p {
+			//position:relative; top:15px;
+		}
+	}
+}

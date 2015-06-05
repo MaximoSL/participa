@@ -1,0 +1,17 @@
+
+.well {
+	@include clearfix(); box-shadow:none; padding: 20px 10px;
+	&.well-sm { padding:$small-margin;}
+}
+
+.well-success {
+	background-color: $brand-blue; color:$white; border:none;
+}
+
+.well-lg {
+	padding: 70px; font-weight: 400;
+}
+
+@media (min-width: $screen-sm-min) {
+	.well { padding:50px; }
+}

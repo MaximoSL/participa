@@ -1,0 +1,227 @@
+//** landing page
+$brand-margin: 40px; 
+$banner-height: 277px;
+
+//** banner principal
+.main-banner {
+  min-height: $banner-height; margin-bottom: $brand-margin;  color:$white; background-color:$black;  background-image:none;
+  & > .container { display: table; height:$banner-height; }
+  .intro {
+      display:table-cell; vertical-align:middle;  
+    & > h1 {
+     font-size: ($font-size-h1 - 20px); line-height:122%; margin:0px; font-weight:300; 
+    }
+    strong {
+      font-weight: 500; display:block; margin-top: -5px;
+    }
+  }
+
+  .main-search {
+    max-width: 520px; margin-top: $brand-margin - 10px;
+  }
+
+  .search-legend {
+    max-width: 520px; display:block; margin-top: 7px; font-size: $font-size-small - 2px;
+  }
+
+
+  .gray-right {
+    background-color: $gray-dark;   color: $white;  padding: 7px 15px 3px 20px;   border-radius: 2px;  position: absolute;  right: 5px;  top: 5px; bottom:5px;
+    &:hover { background-color: $gray-darker;}
+  }
+  .form-control { height: 57px; box-shadow: inset 11px 10px 5px -8px rgba(0, 0, 0, 0.25);border:none; border-radius: 2px;}
+   
+}
+
+.steps-row {
+  @include make-row(); margin-bottom: ($brand-margin / 2);
+  article {
+    @include make-sm-column(6);
+    h4 {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.secretary-landing {
+  .giant {
+    font-size: 65px; margin-bottom: 0; text-indent:0; line-height:1;
+    a { 
+      color: $text-color; text-decoration: none;
+    }
+  }
+  p {
+    margin-bottom: $brand-margin;
+    a { color: $text-color; text-decoration: none;}
+  }
+}
+
+.secretary-list {
+  //li {width: 50%;  float: left; display:inline; padding-right: 20px;}
+  h4 { font-weight: 300; line-height:1.3; margin-bottom: 20px !important;}
+}
+
+
+//** contenedor principal de landing page
+.landing-wrapper {
+  & > section {
+    margin-bottom: $brand-margin;
+    & > h3 { margin: 0px; }
+    & > hr { 
+      margin: 10px 0 70px; border-top-color: $border-color; position: relative;
+      &:before { content: " "; width:35px; height: 5px; background-color: $brand-red; display:block; position: absolute; }
+    }
+    h4 { margin-top: 0px; /*margin-bottom: 37px; */font-size:($font-size-h4 - 2px);}
+  }
+}
+
+//** contenendor seccion de que ¿Que es gob.mx?
+.about-landing{
+  .row {
+    & > div {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.numbers-landing {
+  .giant {
+    margin-bottom: 20px;
+    small { text-transform: none; font-weight: 700; font-size: 60%; color:$text-color; line-height:20px;}
+  }
+  p { font-size:24px; font-weight: 500; }
+}
+
+  //* Texto introductorio de que ¿Que es gob.mx?
+  .intro-text {    
+      font-size: $font-size-h4; font-weight:400; line-height:150%; margin: 0px; 
+    
+
+  }
+
+  //* Caja lateral 
+  .side-text-landing {
+    margin: 0; padding:40px; border: 2px solid $border-color; text-align: center; font-size:($font-size-large - 2px); font-weight:400; line-height:124%;
+  }
+
+
+//** seccion de que ¿Que estamos haciendo?
+.doing-landing{
+  .row {
+    & > div {
+      margin-bottom: 40px;
+    }
+  }
+}
+
+//** seccion de Trámites
+.steps-landing {
+  article {
+    margin-bottom: 35px;
+    h4 { margin-bottom: 20px; }  
+    p { font-size: ($font-size-base - 2px); }
+  }
+  
+}
+
+
+//** seccion Gobierno (articulos)
+.recent-posts-landing {
+  & > .row { margin-bottom: 30px; }  
+  a { font-weight: 600; }
+  img {width:100%; height:auto;}
+  .first-post {
+    time { margin-top: -4px; display:block;}
+  } 
+  article:first-child {
+    p {
+      font-size: ($font-size-base - 2px); font-weight: 400; line-height: 132%;
+    }
+    a {
+      color: $text-color; display:block; font-weight: 400; text-decoration: none;                
+    }
+    small {
+      color: $link-color; font-weight: 600; text-decoration: underline;
+      &:hover { color:$link-hover-color; }
+    }  
+  }
+  .small-posts {
+    & > div { margin-bottom: 30px}
+    a {      
+      img {
+        margin-bottom: 30px;
+      }      
+    }
+    small {
+      color: $link-color; font-weight: 600; text-decoration: underline;
+      &:hover { color:$link-hover-color; }
+    }
+  }
+
+  .landing-wrapper & {
+    h4 {
+      font-size: ($font-size-h4 - 2px); line-height:119%; margin-bottom: 12px; margin-top: 10px; 
+    }
+    .small-posts {
+      a {
+        h4 {
+          margin-top: 10px; line-height:119%;
+        }
+      }
+    }
+  } 
+
+}
+
+
+
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $screen-sm-min) {   
+  $brand-margin: 64px;
+  $banner-height: 350px;
+
+  .main-banner {
+    min-height: $banner-height; background-image: url('../images/home_picture.jpg'); background-size:cover; background-repeat:no-repeat; background-position:center center;
+    & > .container { height:$banner-height; }
+  }
+
+  .main-banner, .landing-wrapper > section { 
+    margin-bottom: $brand-margin;
+  }
+
+  .small-posts {
+    & > div { margin-bottom: 0px; }
+  }
+  
+  .intro-text {
+    p {
+      font-size: ($font-size-h4 + 2px);
+    }
+  }
+
+  .about-landing, .doing-landing {
+    .row {
+      & > div {
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {  
+  .main-banner {
+    margin-bottom: $brand-margin; background-position:right center;
+  }
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $screen-lg-min) {
+
+}
+
+
+

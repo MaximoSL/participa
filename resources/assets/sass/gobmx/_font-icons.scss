@@ -1,0 +1,96 @@
+@font-face {
+	font-family: 'icogobmx';
+	src:url('/fonts/icogobmx.eot?-jluxo2');
+	src:url('/fonts/icogobmx.eot?#iefix-jluxo2') format('embedded-opentype'),
+		url('/fonts/icogobmx.woff?-jluxo2') format('woff'),
+		url('/fonts/icogobmx.ttf?-jluxo2') format('truetype'),
+		url('/fonts/icogobmx.svg?-jluxo2#icogobmx') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icogobmx';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ayuda:before {
+	content: "\e608";
+}
+
+.icon-documento:before {
+	content: "\e609";
+}
+
+.icon-fecha:before {
+	content: "\e60a";
+}
+
+.icon-tramite-iniciar:before {
+	content: "\e607";
+}
+
+.icon-world:before {
+	content: "\e600a";
+}
+
+.icon-phone:before {
+	content: "\e60b";
+}
+
+.icon-tramite:before {
+	content: "\e60c";
+}
+
+.icon-others:before {
+	content: "\e60d";
+}
+
+.icon-phone-user:before {
+	content: "\e60e";
+}
+
+.icon-user:before {
+	content: "\e60f";
+}
+
+.icon-infocircle:before {
+	content: "\e610";
+}
+
+.icon-calendar:before {
+	content: "\e603";
+}
+
+.icon-caret-right:before {
+	content: "\e604";
+}
+
+.icon-caret-down:before {
+	content: "\e605";
+}
+
+.icon-search:before {
+	content: "\e606";
+}
+
+.icon-arrow:before {
+	content: "\e600";
+}
+
+.icon-home:before {
+	content: "\e601";
+}
+
+.icon-printing:before {
+	content: "\e602";
+}

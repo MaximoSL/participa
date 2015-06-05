@@ -1,0 +1,34 @@
+//** defaults
+
+html, body { height:100%; display:block;}
+html { background-color:$white;}
+
+body { 
+  padding-top: $navbar-height; font-weight:300; background-color: $footer-brand;
+}
+main { background-color: $white; }
+
+h1, h2, h3, b { 
+  font-weight:600;
+}
+
+
+time {
+  font-size: $font-size-small; color: lighten($brand-gray, 28.6%);
+}
+
+a {
+	text-decoration: underline;
+  &:hover {
+    
+  }
+  &:active, &.active {
+    color: $link-active-color;
+  }
+}
+
+
+blockquote {
+	 padding: 0px $line-height-computed; font-size: $font-size-base; border-left: 10px solid #eeeeee; margin-bottom: ($line-height-computed / 2);
+	p {  margin-bottom: ($line-height-computed / 2); }
+}

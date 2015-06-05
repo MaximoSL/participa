@@ -1,0 +1,17 @@
+.breadcrumb {
+	& > li + li:before {
+		content: "\e600"; font-family:"icogobmx"; font-size:10px; color: $text-color;
+	}
+	a {
+		color: $brand-gray; text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	& > .active{
+		font-weight: bold; color:$text-color;
+	}
+	.icon { 
+		font-size: 14px;
+	}
+} 

@@ -1,0 +1,81 @@
+$brand-margin: 40px;
+.tramites {
+	padding-bottom: $brand-margin;
+	.breadcrumb { margin-bottom: 0px; }
+	.well { 
+		margin-bottom: $small-margin; padding-left: 32px; padding-top: 10px;
+		&.well-lg { padding:70px; font-size:$font-size-h4; }
+	}
+	h2 { margin-top: $brand-margin; margin-bottom: 36px; }
+	hr.double {  border-width:5px; margin-top: 0px; margin-bottom: 45px; }
+	.intro-text {
+		color: $text-light-color; line-height: 134%; font-weight:300; font-size: ($font-size-h4 - 2px);
+		& > strong {
+			font-weight:400; margin-top: 30px; display:block;
+		}
+	}
+	label { 
+		font-weight: 300; line-height:134%;
+		&.question { font-weight: 400;}
+	}
+	.input-lg {
+		font-size: 16px; color: $text-light-color;
+	}
+	.alert-container {
+		margin: 0px -41px 40px -60px;
+	}
+	.error-log{
+		display: none; padding:30px;
+		.glyphicon { font-size:45px; }
+	}
+	.alert{
+		display: block;
+		&.form-control { background-color: $white; border-color:#CCC; text-align: left;}
+	}
+}
+
+.question {
+	font-weight: 400; margin-right: 0px; margin-bottom: 30px; line-height:145%; 
+	&:before {
+		content:""; background-color:$brand-blue; border-radius:50%; width: 10px; height:10px; display: inline-block; margin-top: 8px; margin-left: -18px; position: absolute;
+	}
+}
+
+.success-message {
+	display:none;
+	.intro-text {
+		color: lighten($text-light-color, 15%); margin: $brand-margin 0px; font-weight: 400;
+	}
+	.question, .well {
+		margin-left: 60px;
+	}
+	.question {
+		color: $text-light-color;
+	}
+	.well {
+		 color:$black; font-weight: 400;
+		&.well-success { color:$white; padding: 70px;  margin-left: 0px;}
+	}
+	.tramites & {
+		.well { padding: 30px 20px;}
+	}
+}
+
+@media (min-width: $screen-sm-min) {
+	$brand-margin: 64px;
+	.tramites {
+		padding-bottom: $brand-margin;
+		.well { padding-left: 72px;
+			&.error-log {padding:30px;}
+			&.well-lg { padding:70px; }
+		}
+		h2 { margin-top: $brand-margin;}
+		.intro-text { font-size: $font-size-h4; }
+	}
+	.question {
+		margin-right: 20px;
+		&:before {
+			margin-left: -26px;
+		}
+	}
+}

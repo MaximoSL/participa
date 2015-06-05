@@ -1,0 +1,196 @@
+$brand-margin: 40px;
+.browse-panes {
+	margin-bottom: $brand-margin;
+	&.section {
+		@include clearfix(); 
+		.first {
+			width: auto; display:none;
+		}
+		.second {
+			width: auto; margin-right: 0;
+		}
+		.third {
+			width: auto; margin-left: 0; 
+		}
+	}
+	
+	
+
+	.pane {
+		//@include autotransition(all, 0.6s, ease);
+		float: none;
+		ul {
+			margin-left: 0px; padding-left: 0;
+			li {
+				list-style: none;
+				&.active {
+					a {
+						&:after { color: $white; }
+						background-color: lighten($footer-brand, 10%); color: $white;
+						p{ color:$white; }
+					}
+				} 
+				a {
+					text-decoration: none; display:block;
+					&:hover { 
+						background-color: lighten($footer-brand, 20%); color: $white; 
+						&:after { color: $white; }
+						p{ color:$white; }
+					}
+				}	
+			}
+		}
+	} 
+
+	.first {
+		 min-height:880px;
+		ul {
+			margin-top: 25px;
+			li {
+				&.active {
+					a {						 
+						&:after {
+							content: "";
+						}
+					}
+				}
+				a {
+					border-bottom: 1px solid $gray-lighter; position: relative; display:block; @include clearfix();  padding: 15px 15px 15px 35px;
+					&:after {
+						content: "\e604"; display:block; font-family: 'icogobmx'; color: $text-color; float:right; font-size:12px; line-height:24px; padding-right: 5px;
+					}
+				}
+			}
+		}
+	}
+
+	.second {
+		border-left: 1px solid lighten($gray-light, 30%);
+		li {
+			@include clearfix(); position:relative; padding:0px;
+			a { padding: 10px 35px 10px 25px;  }	
+		}	
+		
+	}
+
+	.third {		
+		li {
+			@include clearfix(); position:relative; padding:0px;
+						
+			h4 { font-size:$font-size-h5}		
+		}	
+	}
+
+	.second, .third {
+		position:relative; background-color:$white; z-index:1;
+		h3 {
+			padding-left: 25px; margin-bottom: 35px;
+		}
+		.sort-order {
+			font-size:$font-size-h3; font-weight: 600; color:$black; padding-left: 25px; margin-top: 25px;
+		}
+		a {
+			@include clearfix(); position:relative; padding: 10px 40px 10px 35px;  
+			&:after {
+				content: "\e604"; display:inline-block; font-family: 'icogobmx'; color: $text-color; font-size:12px; position:absolute; right:15px; top:50%; margin-top: -7px;
+			}
+			h4 {
+				font-size:16px; font-weight: 400; line-height:130%; margin: 5px 5px 5px 0px;
+			}
+			p {
+				color: $text-color; font-size:18px;
+			}
+		}		
+	}
+		
+	.pane-inner {
+		min-height: 700px;
+	}
+
+
+	&.subsection {
+		.first {
+			display: none;
+			li { 
+				a { color: lighten($text-color, 20%); }
+			}
+		}
+		.second {
+			display: none; border-right: none; 
+			li {				
+				a { color: lighten($text-color, 5%);}	
+			}	
+		}	
+		.third {
+			border-left: none; 
+
+		}
+		
+	}
+
+/*	&.subsection {
+
+		.first, .second, .third {
+			 float: right; 
+		}
+
+		.first{
+			width: 27%;
+		}
+		
+		.second {
+			width: 29%; margin-right: 39%;margin-left: -13%; width: 29%; margin-right: 39%;  border-right: 1px solid lighten($gray-light, 30%); border-left: 1px solid lighten($gray-light, 30%);
+			.pane-inner { 
+				padding-left: 0px; padding-right: 0px;
+				.sort-order {
+					display: none;
+				}
+			}
+		}
+		.third {
+			width: 50%; margin-left: -50%;
+		}
+	}*/
+
+}
+
+@media (min-width: $screen-sm-min) { 
+	$brand-margin: 64px;
+	.browse-panes {
+		margin-bottom: $brand-margin;
+		&.section {
+			@include clearfix(); 
+			.first {
+				width: 32%; display:block;
+			}
+			.second {
+				width: 33%; margin-right: 35%;
+			}
+			.third {
+				width: 35%; margin-left: -50%; width:calc(35% + 1px); margin-left: calc(-50% + 1px);
+			}
+		}
+
+		.pane {
+			float: right;
+		}
+
+		&.subsection {
+			.first, .second, .third {
+				display: block;
+			}
+			.second {
+				border-right: 1px solid lighten($gray-light, 30%); 
+			}
+			.third {
+				border-left: 1px solid lighten($gray-light, 30%); 
+			}
+		}
+
+	}
+
+	
+
+}
+
+

@@ -1,0 +1,26 @@
+$brand-margin: 64px; 
+$small-margin:26px;
+
+
+@mixin autotransition($transition-property, $transition-time, $method) {
+    -webkit-transition: $transition-property $transition-time $method;
+    -moz-transition: $transition-property $transition-time $method;
+    -ms-transition: $transition-property $transition-time $method;
+    -o-transition: $transition-property $transition-time $method;
+    transition: $transition-property $transition-time $method;
+}
+
+
+@mixin css-sprite( $spriteVals ) {
+    width: nth( $spriteVals, 1 );
+    height: nth( $spriteVals, 2 );
+    background-repeat: no-repeat;
+    background-image: url( #{ nth( $spriteVals, 3 ) } );
+    background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 );    
+}
+
+
+$noticias: 55px 55px '../images/search-cats.png' 0px 0px;
+$imagenes: 55px 55px '../images/search-cats.png' -58px 0px;
+$tramites: 55px 55px '../images/search-cats.png' -116px 0px;
+$videos: 55px 55px '../images/search-cats.png' -174px 0px;

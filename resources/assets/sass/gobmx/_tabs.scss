@@ -1,0 +1,8 @@
+.nav-tabs {
+  > li {
+    > a {
+      background-color: lighten($gray-lighter, 3%); margin-right: 0px; border: 1px solid darken($gray-lighter, 10%); border-radius: 0px; text-decoration: none; color: $text-color; font-size: ($font-size-base - 2px );
+      
+    }
+  }
+}

@@ -1,0 +1,102 @@
+$small-margin-cat: 24px;
+$brand-margin: 40px; 
+
+.categorias{
+	padding-bottom: $brand-margin;
+	.title {
+		h2 { margin-bottom: $small-margin-cat; }
+		.intro-text { margin-bottom: $small-margin-cat; font-weight: 300; }
+	}
+
+	.steps {
+		margin-bottom: $brand-margin;
+		article {margin-bottom:$brand-margin; }
+		& > h3 { margin-bottom: $small-margin-cat; }
+		& > h2 { margin-bottom: $small-margin-cat; }
+		a { font-weight: 400;}
+		p {
+			margin-bottom: $small-margin-cat; margin-top: $small-margin-cat;
+		}
+	}
+
+	.results {
+		article { margin-bottom: 34px;
+			
+		}
+
+	}
+	.most-requested { article {margin-bottom: 20px;}}
+
+	.search {
+		padding: 20px; margin-bottom: $brand-margin;
+		h2 {
+			font-weight: 400;
+		}
+		.form-group-icon{
+			margin-top: 50px;
+		}
+
+		.form-control {
+			padding: 32px 47px 32px 12px;			
+		}
+
+		.blue-right {
+			padding: 13px 16px 8px 19px; right: 10px; top: 10px;
+		}
+	}
+}
+
+.cats {
+	margin:0px; padding:0px;
+	li {
+		margin: 0px; padding:0px; list-style: none; margin-bottom: 5px;
+		&.active {
+			background-color: $gray; color:$white; display:block; padding:15px 0px 15px 10px; margin-bottom: 10px; position: relative;
+			&:after {
+				content: "\e604"; font-family: 'icogobmx'; font-size:12px; position:absolute; right:15px; top:20px;
+			}
+		}
+		a {
+			margin-left: 10px;
+		}
+	}
+}
+
+.subcats {
+	margin:0px; padding:0px;
+	li {
+		margin: 0px 0px 5px 10px; padding:0px; list-style: none; 
+		&.parent {
+			background-color: $gray; color:$white; display:block; padding:15px 0px 15px 10px; margin-left: 0px; margin-bottom: 10px; position: relative;
+			&:after {
+				content: "\e605"; font-family: 'icogobmx'; font-size:11px; position:absolute; right:15px; top:22px;
+			}
+		}
+		&.active {
+			border-bottom: 1px solid $gray-light; padding-bottom: 8px; margin-bottom: 8px; margin-left: 0px; padding-left: 10px;
+		}
+	}
+}
+
+
+@media (min-width: $screen-sm-min) {  
+  	$brand-margin: 64px;
+	.categorias{
+		padding-bottom: $brand-margin;
+		.title {		
+			.intro-text {
+				margin-bottom: $brand-margin;
+			}
+		}
+
+		.steps  {
+			margin-bottom: $brand-margin;
+			article {margin-bottom:$brand-margin; }
+		}
+
+		.search {
+			 margin-bottom: $brand-margin;
+		}
+	}
+	
+}

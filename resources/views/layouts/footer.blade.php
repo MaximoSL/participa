@@ -52,7 +52,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-4">
-        <img class="gobmx-footer" src="http://www.gob.mx/assets/gobmxlogo-e521a62b3d6ea74078232851b6e1775e.svg" width="126" height="39" alt="gob.mx">
+        <img class="gobmx-footer" src="http://www.gob.mx/assets/gobmxlogo.svg" width="126" height="39" alt="gob.mx">
       </div>
       <div class="col-sm-4 col-sm-offset-4">
         <img src="http://www.gob.mx/assets/logo_mexico-da55978f9b0cf504f48113e8bf3932a8.svg" width="172" height="70" alt="gob.mx">

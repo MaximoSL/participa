@@ -1,0 +1,98 @@
+.interior, .pagina {
+	$small-margin: 52px;
+	margin-bottom: $brand-margin;
+	.breadcrumb {
+		margin-bottom: $brand-margin;
+	}
+	.small-bottom-buffer {
+		margin-bottom: $small-margin;
+	}
+	.small-top-buffer {
+		margin-top: $small-margin;
+	}
+	h2 {
+		 margin-top: 0px; line-height:134%;
+	}
+	h3 {
+		font-weight: 300; line-height:141%;
+	}
+	h2, h3, h4, p  {
+		margin-bottom: $small-margin;
+	}
+	p {
+		font-size: 18px;
+	}
+	time {
+		display: block; margin-top: $small-margin;
+	}
+
+	.print {
+		a { font-size: 16px; margin-top: 10px;}
+	}
+
+	
+}
+
+.border-box {
+		border: 2px solid lighten($gray-light, 20%); margin-top: 25px; padding:30px 30px 0px; font-size:14px; color: $black;
+		dl {
+			dt { font-weight:400; }
+			dd { margin-bottom: 30px; font-weight:400; }
+		}
+	}
+
+.pagina {
+	margin-bottom: 0px; padding-bottom: $brand-margin;
+}
+
+.que-es {
+	.row { display: table; }
+	.row [class*="col-"] {
+	    float: none; display: table-cell; vertical-align: top;
+	}
+	.vertical-line {
+		position:relative;
+		&:after {
+			border-left: 2px solid $gray-light; position: absolute; left:50%; top:0; bottom:0; content:" "; width: 2px; height: 100%; display:block; margin-left: -1px; 
+		}
+	}
+	.circle-wrapper-top{
+		position:absolute; left:50%; margin-left: -20px; z-index:1;
+	}
+	.circle-wrapper-bottom{
+		position:absolute; left:50%; bottom:0; margin-left: -8px; z-index:1;
+	}
+	.label-year {
+		position:absolute; left:50%; width:151px; height:55px; z-index:2; margin-top: -7px; margin-left: 10px;
+		img { position:absolute; z-index:0;}
+		span { color:$white; text-align: center; position:relative; z-index:1; font-size: 35px; margin-left: 51px;}
+	}
+
+}
+
+
+.gallery {
+	margin-bottom: $brand-margin;
+	.small-posts {
+		figcaption {
+			margin-top: 15px;
+		}
+	}
+}
+
+
+.documents {
+	.document {
+		 position:relative; max-width:100%; height: 400px; border: 3px solid $gray-lighter; padding: 20px; background-color:  transparent; 
+		&:after {
+			content: ""; position:absolute; top: 0;   left: 0;   right: 0;   bottom: 0;   background: $gray-lighter; margin:15px;
+		}
+	}
+	.share-buttons{
+		@include clearfix(); margin-top: $brand-margin; margin-bottom: $brand-margin;
+		.twitter-share-button {  margin-right: 20px; float:left; }
+		.fb-share-button { position:relative; top: -5px }
+	}
+}
+
+

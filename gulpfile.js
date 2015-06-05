@@ -63,5 +63,6 @@ elixir(function(mix) {
         'resources/assets/js/app.js',
         'resources/assets/js/googletranslate.js',
       ], 'public/dist/js/app.js', './')
-      .version(['public/dist/css/app.css', 'public/dist/js/app.js']);
+      .version(['public/dist/css/app.css', 'public/dist/js/app.js'])
+      .copy('bower_components/bootstrap-sass/assets/fonts/bootstrap/', 'public/fonts/');;
 });

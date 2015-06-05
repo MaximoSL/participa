@@ -1,0 +1,56 @@
+@import "pre-variables";
+
+// bower:scss
+@import "./bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+@import "font-icons";
+@import "variables";
+@import "defaults";
+@import "buttons";
+@import "helper-classes";
+@import "navbar";
+@import "footer";
+@import "breadcrumb";
+@import "well";
+@import "tabs";
+@import "alerts";
+
+@import "landing-new";
+@import "home";
+@import "tramites";
+@import "ficha-tramite";
+@import "busquedas";
+@import "interior";
+@import "blog";
+@import "categorias";
+@import "gobierno";
+@import "collapse-menus";
+@import "carousel";
+@import "datepicker";
+
+
+.fa-spin {
+  animation: fa-spin .7s infinite linear;
+}
+
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+
+.mask-loader {
+	display: none; width: 100%; height: 100%; background-color: rgba(0,0,0, .5); position: fixed; top:0; bottom: 0; left: 0; right: 0; z-index: 9999999;
+	.glyphicon { color: $white; position: absolute; font-size:27px; top:50%; left:50%;  margin-left: -15px; margin-top: -15px;}
+}
+
+
+
+.message-subscribe {
+	margin-top: 20px; font-size:14px;
+}

@@ -1,0 +1,55 @@
+//** navbar header
+.navbar {
+  border:none; margin-bottom: 0px; font-size: ($font-size-base - 2px);
+}
+.navbar-inverse {
+	.navbar-nav {
+		& > li {
+			& > a {
+				text-decoration: none;
+				&:hover, &:focus {
+					background-color:$black; color: $white; text-decoration: none;
+				}
+			}
+			
+		}
+	}
+	.navbar-toggle {
+		border:none;
+		&:focus, &:hover {
+			background-color:transparent;
+			.icon-bar {
+				background-color: $gray-light;	
+			}			
+		}
+	}
+}
+
+.navbar-brand{
+	padding: 9px 15px; text-decoration: none; font-size: ($font-size-base + 1px);
+	& > img {
+		height: 29px; width:auto;
+	}
+}
+
+.sub-navbar{
+	background: #000; margin-top: 0px; margin-top: 46px; width: 100%; z-index: 1029;
+	.navbar-brand {
+		 position: relative; top:1px; display:none;
+	}
+	.navbar-collapse {
+		background-color:$black;
+	}
+	.navbar-toggle {
+		color:$white; border-radius:0;
+	}
+}
+
+
+@media (min-width: $screen-lg-min) {  
+	.sub-navbar{
+		.navbar-brand {
+			display: block;
+		}
+	}
+}
