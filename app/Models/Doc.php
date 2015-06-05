@@ -11,21 +11,16 @@ class Doc extends Model
 {
     use SoftDeletes;
 
-    public static $timestamp = true;
-
-    protected $index;
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamp = true;
 
     const TYPE = 'doc';
-
     const SPONSOR_TYPE_INDIVIDUAL = 'individual';
     const SPONSOR_TYPE_GROUP = 'group';
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->index = config('elasticsearch.annotationIndex');
-    }
 
     public function getEmbedCode()
     {
@@ -57,19 +52,6 @@ class Doc extends Model
         return $this->hasMany('MXAbierto\Participa\Models\Date');
     }
 
-    public function canUserEdit($user)
-    {
-        if ($user->hasRole('Admin')) {
-            return true;
-        }
-
-        if (in_array($user->id, $this->authors->lists('id')->all())) {
-            return true;
-        }
-
-        return false;
-    }
-
     public function authors()
     {
         return $this->belongsToMany('MXAbierto\Participa\Models\User');
@@ -78,19 +60,6 @@ class Doc extends Model
     public function userSponsor()
     {
         return $this->belongsToMany('MXAbierto\Participa\Models\User');
-    }
-
-    public function sponsorName()
-    {
-        $sponsor = $this->sponsor->first();
-
-        if ($sponsor instanceof User) {
-            $display_name = $sponsor->fname.' '.$sponsor->lname;
-        } else {
-            $display_name = '';
-        }
-
-        return $display_name;
     }
 
     public function statuses()
@@ -113,11 +82,6 @@ class Doc extends Model
         return $this->hasMany('MXAbierto\Participa\Models\Annotation');
     }
 
-    public function getLink()
-    {
-        return URL::to('docs/'.$this->slug);
-    }
-
     public function content()
     {
         return $this->hasOne('MXAbierto\Participa\Models\DocContent');
@@ -127,6 +91,38 @@ class Doc extends Model
     {
         return $this->hasMany('MXAbierto\Participa\Models\DocMeta');
     }
+
+    public function canUserEdit($user)
+    {
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
+
+        if (in_array($user->id, $this->authors->lists('id')->all())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function sponsorName()
+    {
+        $sponsor = $this->sponsor->first();
+
+        if ($sponsor instanceof User) {
+            $display_name = $sponsor->fname.' '.$sponsor->lname;
+        } else {
+            $display_name = '';
+        }
+
+        return $display_name;
+    }
+
+    public function getLink()
+    {
+        return URL::to('docs/'.$this->slug);
+    }
+
 
     public static function createEmptyDocument(array $params)
     {
@@ -271,100 +267,6 @@ class Doc extends Model
         }
 
         return $results;
-    }
-
-    public function setActionCount()
-    {
-        $es = self::esConnect();
-
-        $params['index'] = $this->index;
-        $params['type'] = 'annotation';
-        $params['body']['term']['doc'] = (string) $this->id;
-
-        $count = $es->count($params);
-
-        $this->annotationCount = $count['count'];
-    }
-
-    public function get_file_path($format = 'markdown')
-    {
-        switch ($format) {
-            case 'html' :
-                $path = 'html';
-                $ext = '.html';
-                break;
-
-            case 'markdown':
-            default:
-                $path = 'md';
-                $ext = '.md';
-        }
-
-        $filename = $this->slug.$ext;
-        $path = implode(DIRECTORY_SEPARATOR, [storage_path(), 'docs', $path, $filename]);
-
-        return $path;
-    }
-
-    public function indexContent($doc_content)
-    {
-        $es = self::esConnect();
-
-        File::put($this->get_file_path('markdown'), $doc_content->content);
-
-        File::put($this->get_file_path('html'),
-            Markdown::render($doc_content->content)
-        );
-
-        $body = [
-            'id'      => $this->id,
-            'content' => $doc_content->content,
-        ];
-
-        $params = [
-            'index'    => $this->index,
-            'type'     => self::TYPE,
-            'id'       => $this->id,
-            'body'     => $body,
-        ];
-
-        $results = $es->index($params);
-    }
-
-    public function get_content($format = null)
-    {
-        $path = $this->get_file_path($format);
-
-        try {
-            return File::get($path);
-        } catch (Illuminate\Filesystem\FileNotFoundException $e) {
-            $content = DocContent::where('doc_id', '=', $this->attributes['id'])->where('parent_id')->first()->content;
-
-            if ($format == 'html') {
-                $content = Markdown::render($content);
-            }
-
-            return $content;
-        }
-    }
-
-    public static function search($query)
-    {
-        $es = self::esConnect();
-
-        $params['index'] = Config::get('elasticsearch.annotationIndex');
-        $params['type'] = self::TYPE;
-        $params['body']['query']['filtered']['query']['query_string']['query'] = $query;
-
-        return $es->search($params);
-    }
-
-    public static function esConnect()
-    {
-        $esParams['hosts'] = Config::get('elasticsearch.hosts');
-        $es = new Elasticsearch\Client($esParams);
-
-        return $es;
     }
 
     public static function findDocBySlug($slug = null)

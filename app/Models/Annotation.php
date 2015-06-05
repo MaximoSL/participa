@@ -31,52 +31,6 @@ class Annotation extends Model implements ActivityInterface
      */
     protected $fillable = ['quote', 'text', 'uri', 'seen'];
 
-    /**
-     * The ElasticSearch instance.
-     *
-     * @var \ElasticSearch\Client
-     */
-    protected static $_esInstance = null;
-
-    /**
-     * The ElasticSearch index.
-     *
-     * @var mixed
-     */
-    protected static $_esIndex;
-
-    public static function getEsClient()
-    {
-        static::connectToEs();
-
-        return static::$_esInstance;
-    }
-
-    public static function setEsIndex($index)
-    {
-        static::$_esIndex = $index;
-    }
-
-    public static function getEsIndex()
-    {
-        return static::$_esIndex;
-    }
-
-    public static function connectToEs()
-    {
-        if (is_null(static::$_esInstance)) {
-            $params = [
-                'hosts' => Config::get('elasticsearch.hosts'),
-            ];
-
-            static::$_esInstance = new ElasticSearch\Client($params);
-        }
-
-        static::setEsIndex(Config::get('elasticsearch.annotationIndex'));
-
-        return static::$_esInstance;
-    }
-
     public function user()
     {
         return $this->belongsTo('MXAbierto\Participa\Models\User');
