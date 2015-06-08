@@ -38,12 +38,13 @@ class CommentController extends AbstractApiController
 
     public function postIndex($doc)
     {
+        $user = Auth::user();
         $comment = Input::get('comment');
 
         $comment['private'] = (!empty($comment['private']) && $comment['private'] != 'false') ? 1 : 0;
 
         $newComment = new Comment();
-        $newComment->user_id = Auth::user()->id;
+        $newComment->user_id = $user->id;
         $newComment->doc_id = $comment['doc']['id'];
         $newComment->text = $comment['text'];
         $newComment->private = $comment['private'];
@@ -51,7 +52,7 @@ class CommentController extends AbstractApiController
 
         event(MadisonEvent::DOC_COMMENTED, $newComment);
 
-        $return = Comment::loadComments($newComment->doc_id, $newComment->id, $newComment->user_id);
+        $return = Comment::loadComments($newComment->doc_id, $newComment->id, $user);
 
         return response()->json($return);
     }

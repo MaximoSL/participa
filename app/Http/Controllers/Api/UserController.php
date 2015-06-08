@@ -3,6 +3,8 @@
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\User;
 use MXAbierto\Participa\Models\DocMeta;
 
@@ -172,8 +174,17 @@ class UserController extends AbstractApiController
         return Response::json(['saved' => true]);
     }
 
-    public function getSupport($user, $doc)
+    /**
+     * Get the user support status.
+     *
+     * @param int $doc
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSupport($doc)
     {
+        $user = Auth::user();
+
         $docMeta = DocMeta::where('user_id', $user->id)->where('meta_key', '=', 'support')->where('doc_id', '=', $doc)->first();
 
         $supports = DocMeta::where('meta_key', '=', 'support')->where('meta_value', '=', '1')->where('doc_id', '=', $doc)->count();
@@ -184,5 +195,47 @@ class UserController extends AbstractApiController
         } else {
             return response()->json(['support' => null, 'supports' => $supports, 'opposes' => $opposes]);
         }
+    }
+
+    /**
+     * Method to handle posting support/oppose clicks on a document.
+     *
+     * @param int $doc
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postSupport($doc)
+    {
+        $input = Input::get();
+
+        $supported = (bool) $input['support'];
+
+        $docMeta = DocMeta::withTrashed()->where('user_id', Auth::user()->id)->where('meta_key', '=', 'support')->where('doc_id', '=', $doc)->first();
+
+        if (!isset($docMeta)) {
+            $docMeta = new DocMeta();
+            $docMeta->doc_id = $doc;
+            $docMeta->user_id = Auth::user()->id;
+            $docMeta->meta_key = 'support';
+            $docMeta->meta_value = (string) $supported;
+            $docMeta->save();
+        } elseif ($docMeta->meta_value == (string) $supported && !$docMeta->trashed()) {
+            $docMeta->delete();
+            $supported = null;
+        } else {
+            if ($docMeta->trashed()) {
+                $docMeta->restore();
+            }
+            $docMeta->doc_id = $doc;
+            $docMeta->user_id = Auth::user()->id;
+            $docMeta->meta_key = 'support';
+            $docMeta->meta_value = (string) (bool) $input['support'];
+            $docMeta->save();
+        }
+
+        $supports = DocMeta::where('meta_key', '=', 'support')->where('meta_value', '=', '1')->where('doc_id', '=', $doc)->count();
+        $opposes = DocMeta::where('meta_key', '=', 'support')->where('meta_value', '=', '')->where('doc_id', '=', $doc)->count();
+
+        return response()->json(['support' => $supported, 'supports' => $supports, 'opposes' => $opposes]);
     }
 }

@@ -67,8 +67,8 @@ class ApiRoutes
             ]);
 
             //Document Support / Oppose routes
-            $router->post('docs/{doc}/support', 'DocController@postSupport');
-            $router->get('users/{user}/support/{doc}', 'UserController@getSupport');
+            $router->post('users/support/{doc}', 'UserController@postSupport');
+            $router->get('users/support/{doc}', 'UserController@getSupport');
 
             //Document Api Routes
             $router->get('docs/recent/{query?}', 'DocumentController@getRecent')->where('query', '[0-9]+');

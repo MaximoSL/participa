@@ -78675,7 +78675,7 @@ angular.module('madisonApp.controllers')
     };
     $scope.getSupported = function () {
       if ($scope.user.id !== '') {
-      $http.get(_baseUrl + '/api/users/' + $scope.user.id + '/support/' + $scope.doc.id)
+      $http.get(_baseUrl + '/api/users/support/' + $scope.doc.id)
         .success(function (data) {
           switch (data.support) {
             case "1":
@@ -78702,7 +78702,7 @@ angular.module('madisonApp.controllers')
       if ($scope.user.id === '') {
         createLoginPopup($event);
       } else {
-        $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/support', {
+        $http.post(_baseUrl + '/api/users/support/' + $scope.doc.id, {
           'support': supported
         })
         .success(function (data) {

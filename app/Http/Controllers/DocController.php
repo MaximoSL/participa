@@ -144,48 +144,6 @@ class DocController extends AbstractController
     }
 
     /**
-     * Method to handle posting support/oppose clicks on a document.
-     *
-     * @param int $doc
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postSupport($doc)
-    {
-        $input = Input::get();
-
-        $supported = (bool) $input['support'];
-
-        $docMeta = DocMeta::withTrashed()->where('user_id', Auth::user()->id)->where('meta_key', '=', 'support')->where('doc_id', '=', $doc)->first();
-
-        if (!isset($docMeta)) {
-            $docMeta = new DocMeta();
-            $docMeta->doc_id = $doc;
-            $docMeta->user_id = Auth::user()->id;
-            $docMeta->meta_key = 'support';
-            $docMeta->meta_value = (string) $supported;
-            $docMeta->save();
-        } elseif ($docMeta->meta_value == (string) $supported && !$docMeta->trashed()) {
-            $docMeta->delete();
-            $supported = null;
-        } else {
-            if ($docMeta->trashed()) {
-                $docMeta->restore();
-            }
-            $docMeta->doc_id = $doc;
-            $docMeta->user_id = Auth::user()->id;
-            $docMeta->meta_key = 'support';
-            $docMeta->meta_value = (string) (bool) $input['support'];
-            $docMeta->save();
-        }
-
-        $supports = DocMeta::where('meta_key', '=', 'support')->where('meta_value', '=', '1')->where('doc_id', '=', $doc)->count();
-        $opposes = DocMeta::where('meta_key', '=', 'support')->where('meta_value', '=', '')->where('doc_id', '=', $doc)->count();
-
-        return Response::json(['support' => $supported, 'supports' => $supports, 'opposes' => $opposes]);
-    }
-
-    /**
      * Method to handle document RSS feeds.
      *
      * @param string $slug
