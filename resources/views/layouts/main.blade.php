@@ -55,6 +55,7 @@
 		</main>
 		@include('layouts.footer')
 		<!-- Scripts -->
+		<script src="{{ elixir('dist/js/libs.js') }}"></script>
 		<script src="{{ elixir('dist/js/app.js') }}"></script>
 		<script type="text/javascript">
 			ZeroClipboard.config( { swfPath: '{{ url('swf/ZeroClipboard.swf') }}' } );

@@ -51,9 +51,10 @@ elixir(function(mix) {
         'bower_components/pagedown/Markdown.Sanitizer.js',
         'bower_components/pagedown/Markdown.Editor.js',
         'bower_components/annotator/annotator-full.min.js',
-        'resources/assets/js/annotator-madison.js',
-
+      ], 'public/dist/js/libs.js', './')
+      .scripts([
         // Custom JS
+        'resources/assets/js/annotator-madison.js',
         'resources/assets/js/controllers/module.js',
         'resources/assets/js/controllers/**/*.js',
         'resources/assets/js/dashboard/module.js',
@@ -70,7 +71,7 @@ elixir(function(mix) {
         'resources/assets/js/app.js',
         'resources/assets/js/googletranslate.js',
       ], 'public/dist/js/app.js', './')
-      .version(['public/dist/css/app.css', 'public/dist/js/app.js'])
+      .version(['public/dist/css/app.css', 'public/dist/js/libs.js', 'public/dist/js/app.js'])
       .copy('bower_components/pagedown/wmd-buttons.png', 'public/img/wmd-buttons.png')
       .copy('bower_components/zeroclipboard/dist/ZeroClipboard.swf', 'public/swf/ZeroClipboard.swf')
       .copy('bower_components/bootstrap-sass/assets/fonts/bootstrap/', 'public/fonts/');
