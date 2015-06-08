@@ -1,5 +1,6 @@
 <?php
 
+use MXAbierto\Participa\Migrations\DualMigration;
 
 class DropUnusedUserFields extends DualMigration
 {

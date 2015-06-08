@@ -1,5 +1,7 @@
 <?php
 
+use MXAbierto\Participa\Migrations\DualMigration;
+
 class DropAnnotationMetaColumns extends DualMigration
 {
     public function upMySQL()

@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use MXAbierto\Participa\Models\Permission;
+use MXAbierto\Participa\Models\Role;
+use MXAbierto\Participa\Models\User;
 
 class RbacSeeder extends Seeder
 {

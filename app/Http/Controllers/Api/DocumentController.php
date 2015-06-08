@@ -113,7 +113,7 @@ class DocumentController extends AbstractApiController
         $doc->content([$doc_content]);
         $doc->save();
 
-        Event::fire(MadisonEvent::DOC_EDITED, $doc);
+        event(MadisonEvent::DOC_EDITED, $doc);
 
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.doccontent').' '.trans('messages.saved'))), 'severity' => 'info'];
 

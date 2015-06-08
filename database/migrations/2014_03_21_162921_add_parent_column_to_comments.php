@@ -1,5 +1,7 @@
 <?php
 
+use MXAbierto\Participa\Migrations\DualMigration;
+
 class AddParentColumnToComments extends DualMigration
 {
     public function upMySQL()

@@ -35,9 +35,4 @@ class DocContent extends Model
     {
         return $this->belongsTo('MXAbierto\Participa\Models\DocContent', 'parent_id');
     }
-
-    public function html()
-    {
-        return Markdown::render($this->content);
-    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use MXAbierto\Participa\Models\Group;
 
 class AddGroupTables extends Migration
 {

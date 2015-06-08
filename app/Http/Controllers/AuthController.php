@@ -13,6 +13,16 @@ use MXAbierto\Participa\Models\User;
 class AuthController extends AbstractController
 {
     /**
+     * Creates a new auth contoller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
+    /**
      * Displays the login form.
      *
      * @param \Illuminate\Http\Request $request

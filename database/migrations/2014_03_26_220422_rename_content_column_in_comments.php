@@ -1,5 +1,7 @@
 <?php
 
+use MXAbierto\Participa\Migrations\DualMigration;
+
 class RenameContentColumnInComments extends DualMigration
 {
     public function upMySQL()

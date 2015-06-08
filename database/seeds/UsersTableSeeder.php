@@ -8,20 +8,20 @@ class UsersTableSeeder extends Seeder
     {
         $creds = Config::get('madison.seeder');
 
-        DB::table('users')->insert([
+        factory('MXAbierto\Participa\Models\User')->create([
             'email'    => $creds['admin_email'],
-            'password' => Hash::make($creds['admin_password']),
+            'password' => $creds['admin_password'],
             'fname'    => $creds['admin_fname'],
             'lname'    => $creds['admin_lname'],
-            'token'    => '',
         ]);
 
-        DB::table('users')->insert([
-      'email'    => $creds['user_email'],
-      'password' => Hash::make($creds['user_password']),
-      'fname'    => $creds['user_fname'],
-      'lname'    => $creds['user_lname'],
-      'token'    => '',
-    ]);
+        factory('MXAbierto\Participa\Models\User')->create([
+            'email'    => $creds['user_email'],
+            'password' => $creds['user_password'],
+            'fname'    => $creds['user_fname'],
+            'lname'    => $creds['user_lname'],
+        ]);
+
+        factory('MXAbierto\Participa\Models\User')->times(3)->create();
     }
 }

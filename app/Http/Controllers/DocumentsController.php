@@ -101,7 +101,7 @@ class DocumentsController extends AbstractController
             $document = Doc::createEmptyDocument($docOptions);
 
             if ($activeGroup > 0) {
-                Event::fire(MadisonEvent::NEW_GROUP_DOCUMENT, ['document' => $document, 'group' => $group]);
+                event(MadisonEvent::NEW_GROUP_DOCUMENT, ['document' => $document, 'group' => $group]);
             }
 
             return redirect()->to("documents/edit/{$document->id}")->with('success_message', trans('messages.saveddoc'));
@@ -152,7 +152,7 @@ class DocumentsController extends AbstractController
 
         //Fire document edited event for admin notifications
         $doc = Doc::find($docContent->doc_id);
-        Event::fire(MadisonEvent::DOC_EDITED, $doc);
+        event(MadisonEvent::DOC_EDITED, $doc);
 
         try {
             $document->indexContent($docContent);

@@ -6,49 +6,25 @@ class DocumentsTableSeeder extends Seeder
 {
     public function run()
     {
-        $adminEmail = Config::get('madison.seeder.admin_email');
-        $adminPassword = Config::get('madison.seeder.admin_password');
+        $stubContent = [
+            factory('MXAbierto\Participa\Models\DocContent')->make([
+                'content' => file_get_contents(base_path('database/stubs/the_last_question.md'))
+            ]),
+            factory('MXAbierto\Participa\Models\DocContent')->make([
+                'content' => file_get_contents(base_path('database/stubs/logistic_regression.md'))
+            ]),
+        ];
 
-    // Login as admin to create docs
-        $credentials = ['email' => $adminEmail, 'password' => $adminPassword];
-        Auth::attempt($credentials);
-        $admin = Auth::user();
-        $mx_a = Group::where('id', '=', 1)->first();
+        factory('MXAbierto\Participa\Models\Doc', 2)
+            ->create()
+            ->each(function($doc, $key) use ($stubContent) {
+                $doc->contents()->save($stubContent[$key]);
+            });
 
-    // Create first doc
-
-    $docSeedPath = app_path().'/database/seeds/the_last_question.md';
-        if (file_exists($docSeedPath)) {
-            $content = file_get_contents($docSeedPath);
-        }
-        $docOptions = [
-      'title'       => 'The Last Question',
-      'content'     => $content,
-      'sponsor'     => $mx_a->id,
-      'sponsorType' => Doc::SPONSOR_TYPE_GROUP,
-    ];
-        $document = Doc::createEmptyDocument($docOptions);
-
-        Input::replace($input = ['content' => $content]);
-        App::make('DocumentsController')->saveDocumentEdits($document->id);
-
-    // Create second doc
-
-    $docSeedPath = app_path().'/database/seeds/log_reg.md';
-        if (file_exists($docSeedPath)) {
-            $content = file_get_contents($docSeedPath);
-        }
-
-        $docOptions = [
-      'title'       => 'Logistic Regression',
-      'sponsor'     => $mx_a->id,
-      'sponsorType' => Doc::SPONSOR_TYPE_GROUP,
-    ];
-        $document = Doc::createEmptyDocument($docOptions);
-
-        DB::table('doc_contents')->insert([
-      'doc_id'      => $document->id,
-      'content'     => $content,
-        ]);
+        $docs = factory('MXAbierto\Participa\Models\Doc', 30)
+            ->create()
+            ->each(function($doc) {
+                $doc->contents()->save(factory('MXAbierto\Participa\Models\DocContent')->make());
+            });
     }
 }

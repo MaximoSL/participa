@@ -11,11 +11,27 @@
 |
 */
 
-$factory->define('App\User', function ($faker) {
+$factory->define('MXAbierto\Participa\Models\User', function ($faker) {
     return [
-        'name' => $faker->name,
+        'fname' => $faker->name,
+        'lname' => $faker->lastName,
         'email' => $faker->email,
         'password' => str_random(10),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define('MXAbierto\Participa\Models\Doc', function ($faker) {
+    $title = $faker->sentence;
+
+    return [
+        'title' => $title,
+        'slug' => str_slug($title),
+    ];
+});
+
+$factory->define('MXAbierto\Participa\Models\DocContent', function ($faker) {
+    return [
+        'content' => $faker->text,
     ];
 });

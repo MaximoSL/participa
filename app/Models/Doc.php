@@ -83,6 +83,11 @@ class Doc extends Model implements HasPresenter
         return $this->hasMany('MXAbierto\Participa\Models\Annotation');
     }
 
+    public function contents()
+    {
+        return $this->hasMany('MXAbierto\Participa\Models\DocContent');
+    }
+
     public function content()
     {
         return $this->hasOne('MXAbierto\Participa\Models\DocContent')->whereNull('parent_id');
@@ -129,32 +134,15 @@ class Doc extends Model implements HasPresenter
     {
         $defaults = [
             'content'     => 'New Document Content',
-            'sponsor'     => null,
-            'sponsorType' => null,
         ];
 
         $params = array_replace_recursive($defaults, $params);
-
-        if (is_null($params['sponsor'])) {
-            throw new \Exception('Sponsor Param Required');
-        }
 
         $document = new self();
 
         DB::transaction(function () use ($document, $params) {
             $document->title = $params['title'];
             $document->save();
-
-            switch ($params['sponsorType']) {
-                case static::SPONSOR_TYPE_INDIVIDUAL:
-                    $document->userSponsor()->sync([$params['sponsor']]);
-                    break;
-                case static::SPONSOR_TYPE_GROUP:
-                    $document->groupSponsor()->sync([$params['sponsor']]);
-                    break;
-                default:
-                    throw new \Exception('Invalid Sponsor Type');
-            }
 
             $template = new DocContent();
             $template->doc_id = $document->id;
@@ -165,30 +153,9 @@ class Doc extends Model implements HasPresenter
             $document->save();
         });
 
-        Event::fire(MadisonEvent::NEW_DOCUMENT, $document);
+        event(MadisonEvent::NEW_DOCUMENT, $document);
 
         return $document;
-    }
-
-    public function save(array $options = [])
-    {
-        if (empty($this->slug)) {
-            $this->slug = $this->getSlug();
-        }
-
-        return parent::save($options);
-    }
-
-    public function getSlug()
-    {
-        if (empty($this->title)) {
-            throw new Exception("Can't get a slug - empty title");
-        }
-
-        return str_replace(
-                    [' ', '.', ',', '#'],
-                    ['-', '', '', ''],
-                    strtolower($this->title));
     }
 
     public static function allOwnedBy($userId)

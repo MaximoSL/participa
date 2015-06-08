@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -57,7 +60,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call('UsersTableSeeder');
         $this->call('RbacSeeder');
-        $this->call('GroupsTableSeeder');
         $this->call('DocumentsTableSeeder');
 
         if (App::environment() === 'testing') {

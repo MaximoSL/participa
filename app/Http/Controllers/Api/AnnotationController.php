@@ -279,7 +279,7 @@ class AnnotationController extends AbstractApiController
         $annotation->load('user');
         $annotation->type = 'annotation';
 
-        Event::fire(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'like', 'activity' => $annotation, 'user'    => Auth::user()]);
+        event(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'like', 'activity' => $annotation, 'user'    => Auth::user()]);
 
         return response()->json($annotation->toAnnotatorArray());
     }
