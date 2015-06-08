@@ -5,8 +5,9 @@ namespace MXAbierto\Participa\Http\Controllers\Api;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use MXAbierto\Participa\Models\User;
 use MXAbierto\Participa\Models\DocMeta;
+use MXAbierto\Participa\Models\User;
+use MXAbierto\Participa\Models\UserMeta;
 
 /**
  * 	Controller for User actions.
@@ -63,7 +64,7 @@ class UserController extends AbstractApiController
                             ->where('meta_value', '0')
                             ->with('user')->get();
 
-        return Response::json($requests);
+        return response()->json($requests);
     }
 
     public function postIndependentVerify()
@@ -111,7 +112,7 @@ class UserController extends AbstractApiController
                 break;
         }
 
-        return Response::json($retval);
+        return response()->json($retval);
     }
 
     public function getVerify()
@@ -120,7 +121,7 @@ class UserController extends AbstractApiController
 
         $requests = UserMeta::where('meta_key', 'verify')->with('user')->get();
 
-        return Response::json($requests);
+        return response()->json($requests);
     }
 
     public function postVerify()
@@ -142,7 +143,7 @@ class UserController extends AbstractApiController
 
         $ret = $meta->save();
 
-        return Response::json($ret);
+        return response()->json($ret);
     }
 
     public function getAdmins()
@@ -156,7 +157,7 @@ class UserController extends AbstractApiController
             $admin->admin_contact();
         }
 
-        return Response::json($admins);
+        return response()->json($admins);
     }
 
     public function postAdmin()
@@ -171,7 +172,7 @@ class UserController extends AbstractApiController
 
         $user->admin_contact($admin['admin_contact']);
 
-        return Response::json(['saved' => true]);
+        return response()->json(['saved' => true]);
     }
 
     /**

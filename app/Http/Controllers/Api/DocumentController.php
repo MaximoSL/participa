@@ -4,6 +4,9 @@ namespace MXAbierto\Participa\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\Doc;
+use MXAbierto\Participa\Models\DocMeta;
+use MXAbierto\Participa\Models\Category;
+use MXAbierto\Participa\Models\UserMeta;
 
 /**
  * 	Controller for Document actions.
@@ -24,7 +27,7 @@ class DocumentController extends AbstractApiController
     {
         $doc_id = $doc;
 
-        $doc = Doc::with('content')->with('categories')->with('introtext')->find($doc);
+        $doc = Doc::with('content', 'categories', 'introtext')->find($doc);
 
         return response()->json($doc);
     }

@@ -71,6 +71,7 @@ elixir(function(mix) {
         'resources/assets/js/googletranslate.js',
       ], 'public/dist/js/app.js', './')
       .version(['public/dist/css/app.css', 'public/dist/js/app.js'])
+      .copy('bower_components/pagedown/wmd-buttons.png', 'public/img/wmd-buttons.png')
       .copy('bower_components/zeroclipboard/dist/ZeroClipboard.swf', 'public/swf/ZeroClipboard.swf')
       .copy('bower_components/bootstrap-sass/assets/fonts/bootstrap/', 'public/fonts/');
 });
