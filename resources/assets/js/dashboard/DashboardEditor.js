@@ -207,10 +207,10 @@ angular.module('madisonApp.dashboardControllers')
 
             /*jslint unparam: true*/
             $scope.statusOptions    = {
-                placeholder         : "Select Document Status",
+                placeholder         : 'Select Document Status',
                 allowClear          : true,
                 ajax                : {
-                    url         : _baseUrl + "/participa/api/docs/statuses",
+                    url         : _baseUrl + '/participa/api/docs/statuses',
                     dataType    : 'json',
                     data        : function (term, page) {
                         return;
@@ -247,10 +247,10 @@ angular.module('madisonApp.dashboardControllers')
             };
 
             $scope.sponsorOptions   = {
-                placeholde          : "Select Document Sponsor",
+                placeholde          : 'Select Document Sponsor',
                 allowClear          : true,
                 ajax                : {
-                    url         : "/participa/api/user/sponsors/all",
+                    url         : '/participa/api/user/sponsors/all',
                     dataType    : 'json',
                     data        : function () {
                         return;

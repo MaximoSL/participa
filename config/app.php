@@ -142,6 +142,7 @@ return [
          */
          'Zizaco\Entrust\EntrustServiceProvider',
          'Roumen\Feed\FeedServiceProvider',
+         'Roumen\Sitemap\SitemapServiceProvider',
          'GrahamCampbell\Markdown\MarkdownServiceProvider',
          'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
 

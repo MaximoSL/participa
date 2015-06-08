@@ -80971,8 +80971,8 @@ angular.module( 'madisonApp.controllers' )
         };
     }]);
 angular.module( 'madisonApp.dashboardControllers', []);
-angular.module( 'madisonApp.dashboardControllers' )
-    .controller( 'DashboardDocumentsController', [ '$scope', '$http', '$filter', function ( $scope, $http, $filter ) {
+angular.module('madisonApp.dashboardControllers')
+    .controller('DashboardDocumentsController', ['$scope', '$http', '$filter', function ($scope, $http, $filter) {
         $scope.docs         = [];
         $scope.categories   = [];
         $scope.sponsors     = [];
@@ -80994,79 +80994,79 @@ angular.module( 'madisonApp.dashboardControllers' )
         };
 
         //Retrieve all docs
-        $http.get( '/api/docs' )
-            .success( function ( data ) {
-              $scope.parseDocs( data );
+        $http.get(_baseUrl + '/api/docs')
+            .success(function (data) {
+              $scope.parseDocs(data.results);
             })
-            .error( function ( data ) {
-                console.error( "Unable to get documents: %o", data );
+            .error(function (data) {
+                console.error("Unable to get documents: %o", data);
             });
-        $scope.parseDocs    = function ( docs ) {
-            angular.forEach( docs, function ( doc ) {
-                $scope.docs.push( doc );
-                $scope.parseDocMeta( doc.categories, 'categories' );
-                $scope.parseDocMeta( doc.sponsor, 'sponsors' );
-                $scope.parseDocMeta( doc.statuses, 'statuses' );
+        $scope.parseDocs    = function (docs) {
+            angular.forEach(docs, function ( doc) {
+                $scope.docs.push(doc);
+                $scope.parseDocMeta(doc.categories, 'categories');
+                $scope.parseDocMeta(doc.sponsor, 'sponsors');
+                $scope.parseDocMeta(doc.statuses, 'statuses');
 
-                angular.forEach( doc.dates, function ( date ) {
-                    date.date   = Date.parse( date.date );
+                angular.forEach(doc.dates, function (date) {
+                    date.date   = Date.parse(date.date);
                 });
             });
         };
-        $scope.parseDocMeta = function ( collection, name ) {
-            if ( collection === undefined || collection.length === 0 ) {
+        $scope.parseDocMeta = function (collection, name) {
+            if (collection === undefined || collection.length === 0) {
                 return;
             }
 
-            angular.forEach( collection, function ( item ) {
-                var found = $filter( 'getById' )( $scope[name], item.id );
+            angular.forEach(collection, function ( item) {
+                var found = $filter('getById')($scope[name], item.id);
 
-                if ( found === null ) {
-                    switch ( name ) {
+                if (found === null) {
+                    switch (name) {
                         case 'categories':
-                            $scope.categories.push( item );
+                            $scope.categories.push(item);
                             break;
                         case 'sponsors':
-                            $scope.sponsors.push( item );
+                            $scope.sponsors.push(item );
                             break;
                         case 'statuses':
-                            $scope.statuses.push( item );
+                            $scope.statuses.push(item);
                             break;
                         default:
-                            console.error( 'Unknown meta name: ' + name );
+                            console.error('Unknown meta name: ' + name);
                     }
                 }
             });
         };
-        $scope.docFilter    = function ( doc ) {
+        $scope.docFilter    = function (doc) {
             var show = false;
 
-            if ( $scope.select2 !== undefined && $scope.select2 !== '' ) {
+            if ($scope.select2 !== undefined && $scope.select2 !== '') {
                 var cont    = true;
                 var select2 = $scope.select2.split('_');
                 var type    = select2[0];
                 var value   = parseInt(select2[1], 10);
 
-                switch ( type ) {
+                switch ( type) {
                     case 'category':
-                        angular.forEach( doc.categories, function ( category ) {
-                            if (    +category.id === value && cont ) {
+                        angular.forEach(doc.categories, function (category) {
+                            if (   +category.id === value && cont) {
                                 show    = true;
                                 cont    = false;
                             }
                         });
                         break;
                     case 'sponsor':
-                        angular.forEach( doc.sponsor, function ( sponsor ) {
-                            if ( +sponsor.id === value && cont ) {
+                        angular.forEach(doc.sponsor, function (sponsor) {
+                            if (+sponsor.id === value && cont) {
                                 show    = true;
                                 cont    = false;
                             }
                         });
                         break;
                     case 'status':
-                        angular.forEach( doc.statuses, function ( status ) {
-                            if ( +status.id === value && cont ) {
+                        angular.forEach(doc.statuses, function ( status) {
+                            if (+status.id === value && cont) {
                                 show    = true;
                                 cont    = false;
                             }
@@ -81080,6 +81080,7 @@ angular.module( 'madisonApp.dashboardControllers' )
             return show;
         };
     }]);
+
 angular.module('madisonApp.dashboardControllers')
     .controller('DashboardEditorController', [ '$scope', '$http', '$timeout', '$location', '$filter', 'growl', function ($scope, $http, $timeout, $location, $filter, growl) {
         $scope.doc                  = {};
@@ -81289,10 +81290,10 @@ angular.module('madisonApp.dashboardControllers')
 
             /*jslint unparam: true*/
             $scope.statusOptions    = {
-                placeholder         : "Select Document Status",
+                placeholder         : 'Select Document Status',
                 allowClear          : true,
                 ajax                : {
-                    url         : _baseUrl + "/participa/api/docs/statuses",
+                    url         : _baseUrl + '/participa/api/docs/statuses',
                     dataType    : 'json',
                     data        : function (term, page) {
                         return;
@@ -81329,10 +81330,10 @@ angular.module('madisonApp.dashboardControllers')
             };
 
             $scope.sponsorOptions   = {
-                placeholde          : "Select Document Sponsor",
+                placeholde          : 'Select Document Sponsor',
                 allowClear          : true,
                 ajax                : {
-                    url         : "/participa/api/user/sponsors/all",
+                    url         : '/participa/api/user/sponsors/all',
                     dataType    : 'json',
                     data        : function () {
                         return;

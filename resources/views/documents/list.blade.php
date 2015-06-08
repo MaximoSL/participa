@@ -4,11 +4,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<ol class="breadcrumb">
-					<li><a href="/"><i class="icon icon-home"></i> {{ trans('messages.home')}}</a></li>
+					<li><a href="{{ route('home') }}"><i class="icon icon-home"></i> {{ trans('messages.home')}}</a></li>
 					<li class="active">{{ trans('messages.document') }}s</li>
 				</ol>
 			</div>
-			@if($loggedUser->hasRole('Independent Sponsor') || $loggedUser->groups()->exists())
+			@if($loggedUser->hasRole('Independent Sponsor'))
 				<div class="col-md-8 admin-document-list">
 					<h2>{{ trans('messages.document') }}s</h2>
 					<ul>

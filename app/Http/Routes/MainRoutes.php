@@ -68,6 +68,10 @@ class MainRoutes
             'uses' => 'AuthController@postSignup',
         ]);
 
+        $router->get('user/{id}', [
+            'as'   => 'user.show',
+            'uses' => 'UserController@getIndex',
+        ]);
         $router->get('user/account', [
             'as'   => 'user.account',
             'uses' => 'AccountController@getEdit',
@@ -153,28 +157,31 @@ class MainRoutes
             'uses' => 'SponsorController@postRequest',
         ]);
 
-        // // Modal Routes
+        // Modal Routes
         $router->get('modals/annotation_thanks', [
-            'uses'   => 'ModalController@getAnnotationThanksModal',
-            'before' => 'disable profiler',
+            'as'   => 'modals.thanks',
+            'uses' => 'ModalController@getAnnotationThanksModal',
         ]);
 
-        $router->post('modals/annotation_thanks', 'ModalController@seenAnnotationThanksModal');
-
+        $router->post('modals/annotation_thanks', [
+            'as'   => 'modals.thanks',
+            'uses' => 'ModalController@seenAnnotationThanksModal',
+        ]);
 
         //Annotation Routes
-        $router->get('annotation/{annotation}', 'AnnotationController@getIndex');
-        //
-        //
-        //
-        // $router->get('docs/feed', [
-        //     'as'   => 'dashboardShowsDoc',
-        //     'uses' => 'DashboardController@getDocs'
-        // ]);
-        //
-        // $router->get('sitemap', [
-        //     'as'   => 'dashboardShowsDoc',
-        //     'uses' => 'DashboardController@getDocs'
-        // ]);
+        $router->get('annotation/{annotation}', [
+            'as'   => 'annotation.show',
+            'uses' => 'AnnotationController@getIndex',
+        ]);
+
+        // Feed routes
+        $router->get('feed', [
+            'as'   => 'feed',
+            'uses' => 'FeedController@getFeed'
+        ]);
+        $router->get('sitemap', [
+            'as'   => 'sitemap',
+            'uses' => 'FeedController@getSitemap'
+        ]);
     }
 }

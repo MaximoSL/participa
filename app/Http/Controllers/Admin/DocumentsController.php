@@ -3,29 +3,18 @@
 namespace MXAbierto\Participa\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
 use MXAbierto\Participa\Http\Controllers\AbstractController;
 use MXAbierto\Participa\Models\Doc;
+use MXAbierto\Participa\Models\DocContent;
 
 /**
  * 	Controller for admin dashboard.
  */
 class DocumentsController extends AbstractController
 {
-    /**
-     * Creates a new dashboard controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //Filter to ensure user is signed in has an admin role
-        $this->beforeFilter('admin');
-
-        //Run csrf filter before all posts
-        $this->beforeFilter('csrf', ['on' => 'post']);
-    }
-
     public function showDoc($id)
     {
         $doc = Doc::find($id);
@@ -75,21 +64,20 @@ class DocumentsController extends AbstractController
         $user = Auth::user();
 
         if (!$user->can('admin_manage_documents')) {
-            return Redirect::to('/participa/dashboard')->with('message', trans('messages.nopermission'));
+            return redirect()->route('dashboard')->with('message', trans('messages.nopermission'));
         }
 
         //Creating new document
         if ($id == '') {
             $title = Input::get('title');
-            $slug = str_replace([' ', '.'], ['-', ''], strtolower($title));
+            $slug = str_slug($title);
+
             $doc_details = Input::all();
 
-            $rules = ['title' => 'required'];
-            $validation = Validator::make($doc_details, $rules);
-            if ($validation->fails()) {
-                die($validation);
+            $validation = Validator::make($doc_details, ['title' => 'required']);
 
-                return Redirect::route('dashboard/docs')->withInput()->withErrors($validation);
+            if ($validation->fails()) {
+                return redirect()->route('dashboard.docs')->withInput()->withErrors($validation);
             }
 
             try {
@@ -97,7 +85,6 @@ class DocumentsController extends AbstractController
                 $doc->title = $title;
                 $doc->slug = $slug;
                 $doc->save();
-                $doc->sponsor()->sync([$user->id]);
 
                 $starter = new DocContent();
                 $starter->doc_id = $doc->id;
@@ -107,12 +94,12 @@ class DocumentsController extends AbstractController
                 $doc->init_section = $starter->id;
                 $doc->save();
 
-                return Redirect::route('dashboardShowsDoc', [$doc->id])->with('success_message', trans('messages.createddoc'));
+                return redirect()->route('dashboard.docs.show', [$doc->id])->with('success_message', trans('messages.createddoc'));
             } catch (Exception $e) {
-                return Redirect::route('dashboard/docs')->withInput()->with('error', $e->getMessage());
+                return redirect()->route('dashboard.docs')->withInput()->with('error', $e->getMessage());
             }
         } else {
-            return Response::error('404');
+            return abort('404');
         }
     }
 
@@ -124,7 +111,7 @@ class DocumentsController extends AbstractController
         $user = Auth::user();
 
         if (!$user->can('admin_manage_documents')) {
-            return Redirect::to('/participa/dashboard')->with('message', trans('messages.nopermission'));
+            return redirect()->to('/participa/dashboard')->with('message', trans('messages.nopermission'));
         }
 
         $content = Input::get('content');
@@ -134,7 +121,7 @@ class DocumentsController extends AbstractController
             try {
                 $doc_content = DocContent::find($content_id);
             } catch (Exception $e) {
-                return Redirect::to('/participa/dashboard/docs/'.$id)->with('error', ucfirst(strtolower('Error '.trans('messages.saving').' '.trans('messages.the').' '.trans('messages.document'))).': '.$e->getMessage());
+                return redirect()->route('dashboard.docs.show', $id)->with('error', ucfirst(strtolower('Error '.trans('messages.saving').' '.trans('messages.the').' '.trans('messages.document'))).': '.$e->getMessage());
             }
         } else {
             $doc_content = new DocContent();
@@ -149,6 +136,6 @@ class DocumentsController extends AbstractController
         $doc = Doc::find($id);
         $doc->indexContent($doc_content);
 
-        return Redirect::to('dashboard/docs/'.$id)->with('success_message', trans('messages.saveddoc'));
+        return redirect()->route('dashboard.docs.show', $id)->with('success_message', trans('messages.saveddoc'));
     }
 }
