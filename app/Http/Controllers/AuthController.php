@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
 use MXAbierto\Participa\Events\UserHasRegisteredEvent;
 use MXAbierto\Participa\Models\User;
 
@@ -42,13 +43,23 @@ class AuthController extends AbstractController
     */
    public function postLogin(Request $request)
    {
-       //Rules for login form submission
-       $this->validate($request, [
-           'email'    => 'required|email',
-           'password' => 'required',
+        //Rules for login form submission
+        $validation = Validator::make($request->all(), [
+            'email'    => 'required|email',
+            'password' => 'required',
         ]);
 
+        //Validate input against rules
+        if ($validation->fails()) {
+            if ($request->ajax()) {
+                return response()->json(['status' => 'error', 'errors' => $validation->errors()->all()]);
+            }
+
+            return redirect()->route('auth.login')->withInput()->withErrors($validation->errors()->all());
+        }
+
        // Retrieve POST values
+       $error = [];
        $email = $request->input('email');
        $password = $request->input('password');
        $previous_page = $request->input('previous_page');
@@ -58,23 +69,39 @@ class AuthController extends AbstractController
        $user = User::where('email', $email)->first();
 
        if (!$user) {
-           return redirect()->route('auth.login')->with('error', 'Ese email no existe.');
+           $errors[] = 'Ese email no existe.';
+       } else {
+           // If the user's token field isn't blank, he/she hasn't confirmed their account via email
+           if ($user->token != '') {
+               $errors[] = 'Por favor, haz click en el enlace enviado a tu email para verificar la cuenta.';
+           }
        }
 
-       // If the user's token field isn't blank, he/she hasn't confirmed their account via email
-       if ($user->token != '') {
-           return redirect()->route('auth.login')->with('error', 'Por favor, haz click en el enlace enviado a tu email para verificar la cuenta.');
+       if (!empty($errors)) {
+           if ($request->ajax()) {
+               return response()->json(['status' => 'error', 'errors' => $errors]);
+           }
+
+           return redirect()->route('auth.login')->withInput()->with('error', $errors[0]);
        }
 
        //Attempt to log user in
        $credentials = ['email' => $email, 'password' => $password];
 
        if (!Auth::attempt($credentials, $request->has('remember'))) {
+           if ($request->ajax()) {
+               return response()->json(['status' => 'error', 'errors' => ['Datos incorrectos']]);
+           }
+
            return redirect()->route('auth.login')->with('error', 'Datos incorrectos')->withInput(['previous_page' => $previous_page]);
        }
 
        Auth::user()->last_login = Carbon::now();
        Auth::user()->save();
+
+       if ($request->ajax()) {
+           return response()->json(['status' => 'ok', 'errors' => [], 'message' => 'Has ingresado exitosamente.']);
+       }
 
        if ($previous_page) {
            return redirect()->to($previous_page)->with('message', 'Has ingresado exitosamente.');

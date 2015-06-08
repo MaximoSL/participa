@@ -4,6 +4,7 @@ namespace MXAbierto\Participa\Http\Controllers\Api;
 
 use Illuminate\Contracts\Auth\Guard;
 use MXAbierto\Participa\Models\User;
+use MXAbierto\Participa\Models\DocMeta;
 
 /**
  * 	Controller for User actions.
@@ -23,9 +24,9 @@ class UserController extends AbstractApiController
     /**
      * Api route to get the session logged in user.
      *
-     * @param \Illuminate\
+     * @param \Illuminate\Contracts\Auth\Guard
      *
-     * @return JSON user
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getCurrent(Guard $auth)
     {
@@ -179,9 +180,9 @@ class UserController extends AbstractApiController
         $opposes = DocMeta::where('meta_key', '=', 'support')->where('meta_value', '=', '')->where('doc_id', '=', $doc)->count();
 
         if (isset($docMeta)) {
-            return Response::json(['support' => $docMeta->meta_value, 'supports' => $supports, 'opposes' => $opposes]);
+            return response()->json(['support' => $docMeta->meta_value, 'supports' => $supports, 'opposes' => $opposes]);
         } else {
-            return Response::json(['support' => null, 'supports' => $supports, 'opposes' => $opposes]);
+            return response()->json(['support' => null, 'supports' => $supports, 'opposes' => $opposes]);
         }
     }
 }

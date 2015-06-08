@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-		<form class="" action="{{ route('api.auth.signup') }}" method="post">
+		<form class="" action="{{ route('api.auth.signup') }}" method="post" id="signup">
 			{!! csrf_field() !!}
 			<!-- First Name -->
 			<div class="form-group">
