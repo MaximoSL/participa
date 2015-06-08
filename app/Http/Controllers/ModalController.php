@@ -32,6 +32,6 @@ class ModalController extends AbstractController
 
     public function getAnnotationThanksModal()
     {
-        return View::make('modal.annotations.thanks');
+        return view('modal.annotations.thanks');
     }
 }

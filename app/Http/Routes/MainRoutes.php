@@ -154,16 +154,16 @@ class MainRoutes
         ]);
 
         // // Modal Routes
-        // $router->get('modals/annotation_thanks', [
-        //     'uses'   => 'ModalController@getAnnotationThanksModal',
-        //     'before' => 'disable profiler',
-        // ]);
-        //
-        // $router->post('modals/annotation_thanks', 'ModalController@seenAnnotationThanksModal');
-        //
-        //
-        // //Annotation Routes
-        // $router->get('annotation/{annotation}', 'AnnotationController@getIndex');
+        $router->get('modals/annotation_thanks', [
+            'uses'   => 'ModalController@getAnnotationThanksModal',
+            'before' => 'disable profiler',
+        ]);
+
+        $router->post('modals/annotation_thanks', 'ModalController@seenAnnotationThanksModal');
+
+
+        //Annotation Routes
+        $router->get('annotation/{annotation}', 'AnnotationController@getIndex');
         //
         //
         //

@@ -1,5 +1,19 @@
 /*global window*/
 window.jQuery = window.$;
+$(function() {
+  // Ajax Setup
+  $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+      var token;
+      if (! options.crossDomain) {
+          token = $('meta[name="token"]').attr('content');
+          if (token) {
+              jqXHR.setRequestHeader('X-CSRF-Token', token);
+          }
+      }
+
+      return jqXHR;
+  });
+});
 
 var imports = [
     'madisonApp.filters',
@@ -18,7 +32,6 @@ var imports = [
     'ngSanitize',
     'angular-growl',
     'ngResource',
-    //'angular-tour',
     'ngRoute',
     'ipCookie',
     'pascalprecht.translate'
@@ -57,7 +70,7 @@ var app = angular.module('madisonApp', imports);
 //   });
 // });
 
-// app.config(['growlProvider', '$httpProvider', '$routeProvider', function (growlProvider, $httpProvider, $routeProvider) {
+// app.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
 //     //Set up growl notifications
 //   growlProvider.messagesKey("messages");
 //   growlProvider.messageTextKey("text");
@@ -66,17 +79,17 @@ var app = angular.module('madisonApp', imports);
 //   growlProvider.onlyUniqueMessages(true);
 //   growlProvider.globalTimeToLive(5000);
 //
-//   $routeProvider
-//     .when('/user/edit/:user/notifications', {
-//       templateUrl: "/templates/pages/user-notification-settings.html",
-//       controller: "UserNotificationsController",
-//       title: "Notification Settings"
-//     });
+//   // $routeProvider
+//   //   .when(_baseUrl + '/user/edit/:user/notifications', {
+//   //     templateUrl: _baseUrl + "/templates/pages/user-notification-settings.html",
+//   //     controller: "UserNotificationsController",
+//   //     title: "Notification Settings"
+//   //   });
 // }]);
 
-app.config(function ($locationProvider) {
-  $locationProvider.html5Mode(true);
-});
+// app.config(function ($locationProvider) {
+//   $locationProvider.html5Mode(true);
+// });
 
 app.config(['$translateProvider', function ($translateProvider) {
   $translateProvider.translations('en', {

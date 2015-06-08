@@ -3,7 +3,16 @@
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use MXAbierto\Participa\Models\Annotation;
+use MXAbierto\Participa\Models\AnnotationComment;
+use MXAbierto\Participa\Models\AnnotationRange;
+use MXAbierto\Participa\Models\AnnotationPermission;
+use MXAbierto\Participa\Models\AnnotationTag;
+use MXAbierto\Participa\Models\MadisonEvent;
+use Exception;
 
 /**
  * 	Controller for Document actions.
@@ -132,9 +141,9 @@ class AnnotationController extends AbstractApiController
 
         $annotation = Annotation::find($id);
 
-        Event::fire(MadisonEvent::DOC_ANNOTATED, $annotation);
+        event(MadisonEvent::DOC_ANNOTATED, $annotation);
 
-        return Redirect::route('getAnnotation', [$doc, $id, 303]);
+        return redirect()->route('getAnnotation', [$doc, $id, 303]);
     }
 
     public function postSeen($docId, $annotationId)
@@ -278,7 +287,7 @@ class AnnotationController extends AbstractApiController
     public function postDislikes($doc, $annotation = null)
     {
         if ($annotation === null) {
-            App::abort(404, trans('messages.notreceivednoteid'));
+            abort(404, trans('messages.notreceivednoteid'));
         }
 
         $annotation = Annotation::find($annotation);
@@ -289,7 +298,7 @@ class AnnotationController extends AbstractApiController
         $annotation->load('user');
         $annotation->type = 'annotation';
 
-        Event::fire(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'dislike', 'activity' => $annotation, 'user'    => Auth::user()]);
+        event(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'dislike', 'activity' => $annotation, 'user' => Auth::user()]);
 
         return response()->json($annotation->toAnnotatorArray());
     }
@@ -297,7 +306,7 @@ class AnnotationController extends AbstractApiController
     public function postFlags($doc, $annotation = null)
     {
         if ($annotation === null) {
-            App::abort(404, trans('messages.notreceivednoteid'));
+            abort(404, trans('messages.notreceivednoteid'));
         }
 
         $annotation = Annotation::find($annotation);
@@ -323,7 +332,7 @@ class AnnotationController extends AbstractApiController
         $result->doc_id = $docId;
         $result->link = $result->getLink($docId);
 
-        Event::fire(MadisonEvent::DOC_SUBCOMMENT, ['subcomment' => $result, 'parent' => $annotation]);
+        event(MadisonEvent::DOC_SUBCOMMENT, ['subcomment' => $result, 'parent' => $annotation]);
 
         return response()->json($result);
     }

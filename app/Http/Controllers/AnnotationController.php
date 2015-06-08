@@ -2,7 +2,8 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
-use Illuminate\Support\Facades\Annotation;
+use Illuminate\Support\Facades\Input;
+use MXAbierto\Participa\Models\Annotation;
 
 /**
  * 	Controller for note actions.
