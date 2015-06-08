@@ -70,7 +70,7 @@ angular.module('madisonApp.controllers')
       if ($scope.user.id === '') {
         createLoginPopup($event);
       } else {
-        $http.post('/api/docs/' + $scope.doc.id + '/support', {
+        $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/support', {
           'support': supported
         })
         .success(function (data) {

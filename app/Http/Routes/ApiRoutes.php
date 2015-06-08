@@ -67,7 +67,7 @@ class ApiRoutes
             ]);
 
             //Document Support / Oppose routes
-            $router->post('docs/{doc}/support/', 'DocController@postSupport');
+            $router->post('docs/{doc}/support', 'DocController@postSupport');
             $router->get('users/{user}/support/{doc}', 'UserController@getSupport');
 
             //Document Api Routes
@@ -92,7 +92,7 @@ class ApiRoutes
             $router->post('docs/{doc}/title', 'DocumentController@postTitle');
             $router->post('docs/{doc}/slug', 'DocumentController@postSlug');
             $router->post('docs/{doc}/content', 'DocumentController@postContent');
-            $router->get('docs/', 'DocumentController@getDocs');
+            $router->get('docs', 'DocumentController@getDocs');
 
             //User Routes
             $router->get('user/current', 'UserController@getCurrent');
@@ -106,28 +106,28 @@ class ApiRoutes
             $router->put('user/{user}/edit/email', 'UserController@editEmail');
             $router->get('user/{user}/notifications', 'UserController@getNotifications');
             $router->put('user/{user}/notifications', 'UserController@putNotifications');
-
-            // Group Routes
-            $router->get('groups/verify/', 'GroupsController@getVerify');
-            $router->post('groups/verify/', 'GroupsController@postVerify');
-
-            // User Login / Signup AJAX requests
-            $router->get('user/login', [
-                'as'   => 'api/user/login',
-                'uses' => 'UserManageController@getLogin',
-            ]);
-            $router->post('user/login', [
-                'as'   => 'api/user/login',
-                'uses' => 'UserManageController@postLogin',
-            ]);
-            $router->get('user/signup', [
-                'as'   => 'api/user/signup',
-                'uses' => 'UserManageController@getSignup',
-            ]);
-            $router->post('user/signup', [
-                'as'   => 'api/user/signup',
-                'uses' => 'UserManageController@postSignup',
-            ]);
         });
+
+        // This fixes the back button on ajax requests
+        $router->get('api/auth/login', [
+            'as'   => 'api.auth.login',
+            'uses' => 'AuthController@getLogin',
+        ]);
+        $router->post('api/auth/login', [
+            'as'   => 'api.auth.login',
+            'uses' => 'AuthController@postLogin',
+        ]);
+        $router->get('api/logout', [
+            'as'   => 'api.auth.logout',
+            'uses' => 'AuthController@getLogout',
+        ]);
+        $router->get('api/auth/signup', [
+            'as'   => 'api.auth.signup',
+            'uses' => 'AuthController@getSignup',
+        ]);
+        $router->post('api/auth/signup', [
+            'as'   => 'api.auth.signup',
+            'uses' => 'AuthController@postSignup',
+        ]);
     }
 }

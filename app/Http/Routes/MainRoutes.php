@@ -47,7 +47,6 @@ class MainRoutes
         ]);
 
         //User Routes
-        //$router->controller('user', 'UserController');
         $router->get('auth/login', [
             'as'   => 'auth.login',
             'uses' => 'AuthController@getLogin',
@@ -57,7 +56,7 @@ class MainRoutes
             'uses' => 'AuthController@postLogin',
         ]);
         $router->get('logout', [
-            'as'   => 'logout',
+            'as'   => 'auth.logout',
             'uses' => 'AuthController@getLogout',
         ]);
         $router->get('auth/signup', [

@@ -96,9 +96,7 @@
               </ul>
             </div>
           </div>
-
-
-
+          
           <div class="sidebar-unit">
             <h4>{{ trans('messages.annotations') }}</h4>
             <hr class="red">

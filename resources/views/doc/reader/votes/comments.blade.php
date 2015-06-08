@@ -6,11 +6,11 @@
   <div id="participate-comment" class="participate-comment">
   	@include('doc.reader.votes.comment')
   </div>
-  @else
-  <div id="participate-comment" class="participate-comment">
-  	<p>{{ trans('messages.please') }} <a href="{{ url('/participa/user/login', $parameters = array(), $secure = null) }}" target="_self">{{ trans('messages.login') }}</a> {{ trans('messages.tocomment') }}.</p>
-  </div>
-  @endif
+@else
+<div id="participate-comment" class="participate-comment">
+	<p>{{ trans('messages.please') }} <a href="{{ route('auth.login') }}">{{ trans('messages.login') }}</a> {{ trans('messages.tocomment') }}.</p>
+</div>
+@endif
 <div id="participate-activity" class="participate-activity">
 	<h3>@{{ layoutTexts.header }}</h3>
   <p>@{{ layoutTexts.callToAction }}</p>

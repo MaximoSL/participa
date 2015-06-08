@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Doc extends Model
+class Doc extends Model implements HasPresenter
 {
     use SoftDeletes;
 
@@ -84,7 +85,7 @@ class Doc extends Model
 
     public function content()
     {
-        return $this->hasOne('MXAbierto\Participa\Models\DocContent');
+        return $this->hasOne('MXAbierto\Participa\Models\DocContent')->whereNull('parent_id');
     }
 
     public function doc_meta()
@@ -285,5 +286,15 @@ class Doc extends Model
         }
 
         return $doc;
+    }
+
+    /**
+     * Get the presenter class.
+     *
+     * @return string
+     */
+    public function getPresenterClass()
+    {
+        return 'MXAbierto\Participa\Presenters\DocumentPresenter';
     }
 }

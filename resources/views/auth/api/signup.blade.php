@@ -1,33 +1,30 @@
-{{--
-<div class="row">
-	<div class="md-col-12">
-		<h1>Signup</h1>
-	</div>
-</div>
---}}
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-		{{ Form::open(array('url'=>URL::route('api/user/signup'), 'method'=>'post')) }}
-		<div class="errors"></div>
-		<!-- First Name -->
-		<div class="form-group">
-			{{ Form::label('fname', Lang::get('messages.fname')) . Form::text('fname', Input::old('fname'), array('placeholder'=>Lang::get('messages.fname'), 'class'=>'form-control')) }}
-		</div>
-		<!-- Last Name -->
-		<div class="form-group">
-			{{ Form::label('lname', Lang::get('messages.lname')) . Form::text('lname', Input::old('lname'), array('placeholder'=>Lang::get('messages.lname'), 'class'=>'form-control')) }}
-		</div>
-		<!-- Email -->
-		<div class="form-group">
-			{{ Form::label('email', Lang::get('messages.email')) . Form::text('email', Input::old('email'), array('placeholder'=>Lang::get('messages.email'), 'class'=>'form-control')) }}
-		</div>
-		<!-- Password -->
-		<div class="form-group">
-			{{ Form::label('password', Lang::get('messages.password')) . Form::password('password', array('placeholder'=>Lang::get('messages.password'), 'class'=>'form-control')) }}
-		</div>
-		<!-- Submit -->
-		{{ Form::submit(Lang::get('messages.signup'), array('class'=>'btn btn-default')) }}
-		{{ Form::token() . Form::close() }}
+		<form class="" action="{{ route('api.auth.signup') }}" method="post">
+			{!! csrf_field() !!}
+			<!-- First Name -->
+			<div class="form-group">
+				<label for="fname">{{ trans('messages.fname') }}</label>
+				<input class="form-control" id="fname" type="text" name="fname" value="{{ old('fname') }}" placeholder="{{ trans('messages.fname') }}">
+			</div>
+			<!-- Last Name -->
+			<div class="form-group">
+				<label for="lname">{{ trans('messages.lname') }}</label>
+				<input class="form-control" id="lname" type="text" name="lname" value="{{ old('lname') }}" placeholder="{{ trans('messages.lname') }}">
+			</div>
+			<!-- Email -->
+			<div class="form-group">
+				<label for="email">{{ trans('messages.email') }}</label>
+				<input class="form-control" id="email" type="text" name="email" value="{{ old('email') }}" placeholder="{{ trans('messages.email') }}">
+			</div>
+			<!-- Password -->
+			<div class="form-group">
+				<label for="password">{{ trans('messages.password') }}</label>
+				<input class="form-control" id="password" type="password" name="password" placeholder="{{ trans('messages.password') }}">
+			</div>
+			<!-- Submit -->
+			<input class="btn btn-default" type="submit" value="{{ trans('messages.signup') }}">
+		</form>
 	</div>
 </div>
 <div class="row">

@@ -20,6 +20,10 @@ class AuthController extends AbstractController
      */
     public function getLogin(Request $request)
     {
+        if ($request->ajax()) {
+            return view('auth.api.login');
+        }
+
         $previous_page = $request->old('previous_page', URL::previous());
 
         return view('auth.login', [
@@ -82,16 +86,20 @@ class AuthController extends AbstractController
    /**
     * Returns signup page form.
     *
+    * @param  \Illuminate\Http\Request $request
+    *
     * @return Illuminate\View\View
     */
-   public function getSignup()
+   public function getSignup(Request $request)
    {
-       $data = [
+       if ($request->ajax()) {
+           return view('auth.api.signup');
+       }
+
+       return view('auth.signup', [
            'page_id'        => 'signup',
            'page_title'     => 'Registro a Participa',
-       ];
-
-       return view('auth.signup', $data);
+       ]);
    }
 
    /**
@@ -122,10 +130,19 @@ class AuthController extends AbstractController
        $user->token = $token;
 
        if (!$user->save()) {
+
+           if ($request->ajax()) {
+               return response()->json(['status' => 'error', 'errors' => $user->getErrors() ]);
+           }
+
            return redirect()->route('auth.signup')->withInput()->withErrors($user->getErrors());
        }
 
        event(new UserHasRegisteredEvent($user));
+
+       if ($request->ajax()) {
+           return response()->json(['status' => 'ok', 'errors' => [], 'message' => trans('messages.confirmationresent')]);
+       }
 
        return redirect()->route('auth.login')->with('message', trans('messages.confirmationresent'));
    }

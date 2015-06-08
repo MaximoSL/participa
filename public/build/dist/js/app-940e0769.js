@@ -77719,7 +77719,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       annotationService.addAnnotation(annotation);
       if ($.showAnnotationThanks) {
         $('#annotationThanks').modal({
-          remote: '/participa/modals/annotation_thanks',
+          remote: _baseUrl + '/modals/annotation_thanks',
           keyboard: true
         });
       }
@@ -77968,7 +77968,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
     };
 
     //POST request to add user's comment
-    $.post('/participa/api/docs/' + doc.id + '/annotations/' + annotation.id + '/comments', {
+    $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/comments', {
       comment: comment
     }, function () {
       annotation.comments.push(comment);
@@ -77977,7 +77977,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
     }.bind(this));
   },
   addLike: function (annotation, element) {
-    $.post('/participa/api/docs/' + doc.id + '/annotations/' + annotation.id + '/likes', function (data) {
+    $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/likes', function (data) {
       element = $(element);
       element.children('.action-count').text(data.likes);
       element.siblings('.glyphicon').removeClass('selected');
@@ -77999,7 +77999,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
     });
   },
   addDislike: function (annotation, element) {
-    $.post('/participa/api/docs/' + doc.id + '/annotations/' + annotation.id + '/dislikes', function (data) {
+    $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/dislikes', function (data) {
       element = $(element);
       element.children('.action-count').text(data.dislikes);
       element.siblings('.glyphicon').removeClass('selected');
@@ -78021,7 +78021,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
     });
   },
   addFlag: function (annotation, element) {
-    $.post('/participa/api/docs/' + doc.id + '/annotations/' + annotation.id + '/flags', function (data) {
+    $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/flags', function (data) {
       element = $(element);
       element.children('.action-count').text(data.flags);
       element.siblings('.glyphicon').removeClass('selected');
@@ -78192,7 +78192,7 @@ angular.module( 'madisonApp.controllers' )
 
             subcomment.user = $scope.user;
 
-            $.post( '/participa/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/comments', {
+            $.post( _baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/comments', {
                     'comment'   : subcomment
                 })
                 .success( function ( data ) {
@@ -78440,7 +78440,7 @@ angular.module( 'madisonApp.controllers' )
 
             subcomment.user = $scope.user;
 
-            $.post(_baseUrl + '/participa/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/comments', {
+            $.post(_baseUrl + _baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/comments', {
                 'comment': subcomment
             })
                 .success( function ( data ) {
@@ -78631,7 +78631,7 @@ angular.module('madisonApp.controllers')
   }]);
 
 angular.module('madisonApp.controllers')
-  .controller('ReaderController', [ '$scope', '$http', 'annotationService', 'createLoginPopup', '$timeout', '$anchorScroll', function ($scope, $http, annotationService, createLoginPopup, $timeout, $anchorScroll) {
+  .controller('ReaderController', ['$scope', '$http', 'annotationService', 'createLoginPopup', '$timeout', '$anchorScroll', function ($scope, $http, annotationService, createLoginPopup, $timeout, $anchorScroll) {
     var presentePlural = function(howMany) { return howMany == 1 ? '' : 'n'; };
 
     var howManySupport = function(howMany, doesSupport) {
@@ -78702,7 +78702,7 @@ angular.module('madisonApp.controllers')
       if ($scope.user.id === '') {
         createLoginPopup($event);
       } else {
-        $http.post('/api/docs/' + $scope.doc.id + '/support', {
+        $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/support', {
           'support': supported
         })
         .success(function (data) {
@@ -78829,7 +78829,7 @@ angular.module('madisonApp.controllers')
                 event.stopPropagation();
                 event.preventDefault();
 
-                $.get('/participa/api/user/login', {}, function (data) {
+                $.get(_baseUrl + '/api/user/login', {}, function (data) {
                   data = $(data);
 
                   ajaxify_form(data.find('form'), function () {
@@ -78846,7 +78846,7 @@ angular.module('madisonApp.controllers')
                 event.stopPropagation();
                 event.preventDefault();
 
-                $.get('/participa/api/user/signup', {}, function (data) {
+                $.get(_baseUrl + '/api/user/signup', {}, function (data) {
                   data = $(data);
 
                   ajaxify_form(data.find('form'), function (result) {
@@ -79890,7 +79890,7 @@ angular.module( 'madisonApp.services' )
                 event.stopPropagation();
                 event.preventDefault();
 
-                $.get( '/participa/api/user/login/', {}, function ( data ) {
+                $.get( _baseUrl + '/api/auth/login', {}, function ( data ) {
                     data    = $( data );
 
                     ajaxify_form(data.find('form'), function () {
@@ -79904,7 +79904,7 @@ angular.module( 'madisonApp.services' )
                 event.stopPropagation();
                 event.preventDefault();
 
-                $.get( '/participa/api/user/signup/', {}, function ( data ) {
+                $.get( _baseUrl + '/api/auth/signup', {}, function ( data ) {
                     data    = $( data );
 
                     ajaxify_form( data.find( 'form' ), function ( result ) {
@@ -79929,6 +79929,7 @@ angular.module( 'madisonApp.services' )
             }, 50 );
         };
     }]);
+
 angular.module( 'madisonApp.services' )
     .service( 'modalService', [ '$modal', function ( $modal ) {
         //Set modal defaults

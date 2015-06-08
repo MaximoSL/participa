@@ -2,15 +2,21 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Auth;
+use MXAbierto\Participa\Models\Annotation;
+
 /**
  * 	Controller for Document actions.
  */
 class AnnotationController extends AbstractApiController
 {
+    /**
+     * Creates a new annotation controller.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        parent::__construct();
-
         $this->beforeFilter('auth', ['on' => ['post', 'put', 'delete']]);
     }
 
@@ -31,21 +37,21 @@ class AnnotationController extends AbstractApiController
     {
         try {
             $userId = null;
+
             if (Auth::check()) {
                 $userId = Auth::user()->id;
             }
 
             $results = Annotation::loadAnnotationsForAnnotator($docId, $annotationId, $userId);
         } catch (Exception $e) {
-            throw $e;
-            App::abort(500, $e->getMessage());
+            abort(500, $e->getMessage());
         }
 
         if (isset($annotationId)) {
-            return Response::json($results[0]);
+            return response()->json($results[0]);
         }
 
-        return Response::json($results);
+        return response()->json($results);
     }
 
     /**
@@ -165,7 +171,7 @@ class AnnotationController extends AbstractApiController
             $message->to($email); // Recipient address
         });
 
-        return Response::json($annotation);
+        return response()->json($annotation);
     }
 
     /**
@@ -186,7 +192,7 @@ class AnnotationController extends AbstractApiController
         $annotation = Annotation::createFromAnnotatorArray($body);
         $annotation->updateSearchIndex();
 
-        return Response::json($annotation);
+        return response()->json($annotation);
     }
 
     /**
@@ -206,7 +212,7 @@ class AnnotationController extends AbstractApiController
 
         $ret = $annotation->delete();
 
-        return Response::make(null, 204);
+        return response()->make(null, 204);
     }
 
     /**
@@ -225,7 +231,7 @@ class AnnotationController extends AbstractApiController
 
         $likes = Annotation::getMetaCount($annotation, 'likes');
 
-        return Response::json(['likes' => $likes]);
+        return response()->json(['likes' => $likes]);
     }
 
     public function getDislikes($doc, $annotation = null)
@@ -236,7 +242,7 @@ class AnnotationController extends AbstractApiController
 
         $dislikes = Annotation::getMetaCount($annotation, 'dislikes');
 
-        return Response::json(['dislikes' => $dislikes]);
+        return response()->json(['dislikes' => $dislikes]);
     }
 
     public function getFlags($doc, $annotation = null)
@@ -247,7 +253,7 @@ class AnnotationController extends AbstractApiController
 
         $flags = Annotation::getMetaCount($annotation, 'flags');
 
-        return Response::json(['flags' => $flags]);
+        return response()->json(['flags' => $flags]);
     }
 
     public function postLikes($doc, $annotation = null)
@@ -266,7 +272,7 @@ class AnnotationController extends AbstractApiController
 
         Event::fire(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'like', 'activity' => $annotation, 'user'    => Auth::user()]);
 
-        return Response::json($annotation->toAnnotatorArray());
+        return response()->json($annotation->toAnnotatorArray());
     }
 
     public function postDislikes($doc, $annotation = null)
@@ -285,7 +291,7 @@ class AnnotationController extends AbstractApiController
 
         Event::fire(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'dislike', 'activity' => $annotation, 'user'    => Auth::user()]);
 
-        return Response::json($annotation->toAnnotatorArray());
+        return response()->json($annotation->toAnnotatorArray());
     }
 
     public function postFlags($doc, $annotation = null)
@@ -297,7 +303,7 @@ class AnnotationController extends AbstractApiController
         $annotation = Annotation::find($annotation);
         $annotation->saveUserAction(Auth::user()->id, Annotation::ACTION_FLAG);
 
-        return Response::json($annotation->toAnnotatorArray());
+        return response()->json($annotation->toAnnotatorArray());
     }
 
     public function postComments($docId, $annotationId)
@@ -319,6 +325,6 @@ class AnnotationController extends AbstractApiController
 
         Event::fire(MadisonEvent::DOC_SUBCOMMENT, ['subcomment' => $result, 'parent' => $annotation]);
 
-        return Response::json($result);
+        return response()->json($result);
     }
 }

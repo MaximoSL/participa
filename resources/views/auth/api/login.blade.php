@@ -1,27 +1,23 @@
-{{--
-<div class="row">
-	<div class="md-col-12">
-		<h1>Login</h1>
-	</div>
-</div>
---}}
-
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-		{{ Form::open(array('url'=>URL::route('api/user/login'), 'method'=>'post')) }}
-		<div class="errors"></div>
-		<!-- Email -->
-		<div class="form-group">
-			{{ Form::label('email', Lang::get('messages.email')) . Form::text('email', Input::old('email'), array('placeholder'=>Lang::get('messages.email'), 'class'=>'form-control')) }}
-		</div>
-		<!-- Password -->
-		<div class="form-group">
-			{{ Form::label('password', Lang::get('messages.password')) . Form::password('password', array('placeholder'=>Lang::get('messages.password'), 'class'=>'form-control')) }}
-		</div>
-		<!-- Submit -->
-		{{ Form::submit(Lang::get('messages.login'), array('class'=>'btn btn-default')) }}
-		<a class="forgot-password" href="{{ URL::route('password/remind') }}">{{ trans('messages.forgotpassword') }}</a>
-		{{ Form::token() . Form::close() }}
+		<form action="{{ route('api.auth.login') }}" method="post">
+			{!! csrf_field() !!}
+			<div class="errors"></div>
+			<!-- Email -->
+			<div class="form-group">
+				<label for="email">{{ trans('messages.email') }}</label>
+				<input class="form-control" type="text" name="email" value="{{ old('email') }}" placeholder="{{ trans('messages.email') }}">
+			</div>
+			<!-- Password -->
+			<div class="form-group">
+				<label for="email">{{ trans('messages.password') }}</label>
+				<input class="form-control" type="password" name="password" value="" placeholder="{{ trans('messages.password') }}">
+			</div>
+			<!-- Submit -->
+			<input class="btn btn-default" type="submit" value="{{ trans('messages.login') }}">
+			<br>
+			<a class="forgot-password" href="{{ route('password.remind') }}">{{ trans('messages.forgotpassword') }}</a>
+		</form>
 	</div>
 </div>
 <div class="row">
