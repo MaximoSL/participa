@@ -68,10 +68,6 @@ class MainRoutes
             'uses' => 'AuthController@postSignup',
         ]);
 
-        $router->get('user/{id}', [
-            'as'   => 'user.show',
-            'uses' => 'UserController@getIndex',
-        ]);
         $router->get('user/account', [
             'as'   => 'user.account',
             'uses' => 'AccountController@getEdit',
@@ -87,6 +83,10 @@ class MainRoutes
         $router->patch('user/notifications', [
             'as'   => 'user.notifications',
             'uses' => 'NotificationsController@editNotifications',
+        ]);
+        $router->get('user/{id}', [
+            'as'   => 'user.show',
+            'uses' => 'UserController@getIndex',
         ]);
 
         //Password Routes

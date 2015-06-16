@@ -25,11 +25,10 @@
               <li class="link-login"><a href="{{ route('auth.login') }}" target="_self">{{ trans('messages.login') }}</a></li>
               <li class="link-signup"><a href="{{ route('auth.signup') }}" target="_self">{{ trans('messages.signup') }}</a></li>
             @else
-              @if($loggedUser->hasRole('Independent Sponsor'))
+              @if($loggedUser->hasRole('Independent Sponsor') || $loggedUser->hasRole('Admin'))
                 <li class="link-settings"><a href="{{ route('documents') }}" target="_self">{{ trans('messages.mydocs') }}</a>
               @endif
               <li class="link-settings"><a href="{{ route('user.account') }}" target="_self">{{ trans('messages.accountsettings') }}</a></li>
-              <li><a href="{{ route('user.notifications') }}" target="_self">{{ trans('messages.notifsettings') }}</a></li>
               @if($loggedUser->hasRole('Admin'))
                 <li><a href="{{ route('dashboard') }}" target="_self">{{ trans('messages.admin') }}</a></li>
               @endif
