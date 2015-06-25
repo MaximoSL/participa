@@ -36,18 +36,18 @@ class AdminRoutes
             ]);
 
             //Dashboard's Doc Routes
-            $router->get('dashboard/docs', [
-                'as'   => 'dashboard.docs',
-                'uses' => 'DocumentsController@getDocs',
-            ]);
-            $router->post('dashboard/docs', [
-                'as'   => 'dashboard.docs',
-                'uses' => 'DocumentsController@postDocs',
-            ]);
-            $router->get('dashboard/docs/{doc}', [
-                'as'   => 'dashboard.docs.show',
-                'uses' => 'DocumentsController@showDoc',
-            ]);
+            // $router->get('dashboard/docs', [
+            //     'as'   => 'dashboard.docs',
+            //     'uses' => 'DocumentsController@getDocs',
+            // ]);
+            // $router->post('dashboard/docs', [
+            //     'as'   => 'dashboard.docs',
+            //     'uses' => 'DocumentsController@postDocs',
+            // ]);
+            // $router->get('dashboard/docs/{doc}', [
+            //     'as'   => 'dashboard.docs.show',
+            //     'uses' => 'DocumentsController@showDoc',
+            // ]);
         });
     }
 }

@@ -8,8 +8,8 @@
 			<div class="col-md-12">
 				<div class="content">
 					<ul class="list-unstyled">
-						<li><a href="{{ route('dashboard.docs') }}">{{ trans('messages.createeditdocs') }}</li>
-						<li><a href="{{ route('dashboard.notifications') }}">{{ trans('messages.notifications') }}</li>
+						{{-- <li><a href="{{ route('dashboard.docs') }}">{{ trans('messages.createeditdocs') }}</a></li> --}}
+						<li><a href="{{ route('dashboard.notifications') }}">{{ trans('messages.notifications') }}</a></li>
 					</ul>
 				</div>
 			</div>
