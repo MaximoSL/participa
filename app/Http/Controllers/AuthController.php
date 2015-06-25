@@ -19,7 +19,7 @@ class AuthController extends AbstractController
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest', ['except' => 'getLogout']);
     }
 
     /**
