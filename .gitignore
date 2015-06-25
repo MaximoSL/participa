@@ -16,3 +16,7 @@ npm-debug.log
 
 # PHPUnit
 phpunit.xml
+
+# OS
+.DS_Store
+Thumbs.db
