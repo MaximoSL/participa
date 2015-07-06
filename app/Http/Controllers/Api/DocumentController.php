@@ -5,7 +5,9 @@ namespace MXAbierto\Participa\Http\Controllers\Api;
 use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\Doc;
 use MXAbierto\Participa\Models\DocMeta;
+use MXAbierto\Participa\Models\DocContent;
 use MXAbierto\Participa\Models\Category;
+use MXAbierto\Participa\Models\MadisonEvent;
 use MXAbierto\Participa\Models\UserMeta;
 
 /**
