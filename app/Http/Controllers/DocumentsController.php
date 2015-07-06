@@ -4,9 +4,12 @@ namespace MXAbierto\Participa\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use MXAbierto\Participa\Models\Doc;
+use MXAbierto\Participa\Models\DocContent;
+use MXAbierto\Participa\Models\MadisonEvent;
 
 class DocumentsController extends AbstractController
 {
