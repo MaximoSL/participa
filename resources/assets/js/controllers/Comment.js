@@ -215,7 +215,7 @@ angular.module( 'madisonApp.controllers' )
 
             subcomment.user = $scope.user;
 
-            $.post(_baseUrl + _baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/comments', {
+            $.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/comments', {
                 'comment': subcomment
             })
                 .success( function ( data ) {
