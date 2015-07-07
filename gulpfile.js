@@ -8,7 +8,7 @@ elixir(function(mix) {
       .styles([
         'bower_components/angular-growl-2/build/angular-growl.min.css',
         //'bower_components/pagedown/assets/demo.css',
-        //'bower_components/datetimepicker/datetimepicker.css',
+        'bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css',
         //'bower_components/jquery/jquery-ui-smoothness.css',
         'bower_components/annotator/annotator.min.css',
         'public/dist/css/app.css'
