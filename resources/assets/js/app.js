@@ -37,6 +37,8 @@ var imports = [
     'pascalprecht.translate'
   ];
 
+moment.locale('es');
+
 var app = angular.module('madisonApp', imports);
 
 // Add a prefix to all http calls
