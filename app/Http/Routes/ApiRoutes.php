@@ -21,9 +21,6 @@ class ApiRoutes
     public function map(Registrar $router)
     {
         $router->group(['namespace' => 'Api', 'prefix' => 'api'], function (Registrar $router) {
-            $router->get('sponsors/all', 'SponsorController@getAllSponsors');
-            $router->get('user/sponsors/all', 'DocumentController@getAllSponsorsForUser');
-
             //Annotation Action Routes
             $router->post('docs/{doc}/annotations/{annotation}/likes', 'AnnotationController@postLikes');
             $router->post('docs/{doc}/annotations/{annotation}/dislikes', 'AnnotationController@postDislikes');
