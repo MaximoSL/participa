@@ -53,7 +53,7 @@
             <div id="tab-activity" ng-class="{'active':secondtab == false}" class="tab-pane">
               <div id="content" class="@if($loggedUser) logged_in @endif" tourtip="@{{ step_messages.step_2 }}" tourtip-step="2" tourtip-next-label="Siguiente">
                 <div id="doc_content" class="doc-content-main" tourtip="@{{ step_messages.step_4 }}" tourtip-step="4" tourtip-next-label="Finalizar">
-                  {!! $doc->formattedContent !!}
+                  {!! $doc->formatted_content !!}
                 </div>
               </div>
             </div>

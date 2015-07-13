@@ -58,6 +58,11 @@ class Doc extends Model implements HasPresenter
         return $this->belongsToMany('MXAbierto\Participa\Models\User');
     }
 
+    public function group()
+    {
+        return $this->belongsToMany('MXAbierto\Participa\Models\Group');
+    }
+
     public function userSponsor()
     {
         return $this->belongsToMany('MXAbierto\Participa\Models\User');
@@ -111,24 +116,10 @@ class Doc extends Model implements HasPresenter
         return false;
     }
 
-    public function sponsorName()
-    {
-        $sponsor = $this->sponsor->first();
-
-        if ($sponsor instanceof User) {
-            $display_name = $sponsor->fname.' '.$sponsor->lname;
-        } else {
-            $display_name = '';
-        }
-
-        return $display_name;
-    }
-
     public function getLink()
     {
-        return URL::to('docs/'.$this->slug);
+        return route('docs.doc', $this->slug);
     }
-
 
     public static function createEmptyDocument(array $params)
     {

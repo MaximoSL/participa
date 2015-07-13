@@ -17,8 +17,24 @@ class DocumentPresenter extends BasePresenter
      *
      * @return string
      */
-    public function formattedContent()
+    public function formatted_content()
     {
         return Markdown::convertToHtml($this->wrappedObject->content->content);
+    }
+
+    /**
+     * Get the group name.
+     *
+     * @return string
+     */
+    public function group_name()
+    {
+        $group = $this->wrappedObject->group;
+
+        if (!$group || $group->isEmpty()) {
+            return;
+        }
+
+        return $this->wrappedObject->group->first()->name;
     }
 }

@@ -1,6 +1,6 @@
 <div id="participate-comment-message" class="participate-vote-message message-box"></div>
 @if($loggedUser)
-  @if($doc->canUserEdit($loggedUser)
+  @if($doc->canUserEdit($loggedUser))
   <div ng-init="caneditdocument=true"></div>
   <div id="participate-comment" class="participate-comment">
   	@include('doc.reader.cofemer.comment')

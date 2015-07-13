@@ -16,7 +16,7 @@
           <h1>{{ trans('messages.cofemer-layout-header') }}</h1>
           <ul class="list-unstyled">
             <li>
-              <small>{{ trans('messages.dependency') }}: {{ $doc->sponsorName() }}</small>
+              <small>{{ trans('messages.dependency') }}: {{ $doc->group_name }}</small>
             </li>
             <li>
               <small>@{{ 'POSTED' | translate }}: @{{ doc.created_at | date: 'longDate' }}, @{{ doc.created_at | date: 'HH:mm:ss' }}</small>
@@ -96,7 +96,7 @@
               </ul>
             </div>
           </div>
-          
+
           <div class="sidebar-unit">
             <h4>{{ trans('messages.annotations') }}</h4>
             <hr class="red">
