@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => env('APP_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -140,6 +140,7 @@ return [
         /*
          * Packages Service Providers...
          */
+         'Laravel\Socialite\SocialiteServiceProvider',
          'Zizaco\Entrust\EntrustServiceProvider',
          'Roumen\Feed\FeedServiceProvider',
          'Roumen\Sitemap\SitemapServiceProvider',

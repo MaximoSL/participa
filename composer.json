@@ -13,7 +13,8 @@
         "roumen/feed": "^2.9",
         "roumen/sitemap": "^2.5",
         "zizaco/entrust": "dev-laravel-5",
-        "bugsnag/bugsnag-laravel": "1.*"
+        "bugsnag/bugsnag-laravel": "1.*",
+        "laravel/socialite": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

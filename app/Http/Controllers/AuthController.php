@@ -7,11 +7,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+use Laravel\Socialite\Facades\Socialite;
 use MXAbierto\Participa\Events\UserHasRegisteredEvent;
 use MXAbierto\Participa\Models\User;
 
 class AuthController extends AbstractController
 {
+    /**
+     * The social login scopes.
+     *
+     * @return string[]
+     */
+    protected $scopes = [
+        'facebook' => ['email', 'public_profile'],
+        'twitter'  => [],
+        'linkedin' => ['r_basicprofile', 'r_emailaddress'],
+    ];
+
     /**
      * Creates a new auth contoller instance.
      *
@@ -223,211 +236,93 @@ class AuthController extends AbstractController
    }
 
    /**
-    * getFacebookLogin.
+    * Get social connect.
     *
-    *	Handles OAuth communication with Facebook for signup / login
-    *		Calls $this->getAuthorizationUri() if the oauth code is passed via Input
-    *		Otherwise calls $fb->getAuthorizationUri()
+    * @param  string $provider
     *
-    *	@param void
-    *
-    *	@return Illuminate\Http\RedirectResponse || $this->oauthLogin($user_info)
-    *
-    *	@todo clean up this doc block
+    * @return \Illuminate\Http\RedirectResponse
     */
-   public function getFacebookLogin()
-   {
+    public function getConnect($provider)
+    {
+        try {
+            return Socialite::driver($provider)->scopes(array_get($this->scopes, $provider))->redirect();
+        } catch (\Exception $e){
+            abort(404);
+        }
+    }
 
-       // get data from input
-       $code = Input::get('code');
-
-       // get fb service
-       $fb = OAuth::consumer('Facebook');
-
-       // check if code is valid
-
-       // if code is provided get user data and sign in
-       if (!empty($code)) {
-
-           // This was a callback request from facebook, get the token
-           $token = $fb->requestAccessToken($code);
-
-           // Send a request with it
-           $result = json_decode($fb->request('/me'), true);
-
-           // Remap the $result to something that matches our schema.
-           $user_info = [
-               'fname'        => $result['first_name'],
-               'lname'        => $result['last_name'],
-               'email'        => $result['email'],
-               'oauth_vendor' => 'facebook',
-               'oauth_id'     => $result['id'],
-           ];
-
-           return $this->oauthLogin($user_info);
-       }
-       // if not ask for permission first
-       else {
-           // get fb authorization
-           $url = $fb->getAuthorizationUri();
-
-           // return to facebook login url
-            return redirect()->to((string) $url);
-       }
-   }
 
    /**
-    * getFacebookLogin.
+    * Get social connect callback.
     *
-    *	Handles OAuth communication with Twitter for signup / login
-    *		Calls $this->oauthLogin() if the oauth code is passed via Input
-    *		Otherwise calls $tw->requestRequestToken()
+    * @param  string $provider
     *
-    *	@param void
-    *
-    *	@return Illuminate\Http\RedirectResponse || $this->oauthLogin($user_info)
-    *
-    *	@todo clean up this doc block
+    * @return \Illuminate\Http\RedirectResponse
     */
-   public function getTwitterLogin()
-   {
+    public function getCallback($provider)
+    {
+        try {
+            $user = Socialite::driver($provider)->user();
+        } catch (\Exception $e){
+            return redirect()->route('auth.login')->with('error', 'La conexión ha fallado intenta nuevamente por favor.');
+        }
 
-       // get data from input
-       $token = Input::get('oauth_token');
-       $verify = Input::get('oauth_verifier');
+        $parts = explode(" ", $user->getName());
+        $lastname = array_pop($parts);
+        $firstname = implode(" ", $parts);
 
-       // get twitter service
-       $tw = OAuth::consumer('Twitter');
+        $userInfo = [
+            'fname'        => $firstname,
+            'lname'        => $lastname,
+            'email'        => $user->getEmail(),
+            'oauth_vendor' => $provider,
+            'oauth_id'     => $user->getId(),
+        ];
 
-       // check if code is valid
-
-       // if code is provided get user data and sign in
-       if (!empty($token) && !empty($verify)) {
-
-       // This was a callback request from twitter, get the token
-       $token = $tw->requestAccessToken($token, $verify);
-
-       // Send a request with it
-       $result = json_decode($tw->request('account/verify_credentials.json'), true);
-
-           $user_info = [
-                   'fname'        => $result['name'],
-                   'lname'        => '-',
-                   'oauth_vendor' => 'twitter',
-                   'oauth_id'     => $result['id'],
-               ];
-
-           return $this->oauthLogin($user_info);
-       }
-       // if not ask for permission first
-       else {
-           // get request token
-           $reqToken = $tw->requestRequestToken();
-
-           // get Authorization Uri sending the request token
-           $url = $tw->getAuthorizationUri(['oauth_token' => $reqToken->getRequestToken()]);
-
-           // return to twitter login url
-           return redirect()->to((string) $url);
-       }
-   }
-
-   /**
-    * getFacebookLogin.
-    *
-    *	Handles OAuth communication with Facebook for signup / login
-    *		Calls $this->oauthLogin() if the oauth code is passed via Input
-    *		Otherwise calls $linkedinService->getAuthorizationUri()
-    *
-    *	@param void
-    *
-    *	@return Illuminate\Http\RedirectResponse || $this->oauthLogin($user_info)
-    *
-    *	@todo clean up this doc block
-    */
-   public function getLinkedinLogin()
-   {
-
-       // get data from input
-       $code = Input::get('code');
-
-       $linkedinService = OAuth::consumer('Linkedin');
-
-       if (!empty($code)) {
-
-               // retrieve the CSRF state parameter
-               $state = isset($_GET['state']) ? $_GET['state'] : null;
-
-               // This was a callback request from linkedin, get the token
-               $token = $linkedinService->requestAccessToken($_GET['code'], $state);
-
-           // Send a request with it. Please note that XML is the default format.
-           $result = json_decode($linkedinService->request('/people/~:(id,first-name,last-name,email-address)?format=json'), true);
-
-                   // Remap the $result to something that matches our schema.
-                   $user_info = [
-                       'fname'        => $result['firstName'],
-                       'lname'        => $result['lastName'],
-                       'email'        => $result['emailAddress'],
-                       'oauth_vendor' => 'linkedin',
-                       'oauth_id'     => $result['id'],
-                   ];
-
-           return $this->oauthLogin($user_info);
-       }// if not ask for permission first
-       else {
-           // get linkedinService authorization
-           $url = $linkedinService->getAuthorizationUri();
-
-           // return to linkedin login url
-           return redirect()->to((string) $url);
-       }
-   }
+        return $this->oauthLogin($userInfo);
+    }
 
    /**
     *	oauthLogin.
     *
     * Use OAuth data to login user.  Create account if necessary.
     *
-    *	@param array $user_info
+    *	@param array $userInfo
     *
     *	@return Illuminate\Http\RedirectResponse
     *
     *	@todo Should this be moved to the User model?
     */
-   public function oauthLogin($user_info)
+   protected function oauthLogin($userInfo)
    {
        // See if we already have a matching user in the system
-       $user = User::where('oauth_vendor', $user_info['oauth_vendor'])
-           ->where('oauth_id', $user_info['oauth_id'])->first();
+       $user = User::where('oauth_vendor', $userInfo['oauth_vendor'])
+           ->where('oauth_id', $userInfo['oauth_id'])->first();
 
-       if (!isset($user)) {
-
+       if (!$user) {
            // Make sure this user doesn't already exist in the system.
-           if (isset($user_info['email'])) {
-               $existing_user = User::where('email', $user_info['email'])->first();
+           if (isset($userInfo['email'])) {
+               if ($existingUser = User::where('email', $userInfo['email'])->first()) {
+                   Auth::login($existingUser);
 
-               if (isset($existing_user)) {
-                   Auth::login($existing_user);
-
-                   return redirect()->route('home')->with('success_message', 'Conectado con dirección de email '.$existing_user->email);
+                   return redirect()->route('home')->with('success_message', 'Conectado con dirección de email '.$existingUser->email);
                }
            }
 
            // Create a new user since we don't have one.
            $user = new User();
-           $user->oauth_vendor = $user_info['oauth_vendor'];
-           $user->oauth_id = $user_info['oauth_id'];
+           $user->oauth_vendor = $userInfo['oauth_vendor'];
+           $user->oauth_id = $userInfo['oauth_id'];
            $user->oauth_update = true;
 
            $new_user = true;
        }
 
        // Now that we have a user for sure, update the user and log them in.
-       $user->fname = $user_info['fname'];
-       $user->lname = $user_info['lname'];
-       if (isset($user_info['email'])) {
-           $user->email = $user_info['email'];
+       $user->fname = $userInfo['fname'];
+       $user->lname = $userInfo['lname'];
+       if (isset($userInfo['email'])) {
+           $user->email = $userInfo['email'];
        }
 
        // If the user is new, or if we are allowed to update the user via oauth.
@@ -435,7 +330,7 @@ class AuthController extends AbstractController
        // edits their account within Madison, locking in their info.
        if (isset($new_user) || (isset($user->oauth_update) && $user->oauth_update == true)) {
            if (!$user->save()) {
-               Log::error('Unable to save user: ', $user_info);
+               Log::error('Unable to save user: ', $userInfo);
            }
        }
 
