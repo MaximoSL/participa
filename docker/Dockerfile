@@ -20,7 +20,7 @@ RUN /bin/mv /var/www/participa/composer.phar /usr/local/bin/composer
 RUN /usr/local/bin/composer install --no-dev
 RUN /bin/chown www-data:www-data -R /var/www/participa
 RUN /bin/chmod -R 755 /var/www/participa/storage
-ADD docker/.env.docker /var/www/participa/.env
+ADD .env.docker /var/www/participa/.env
 
 EXPOSE 80 443
 
