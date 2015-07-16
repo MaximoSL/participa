@@ -6,14 +6,14 @@ redis:
   ports:
     - "6379"
   volumes:
-    - /var/www/participa/redis:/data
+    - ./redis:/data
 
 mysql:
   image: mysql
   ports:
     - "3306"
   volumes:
-    - /var/www/participa/data:/var/lib/mysql
+    - ./data:/var/lib/mysql
   environment:
     - MYSQL_ROOT_PASSWORD=root
 
@@ -22,7 +22,7 @@ participa:
   ports:
     - "80"
   volumes:
-    - /var/www/participa/logs:/logs
+    - ./logs:/logs
   links:
     - redis
     - mysql
