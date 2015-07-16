@@ -29,15 +29,17 @@ class SendEmailConfirmationListener
      *
      * @return void
      */
-    public function handler(UserHasRegisteredEvent $event)
+    public function handle(UserHasRegisteredEvent $event)
     {
+        $user = $event->user;
+
         $mail = [
-            'email' => $event->user->email,
-            'token' => $event->user->token,
+            'email' => $user->email,
+            'token' => $user->token,
         ];
 
         //Send email to user for email account verification
-        $this->mailer->queue('email.signup', ['token' => $token], function ($message) use ($mail) {
+        $this->mailer->queue('email.signup', $mail, function ($message) use ($mail) {
             $message->subject(trans('messages.confirmationtitle'));
             $message->from(trans('messages.emailfrom'), trans('messages.emailfromname'));
             $message->to($mail['email']); // Recipient address

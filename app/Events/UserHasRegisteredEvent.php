@@ -10,7 +10,7 @@ class UserHasRegisteredEvent
     /**
      * The user instance.
      *
-     * @var MXAbierto\Participa\Models\User
+     * @var \MXAbierto\Participa\Models\User
      */
     public $user;
 

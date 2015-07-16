@@ -67,6 +67,10 @@ class MainRoutes
             'as'   => 'auth.signup',
             'uses' => 'AuthController@postSignup',
         ]);
+        $router->get('auth/verify/{token}', [
+            'as'   => 'auth.verify',
+            'uses' => 'AuthController@getVerify',
+        ]);
 
         $router->get('user/account', [
             'as'   => 'user.account',
@@ -94,9 +98,18 @@ class MainRoutes
             'as'   => 'password.remind',
             'uses' => 'RemindersController@getRemind',
         ]);
-        $router->post('password/remind', 'RemindersController@postRemind');
-        $router->get('password/reset/{token}',  'RemindersController@getReset');
-        $router->post('password/reset',  'RemindersController@postReset');
+        $router->post('password/remind', [
+            'as'   => 'password.remind',
+            'uses' => 'RemindersController@postRemind',
+        ]);
+        $router->get('password/reset/{token}', [
+            'as'   => 'password.reset',
+            'uses' => 'RemindersController@getReset',
+        ]);
+        $router->post('password/reset', [
+            'as'   => 'password.reset',
+            'uses' => 'RemindersController@postReset',
+        ]);
 
         // Confirmation email resend
         $router->get('verification/remind',  [

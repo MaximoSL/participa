@@ -208,19 +208,18 @@ class AuthController extends AbstractController
     */
    public function getVerify($token)
    {
-       echo $token;
        $user = User::where('token', $token)->first();
 
-       if (isset($user)) {
-           $user->token = '';
-           $user->save();
-
-           Auth::login($user);
-
-           return Redirect::route('home')->with('success_message', 'Tu email ha sido verificado y ahora estás conectado.  Bienvenida/o '.$user->fname);
-       } else {
-           return Redirect::route('user/login')->with('error', 'El enlace de verificación no es válido.');
+       if (!$user) {
+           return redirect()->route('auth.login')->with('error', 'El enlace de verificación no es válido.');
        }
+
+       $user->token = '';
+       $user->save();
+
+       Auth::login($user);
+
+       return redirect()->route('home')->with('success_message', 'Tu email ha sido verificado y ahora estás conectado.  Bienvenida/o '.$user->fname);
    }
 
    /**
@@ -273,7 +272,7 @@ class AuthController extends AbstractController
            $url = $fb->getAuthorizationUri();
 
            // return to facebook login url
-            return Redirect::to((string) $url);
+            return redirect()->to((string) $url);
        }
    }
 
@@ -329,7 +328,7 @@ class AuthController extends AbstractController
            $url = $tw->getAuthorizationUri(['oauth_token' => $reqToken->getRequestToken()]);
 
            // return to twitter login url
-           return Redirect::to((string) $url);
+           return redirect()->to((string) $url);
        }
    }
 
@@ -381,7 +380,7 @@ class AuthController extends AbstractController
            $url = $linkedinService->getAuthorizationUri();
 
            // return to linkedin login url
-           return Redirect::to((string) $url);
+           return redirect()->to((string) $url);
        }
    }
 
@@ -411,7 +410,7 @@ class AuthController extends AbstractController
                if (isset($existing_user)) {
                    Auth::login($existing_user);
 
-                   return Redirect::route('home')->with('success_message', 'Conectado con dirección de email '.$existing_user->email);
+                   return redirect()->route('home')->with('success_message', 'Conectado con dirección de email '.$existing_user->email);
                }
            }
 
@@ -452,6 +451,6 @@ class AuthController extends AbstractController
            $message = 'Benvenido de nuevo, '.$user->fname;
        }
 
-       return Redirect::route('home')->with('success_message', $message);
+       return redirect()->route('home')->with('success_message', $message);
    }
 }
