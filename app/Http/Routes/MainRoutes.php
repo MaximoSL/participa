@@ -72,6 +72,16 @@ class MainRoutes
             'uses' => 'AuthController@getVerify',
         ]);
 
+        $router->get('auth/connect/{provider}', [
+            'as'   => 'auth.connect',
+            'uses' => 'AuthController@getConnect',
+        ]);
+
+        $router->get('auth/connect/{provider}/callback', [
+            'as'   => 'auth.connect.callback',
+            'uses' => 'AuthController@getCallback',
+        ]);
+
         $router->get('user/account', [
             'as'   => 'user.account',
             'uses' => 'AccountController@getEdit',
