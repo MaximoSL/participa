@@ -1,0 +1,28 @@
+# To properly start the services:
+# docker-compose up -d --no-recreate
+
+redis:
+  image: redis
+  ports:
+    - "6379"
+  volumes:
+    - /var/www/participa/redis:/data
+
+mysql:
+  image: mysql
+  ports:
+    - "3306"
+  volumes:
+    - /var/www/participa/data:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+
+participa:
+  image: mxabierto/participa
+  ports:
+    - "80"
+  volumes:
+    - /var/www/participa/logs:/logs
+  links:
+    - redis
+    - mysql
