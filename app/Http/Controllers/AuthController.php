@@ -14,6 +14,11 @@ use MXAbierto\Participa\Models\User;
 
 class AuthController extends AbstractController
 {
+    /**
+     * The social login scopes.
+     *
+     * @return string[]
+     */
     protected $scopes = [
         'facebook' => ['email', 'public_profile'],
         'twitter'  => [],
