@@ -50,7 +50,7 @@ return [
     'linkedin' => [
         'client_id'     => env('LI_CLIENT_ID'),
         'client_secret' => env('LI_CLIENT_SECRET'),
-        'redirect'      => env('APP_URL').'/auth/connect/twitter/callback',
+        'redirect'      => env('APP_URL').'/auth/connect/linkedin/callback',
     ],
 
 ];
