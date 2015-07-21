@@ -14,13 +14,13 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.addSuccessMessage( "Link copied to clipboard." );
+                                growl.success( "Link copied to clipboard." );
                             });
                         });
 
                         var $span       = $( element ).find( '.activity-icon > span.ng-binding' );
                         $span.on( "click", function() {
-                            $( element ).parent().effect( "highlight",{ 
+                            $( element ).parent().effect( "highlight",{
                                 color   : "#2276d7"
                             }, 1000 );
                         });

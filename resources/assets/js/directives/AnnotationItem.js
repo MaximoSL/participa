@@ -14,7 +14,7 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.addSuccessMessage( "Link copied to clipboard." );
+                                growl.success( "Link copied to clipboard." );
                             });
                         });
 
