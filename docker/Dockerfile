@@ -8,6 +8,7 @@ RUN git clone https://github.com/mxabierto/participa.git /var/www/participa
 RUN php5enmod mcrypt
 
 ADD participa.nginx /etc/nginx/sites-available/default
+ADD start.sh /var/www/participa/start.sh
 
 # Set PHP-FMP
 RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php5/fpm/php-fpm.conf
@@ -22,7 +23,8 @@ RUN /bin/chown www-data:www-data -R /var/www/participa
 RUN /bin/chmod -R 755 /var/www/participa/storage
 ADD .env.docker /var/www/participa/.env
 
+RUN chmod +x start.sh
+
 EXPOSE 80 443
 
-CMD ["php5-fpm"]
-CMD ["nginx", "-g", "daemon off;"]
+CMD [ "bash", "-c", "/var/www/participa/start.sh;bash" ]
