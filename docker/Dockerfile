@@ -17,7 +17,7 @@ RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php5/fpm/pool.d/
 WORKDIR /var/www/participa
 RUN /usr/bin/curl -sS https://getcomposer.org/installer |/usr/bin/php
 RUN /bin/mv /var/www/participa/composer.phar /usr/local/bin/composer
-RUN /usr/local/bin/composer install --no-dev
+RUN /usr/local/bin/composer install --no-dev --prefer-source
 RUN /bin/chown www-data:www-data -R /var/www/participa
 RUN /bin/chmod -R 755 /var/www/participa/storage
 ADD .env.docker /var/www/participa/.env
