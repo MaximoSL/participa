@@ -314,54 +314,8 @@ class Annotation extends Model implements ActivityInterface
         return $retval;
     }
 
-    public function updateSearchIndex()
-    {
-        $indexData = $this->toAnnotatorArray();
-        $client = static::getEsClient();
-
-        $esParams = [
-            'index' => static::getEsIndex(),
-            'type'  => static::INDEX_TYPE,
-        ];
-
-        if (!empty($this->search_id)) {
-            $esParams['body']['doc'] = $indexData;
-            $esParams['id'] = $this->search_id;
-
-            $result = $client->update($esParams);
-
-            return $this->save();
-        }
-
-        $esParams['body'] = $indexData;
-
-        $result = $client->index($esParams);
-        $this->search_id = $result['_id'];
-
-        return $this->save();
-    }
-
     public function delete()
     {
-        $client = static::getEsClient();
-
-        $esParams = [
-            'index' => static::getEsIndex(),
-            'type'  => static::INDEX_TYPE,
-            'id'    => $this->search_id,
-        ];
-        try {
-            $client->delete($esParams);
-        } catch (Exception $e) {
-            $message = json_decode($e->getMessage());
-
-            if ($message->ok) {
-                Log::warning('The annotation with id: '.$this->search_id.' was not found in ElasticSearch.  Deleting annotation from the DB...');
-            } else {
-                throw new Exception('Unable to delete annotation from ElasticSearch: '.$e->getMessage());
-            }
-        }
-
         DB::transaction(function () {
             $deletedMetas = NoteMeta::where('annotation_id', '=', $this->id)->delete();
             $deletedComments = AnnotationComment::where('annotation_id', '=', $this->id)->delete();

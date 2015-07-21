@@ -134,8 +134,6 @@ class AnnotationController extends AbstractApiController
                 $comment->save();
             }
 
-            //$annotation->updateSearchIndex();
-
             return $annotation->id;
         });
 
@@ -199,7 +197,6 @@ class AnnotationController extends AbstractApiController
         $body = Input::all();
 
         $annotation = Annotation::createFromAnnotatorArray($body);
-        $annotation->updateSearchIndex();
 
         return response()->json($annotation);
     }
