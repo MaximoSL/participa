@@ -2,8 +2,8 @@
 
 namespace MXAbierto\Participa\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
@@ -52,7 +52,7 @@ class Group extends Model
 
     public function getDisplayName()
     {
-        return !empty($this->display_name) ? $this->display_name : !empty($this->name) ? $this->name : "";
+        return !empty($this->display_name) ? $this->display_name : !empty($this->name) ? $this->name : '';
     }
 
     /**
@@ -63,7 +63,7 @@ class Group extends Model
         $role = strtolower($role);
 
         if (!static::isValidRole($role)) {
-            throw new \Exception("Invalid Role");
+            throw new \Exception('Invalid Role');
         }
 
         return "group_{$this->id}_$role";
@@ -73,7 +73,9 @@ class Group extends Model
     {
         $groupMember = GroupMember::where('group_id', '=', $this->id)->where('user_id', '=', $user->id)->first();
 
-        if(!$groupMember) return false;
+        if (!$groupMember) {
+            return false;
+        }
 
         return $groupMember->role === $role;
     }
@@ -96,7 +98,7 @@ class Group extends Model
         return [
             [
                 'name'         => "group_{$this->id}_create_document",
-                'display_name' => "Create Documents",
+                'display_name' => 'Create Documents',
             ],
             [
                 'name'         => "group_{$this->id}_edit_document",
@@ -104,11 +106,11 @@ class Group extends Model
             ],
             [
                 'name'         => "group_{$this->id}_delete_document",
-                'display_name' => "Delete Documents",
+                'display_name' => 'Delete Documents',
             ],
             [
                 'name'         => "group_{$this->id}_manage_document",
-                'display_name' => "Manage Documents",
+                'display_name' => 'Manage Documents',
             ],
         ];
     }
@@ -269,7 +271,7 @@ class Group extends Model
         $member = $group->findMemberByUserId($user_id);
 
         if (!$member) {
-            throw new Exception("Invalid Member ID");
+            throw new Exception('Invalid Member ID');
 
             return false;
         }
@@ -300,7 +302,7 @@ class Group extends Model
     public function findMemberByUserId($userId)
     {
         if (!isset($this->id) || empty($this->id)) {
-            throw new \Exception("You must have a group ID set in order to search for members");
+            throw new \Exception('You must have a group ID set in order to search for members');
         }
 
         return GroupMember::where('user_id', '=', $userId)->where('group_id', '=', $this->id)->first();
@@ -319,16 +321,16 @@ class Group extends Model
 
         if (!$groupMember) {
             if (is_null($role)) {
-                throw new \Exception("You must provide a role if adding a new member");
+                throw new \Exception('You must provide a role if adding a new member');
             }
 
             if (!isset($this->id) || empty($this->id)) {
-                throw new \Exception("The group must have a ID set in order to add a member");
+                throw new \Exception('The group must have a ID set in order to add a member');
             }
 
             $groupMember = new GroupMember();
             $groupMember->user_id = $userId;
-            $groupMember->role = Group::ROLE_OWNER;
+            $groupMember->role = self::ROLE_OWNER;
             $groupMember->group_id = $this->id;
         } else {
             if (!is_null($role)) {

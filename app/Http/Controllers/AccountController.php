@@ -4,8 +4,8 @@ namespace MXAbierto\Participa\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use MXAbierto\Participa\Models\UserMeta;
 use MXAbierto\Participa\Models\MadisonEvent;
+use MXAbierto\Participa\Models\UserMeta;
 
 class AccountController extends AbstractController
 {
@@ -36,7 +36,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * User's put request to update their profile
+     * User's put request to update their profile.
      *
      * @return \Illuminate\Http\RedirectResponse
      */

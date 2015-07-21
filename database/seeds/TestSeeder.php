@@ -6,8 +6,8 @@ class TestSeeder extends Seeder
 {
     public function run()
     {
-        $test_fname = "Alice";
-        $test_lname = "Wonderland";
+        $test_fname = 'Alice';
+        $test_lname = 'Wonderland';
         $test_password = 'password';
 
         factory('MXAbierto\Participa\Models\User')->create([

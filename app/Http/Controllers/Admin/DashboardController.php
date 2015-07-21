@@ -2,8 +2,6 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Collection;
 use MXAbierto\Participa\Http\Controllers\AbstractController;
 
 /**
@@ -19,8 +17,8 @@ class DashboardController extends AbstractController
     public function getIndex()
     {
         return view('dashboard.index', [
-            'page_id'        => 'dashboard',
-            'page_title'     => 'Dashboard',
+            'page_id'    => 'dashboard',
+            'page_title' => 'Dashboard',
         ]);
     }
 }

@@ -12,7 +12,7 @@ class CreateAnnotationCommentsTable extends Migration
     public function up()
     {
         Schema::create('annotation_comments', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
 
             $table->integer('id')->unsigned();
             $table->integer('annotation_id')->unsigned();

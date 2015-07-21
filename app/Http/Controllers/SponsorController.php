@@ -10,8 +10,8 @@ class SponsorController extends AbstractController
     public function getRequest()
     {
         $data = [
-      'page_id'     => 'sponsor_request',
-      'page_title'  => 'Request Sponsor',
+      'page_id'    => 'sponsor_request',
+      'page_title' => 'Request Sponsor',
     ];
 
         return View::make('documents.sponsor.request.index', $data);

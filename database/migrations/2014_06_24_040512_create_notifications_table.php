@@ -13,7 +13,7 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function ($table) {
 
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('event');
             $table->enum('type', ['text', 'email']);

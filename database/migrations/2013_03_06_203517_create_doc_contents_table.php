@@ -12,7 +12,7 @@ class CreateDocContentsTable extends Migration
     public function up()
     {
         Schema::create('doc_contents', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('doc_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();

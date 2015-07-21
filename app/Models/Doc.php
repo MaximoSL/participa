@@ -2,7 +2,6 @@
 
 namespace MXAbierto\Participa\Models;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -124,7 +123,7 @@ class Doc extends Model implements HasPresenter
     public static function createEmptyDocument(array $params)
     {
         $defaults = [
-            'content'     => 'New Document Content',
+            'content' => 'New Document Content',
         ];
 
         $params = array_replace_recursive($defaults, $params);

@@ -2,12 +2,11 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use McCool\LaravelAutoPresenter\PresenterDecorator;
 use MXAbierto\Participa\Models\Annotation;
 use MXAbierto\Participa\Models\Doc;
-use MXAbierto\Participa\Models\Group;
 use MXAbierto\Participa\Models\User;
 use Roumen\Feed\Facades\Feed;
-use McCool\LaravelAutoPresenter\PresenterDecorator;
 
 /**
  * The feed controller class.

@@ -2,7 +2,6 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
-use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\Annotation;
 
 /**
@@ -33,10 +32,10 @@ class AnnotationController extends AbstractController
 
         //Render view and return to user
         return view('annotation.index', [
-            'page_id'             => 'Annotation',
-            'page_title'          => 'View Annotation',
-            'annotation'          => $annotation,
-            'user'                => $user,
+            'page_id'    => 'Annotation',
+            'page_title' => 'View Annotation',
+            'annotation' => $annotation,
+            'user'       => $user,
         ]);
     }
 }

@@ -14,11 +14,11 @@ class RbacSeeder extends Seeder
         ],
         'ManageSettings' => [
             'name'         => 'admin_manage_settings',
-            'display_name' => "Manage Settings",
+            'display_name' => 'Manage Settings',
         ],
         'VerifyUsers' => [
-            'name'         => "admin_verify_users",
-            'display_name' => "Verify Users",
+            'name'         => 'admin_verify_users',
+            'display_name' => 'Verify Users',
         ],
     ];
 
@@ -53,8 +53,8 @@ class RbacSeeder extends Seeder
         $user->attachRole($admin);
 
         $createDocPerm = new Permission();
-        $createDocPerm->name = "independent_sponsor_create_doc";
-        $createDocPerm->display_name = "Independent Sponsoring";
+        $createDocPerm->name = 'independent_sponsor_create_doc';
+        $createDocPerm->display_name = 'Independent Sponsoring';
         $createDocPerm->save();
 
         $independent_sponsor->perms()->sync([$createDocPerm->id]);

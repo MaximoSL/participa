@@ -12,7 +12,7 @@ class CreateDocsTable extends Migration
     public function up()
     {
         Schema::create('docs', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->unique();

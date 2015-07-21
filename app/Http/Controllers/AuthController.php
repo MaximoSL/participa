@@ -5,9 +5,9 @@ namespace MXAbierto\Participa\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 use MXAbierto\Participa\Events\UserHasRegisteredEvent;
 use MXAbierto\Participa\Models\User;
@@ -51,9 +51,9 @@ class AuthController extends AbstractController
         $previous_page = $request->old('previous_page', URL::previous());
 
         return view('auth.login', [
-            'page_id'          => 'login',
-            'page_title'       => 'Log In',
-            'previous_page'    => $previous_page,
+            'page_id'       => 'login',
+            'page_title'    => 'Log In',
+            'previous_page' => $previous_page,
         ]);
     }
 
@@ -66,7 +66,7 @@ class AuthController extends AbstractController
     */
    public function postLogin(Request $request)
    {
-        //Rules for login form submission
+       //Rules for login form submission
         $validation = Validator::make($request->all(), [
             'email'    => 'required|email',
             'password' => 'required',
@@ -147,8 +147,8 @@ class AuthController extends AbstractController
        }
 
        return view('auth.signup', [
-           'page_id'        => 'signup',
-           'page_title'     => 'Registro a Participa',
+           'page_id'    => 'signup',
+           'page_title' => 'Registro a Participa',
        ]);
    }
 
@@ -180,9 +180,8 @@ class AuthController extends AbstractController
        $user->token = $token;
 
        if (!$user->save()) {
-
            if ($request->ajax()) {
-               return response()->json(['status' => 'error', 'errors' => $user->getErrors() ]);
+               return response()->json(['status' => 'error', 'errors' => $user->getErrors()]);
            }
 
            return redirect()->route('auth.signup')->withInput()->withErrors($user->getErrors());
@@ -235,41 +234,40 @@ class AuthController extends AbstractController
        return redirect()->route('home')->with('success_message', 'Tu email ha sido verificado y ahora estás conectado.  Bienvenida/o '.$user->fname);
    }
 
-   /**
-    * Get social connect.
-    *
-    * @param  string $provider
-    *
-    * @return \Illuminate\Http\RedirectResponse
-    */
+    /**
+     * Get social connect.
+     *
+     * @param string $provider
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function getConnect($provider)
     {
         try {
             return Socialite::driver($provider)->scopes(array_get($this->scopes, $provider))->redirect();
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             abort(404);
         }
     }
 
-
-   /**
-    * Get social connect callback.
-    *
-    * @param  string $provider
-    *
-    * @return \Illuminate\Http\RedirectResponse
-    */
+    /**
+     * Get social connect callback.
+     *
+     * @param string $provider
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function getCallback($provider)
     {
         try {
             $user = Socialite::driver($provider)->user();
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->route('auth.login')->with('error', 'La conexión ha fallado intenta nuevamente por favor.');
         }
 
-        $parts = explode(" ", $user->getName());
+        $parts = explode(' ', $user->getName());
         $lastname = array_pop($parts);
-        $firstname = implode(" ", $parts);
+        $firstname = implode(' ', $parts);
 
         $userInfo = [
             'fname'        => $firstname,

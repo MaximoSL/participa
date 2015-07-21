@@ -3,7 +3,6 @@
 namespace MXAbierto\Participa\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Collection;
 use MXAbierto\Participa\Http\Controllers\AbstractController;
 use MXAbierto\Participa\Models\Notification;
 
@@ -48,5 +47,4 @@ class NotificationsController extends AbstractController
 
         return Redirect::to('/participa/dashboard/notifications')->with('success_message', trans('messages.updatednotif'));
     }
-
 }

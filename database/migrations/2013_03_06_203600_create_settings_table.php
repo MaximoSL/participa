@@ -12,7 +12,7 @@ class CreateSettingsTable extends Migration
     public function up()
     {
         Schema::create('settings', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('meta_key');
             $table->string('meta_value')->nullable();

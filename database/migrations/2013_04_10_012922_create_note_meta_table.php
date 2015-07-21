@@ -12,7 +12,7 @@ class CreateNoteMetaTable extends Migration
     public function up()
     {
         Schema::create('note_meta', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('note_id');
             $table->integer('user_id')->unsigned()->nullable();

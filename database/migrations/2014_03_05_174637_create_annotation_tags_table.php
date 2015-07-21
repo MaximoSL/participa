@@ -12,7 +12,7 @@ class CreateAnnotationTagsTable extends Migration
     public function up()
     {
         Schema::create('annotation_tags', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->integer('annotation_id')->unsigned();

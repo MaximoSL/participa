@@ -13,7 +13,7 @@ class CreateAnnotationPermissionsTable extends Migration
     {
         Schema::create('annotation_permissions', function ($table) {
 
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->integer('annotation_id')->unsigned();

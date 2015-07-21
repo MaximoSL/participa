@@ -17,7 +17,7 @@ class MakeCommentsAutoIncrementing extends DualMigration
     public function upSQLite()
     {
         Schema::create('annotation_comments_temp', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->integer('annotation_id')->unsigned();
@@ -40,7 +40,7 @@ class MakeCommentsAutoIncrementing extends DualMigration
     public function downSQLite()
     {
         Schema::create('annotation_comments_temp', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
 
             $table->integer('id')->unsigned();
             $table->integer('annotation_id')->unsigned();

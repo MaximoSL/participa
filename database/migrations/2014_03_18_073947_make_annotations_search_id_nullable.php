@@ -19,7 +19,7 @@ class MakeAnnotationsSearchIdNullable extends DualMigration
         DB::statement('PRAGMA foreign_keys = OFF');
 
         Schema::create('annotations_temp', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->string('search_id')->nullable();
@@ -48,7 +48,7 @@ class MakeAnnotationsSearchIdNullable extends DualMigration
         DB::statement('PRAGMA foreign_keys = OFF');
 
         Schema::create('annotations_temp', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->string('search_id');

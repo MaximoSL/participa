@@ -12,7 +12,7 @@ class CreateOrganizationsTable extends Migration
     public function up()
     {
         Schema::create('organizations', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
             $table->string('zip');

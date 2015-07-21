@@ -12,7 +12,7 @@ class CreateAnnotationsTable extends Migration
     public function up()
     {
         Schema::create('annotations', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->string('search_id');

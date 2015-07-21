@@ -23,7 +23,7 @@ class AlterNoteMetaTable extends DualMigration
     {
         //Create temporary table
         Schema::create('note_meta_temp', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('annotation_id')->unsigned();
             $table->integer('user_id')->unsigned()->nullable();
@@ -48,7 +48,7 @@ class AlterNoteMetaTable extends DualMigration
     public function downSQLite()
     {
         Schema::create('note_meta_temp', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('note_id');
             $table->integer('user_id')->unsigned()->nullable();

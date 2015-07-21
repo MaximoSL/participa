@@ -12,7 +12,7 @@ class CreateDocMetaTable extends Migration
     public function up()
     {
         Schema::create('doc_meta', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('doc_id')->unsigned();
             $table->string('meta_key');

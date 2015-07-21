@@ -5,8 +5,8 @@ namespace MXAbierto\Participa\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use MXAbierto\Participa\Models\User;
 
 class RemindersController extends AbstractController
@@ -19,15 +19,15 @@ class RemindersController extends AbstractController
     public function getRemind()
     {
         return view('password.remind', [
-            'page_id'        => 'dashboard',
-            'page_title'     => 'Dashboard',
+            'page_id'    => 'dashboard',
+            'page_title' => 'Dashboard',
         ]);
     }
 
     /**
      * Send a reset link to the given user.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -62,23 +62,23 @@ class RemindersController extends AbstractController
         }
 
         return view('password.reset', [
-            'page_id'        => 'reset',
-            'page_title'     => 'Reset Password',
+            'page_id'    => 'reset',
+            'page_title' => 'Reset Password',
         ])->with('token', $token);
     }
 
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
     public function postReset(Request $request)
     {
         $this->validate($request, [
-            'token' => 'required',
-            'email' => 'required|email',
+            'token'    => 'required',
+            'email'    => 'required|email',
             'password' => 'required|confirmed',
         ]);
 
@@ -104,8 +104,9 @@ class RemindersController extends AbstractController
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
-     * @param  string  $password
+     * @param \Illuminate\Contracts\Auth\CanResetPassword $user
+     * @param string                                      $password
+     *
      * @return void
      */
     protected function resetPassword($user, $password)
@@ -120,8 +121,8 @@ class RemindersController extends AbstractController
     public function getConfirmation()
     {
         return view('password.resend', [
-            'page_id'        => 'dashboard',
-            'page_title'     => 'Resend confirmation email',
+            'page_id'    => 'dashboard',
+            'page_title' => 'Resend confirmation email',
         ]);
     }
 

@@ -29,9 +29,9 @@ class RoleAuthentication
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
-     * @param  string                   $role
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     * @param string                   $role
      *
      * @return mixed
      */
@@ -40,7 +40,7 @@ class RoleAuthentication
         if ($this->auth->check()) {
             $user = $this->auth->user();
 
-            if (! $user->hasRole($role)) {
+            if (!$user->hasRole($role)) {
                 abort(404);
             }
         }

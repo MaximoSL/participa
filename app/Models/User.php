@@ -8,9 +8,8 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Model\Collection;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
@@ -48,30 +47,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected static $rules = [
         'save' => [
-            'fname'    => 'required',
-            'lname'    => 'required',
+            'fname' => 'required',
+            'lname' => 'required',
         ],
         'create' => [
-            'email'            => 'required|unique:users',
-            'password'         => 'required',
+            'email'    => 'required|unique:users',
+            'password' => 'required',
         ],
-        'social-signup'    => [
-            'email'               => 'required|unique:users',
-            'oauth_vendor'        => 'required',
-            'oauth_id'            => 'required',
-            'oauth_update'        => 'required',
+        'social-signup' => [
+            'email'        => 'required|unique:users',
+            'oauth_vendor' => 'required',
+            'oauth_id'     => 'required',
+            'oauth_update' => 'required',
         ],
-        'twitter-signup'    => [
-            'oauth_vendor'        => 'required',
-            'oauth_id'            => 'required',
-            'oauth_update'        => 'required',
+        'twitter-signup' => [
+            'oauth_vendor' => 'required',
+            'oauth_id'     => 'required',
+            'oauth_update' => 'required',
         ],
-        'update'    => [
-            'email'            => 'required|unique:users',
-            'password'         => 'required',
+        'update' => [
+            'email'    => 'required|unique:users',
+            'password' => 'required',
         ],
-        'verify'    => [
-            'phone'            => 'required',
+        'verify' => [
+            'phone' => 'required',
         ],
     ];
 

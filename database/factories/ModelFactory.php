@@ -13,10 +13,10 @@
 
 $factory->define('MXAbierto\Participa\Models\User', function ($faker) {
     return [
-        'fname' => $faker->name,
-        'lname' => $faker->lastName,
-        'email' => $faker->email,
-        'password' => str_random(10),
+        'fname'          => $faker->name,
+        'lname'          => $faker->lastName,
+        'email'          => $faker->email,
+        'password'       => str_random(10),
         'remember_token' => str_random(10),
     ];
 });
@@ -26,7 +26,7 @@ $factory->define('MXAbierto\Participa\Models\Doc', function ($faker) {
 
     return [
         'title' => $title,
-        'slug' => str_slug($title),
+        'slug'  => str_slug($title),
     ];
 });
 

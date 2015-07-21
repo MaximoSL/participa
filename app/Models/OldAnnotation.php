@@ -59,7 +59,7 @@ class OldAnnotation
             $comment['id'] = $index + 1;
         }
 
-        $retval =  $this->update(false);
+        $retval = $this->update(false);
 
         $dbComment = new AnnotationComment();
         $dbComment->text = $comment['text'];
@@ -106,9 +106,9 @@ class OldAnnotation
         }
 
         $params = [
-            'index'   => $this->index,
-            'type'    => self::TYPE,
-            'id'      => $this->id,
+            'index' => $this->index,
+            'type'  => self::TYPE,
+            'id'    => $this->id,
         ];
 
         $attributes = new ReflectionClass('Annotation');
@@ -153,9 +153,9 @@ class OldAnnotation
         $this->body['updated'] = Carbon::now('America/New_York')->toRFC2822String();
 
         $params = [
-            'index'    => $this->index,
-            'type'     => self::TYPE,
-            'body'     => $this->body,
+            'index' => $this->index,
+            'type'  => self::TYPE,
+            'body'  => $this->body,
         ];
 
         $results = $es->index($params);
@@ -172,9 +172,9 @@ class OldAnnotation
         $es = self::connect();
 
         $params = [
-            'index'    => $this->index,
-            'type'     => self::TYPE,
-            'id'       => $this->id,
+            'index' => $this->index,
+            'type'  => self::TYPE,
+            'id'    => $this->id,
         ];
 
         $result = $es->delete($params);
@@ -349,10 +349,10 @@ class OldAnnotation
         }
 
         $toReturn = [
-                          'action'        => null,
-                          'likes'         => -1,
-                          'dislikes'      => -1,
-                          'flags'         => -1,
+                          'action'   => null,
+                          'likes'    => -1,
+                          'dislikes' => -1,
+                          'flags'    => -1,
                     ];
 
         $annotation = self::find($note_id);

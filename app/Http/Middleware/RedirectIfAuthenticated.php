@@ -17,7 +17,7 @@ class RedirectIfAuthenticated
     /**
      * Create a new filter instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Guard $auth
+     * @param \Illuminate\Contracts\Auth\Guard $auth
      *
      * @return void
      */

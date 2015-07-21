@@ -13,7 +13,7 @@ class CreateAnnotationRanges extends Migration
     {
         Schema::create('annotation_ranges', function ($table) {
 
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->integer('annotation_id')->unsigned();

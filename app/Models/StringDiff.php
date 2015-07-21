@@ -230,7 +230,7 @@ class StringDiff
     public static function getCommonArrays(array $idmap, $alen, array $achars)
     {
         $commonarrays = [];
-        for ($i = 0; $i < $alen; $i++) {
+        for ($i = 0; $i < $alen; ++$i) {
             if (isset($idmap[$i])) {
                 foreach ($idmap[$i] as $bkey) {
                     $key = $i.'-'.$bkey;
@@ -269,7 +269,7 @@ class StringDiff
     public static function getIDMap(array $achars, $alen, array $binverted)
     {
         $idmap = [];
-        for ($i = 0; $i < $alen; $i++) {
+        for ($i = 0; $i < $alen; ++$i) {
             if (isset($binverted[$achars[$i]])) {
                 $idmap[$i] = $binverted[$achars[$i]];
             } else {
@@ -301,7 +301,7 @@ class StringDiff
     {
         $inverted = [];
         $alen = count($a);
-        for ($i = 0; $i < $alen; $i++) {
+        for ($i = 0; $i < $alen; ++$i) {
             if (!isset($inverted[$a[$i]])) {
                 $inverted[$a[$i]] = [];
             }

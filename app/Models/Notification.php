@@ -16,7 +16,6 @@ class Notification extends Model
      */
     protected $table = 'notifications';
 
-    
     public function user()
     {
         return $this->belongsTo('MXAbierto\Participa\Models\User', 'user_id');

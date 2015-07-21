@@ -2,13 +2,13 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use MXAbierto\Participa\Models\Comment;
 use MXAbierto\Participa\Models\Doc;
 use MXAbierto\Participa\Models\MadisonEvent;
-use Exception;
 
 /**
  * 	Controller for Document actions.
@@ -102,7 +102,7 @@ class CommentController extends AbstractApiController
         $comment->load('user');
         $comment->type = 'comment';
 
-        event(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'like', 'activity' => $comment, 'user'    => Auth::user()]);
+        event(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'like', 'activity' => $comment, 'user' => Auth::user()]);
 
         return response()->json($comment->loadArray());
     }

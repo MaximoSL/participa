@@ -37,7 +37,7 @@ class Comment extends Model implements ActivityInterface
 
     public function likes()
     {
-        $likes =  CommentMeta::where('comment_id', $this->id)
+        $likes = CommentMeta::where('comment_id', $this->id)
                     ->where('meta_key', '=', CommentMeta::TYPE_USER_ACTION)
                     ->where('meta_value', '=', static::ACTION_LIKE)
                     ->count();

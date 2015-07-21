@@ -5,8 +5,6 @@ namespace MXAbierto\Participa\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\User;
-use MXAbierto\Participa\Models\UserMeta;
-use MXAbierto\Participa\Models\MadisonEvent;
 
 class NotificationsController extends AbstractController
 {

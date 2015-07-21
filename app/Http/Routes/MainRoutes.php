@@ -200,11 +200,11 @@ class MainRoutes
         // Feed routes
         $router->get('feed', [
             'as'   => 'feed',
-            'uses' => 'FeedController@getFeed'
+            'uses' => 'FeedController@getFeed',
         ]);
         $router->get('sitemap', [
             'as'   => 'sitemap',
-            'uses' => 'FeedController@getSitemap'
+            'uses' => 'FeedController@getSitemap',
         ]);
     }
 }

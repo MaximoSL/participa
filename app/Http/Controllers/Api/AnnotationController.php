@@ -2,17 +2,17 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use MXAbierto\Participa\Models\Annotation;
 use MXAbierto\Participa\Models\AnnotationComment;
-use MXAbierto\Participa\Models\AnnotationRange;
 use MXAbierto\Participa\Models\AnnotationPermission;
+use MXAbierto\Participa\Models\AnnotationRange;
 use MXAbierto\Participa\Models\AnnotationTag;
 use MXAbierto\Participa\Models\MadisonEvent;
-use Exception;
 
 /**
  * 	Controller for Document actions.
@@ -279,7 +279,7 @@ class AnnotationController extends AbstractApiController
         $annotation->load('user');
         $annotation->type = 'annotation';
 
-        event(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'like', 'activity' => $annotation, 'user'    => Auth::user()]);
+        event(MadisonEvent::NEW_ACTIVITY_VOTE, ['vote_type' => 'like', 'activity' => $annotation, 'user' => Auth::user()]);
 
         return response()->json($annotation->toAnnotatorArray());
     }

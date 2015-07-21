@@ -36,7 +36,7 @@ class DropUnusedUserFields extends DualMigration
         DB::statement('PRAGMA foreign_keys = OFF');
 
         Schema::create('users_temp', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('email')->unique();
             $table->string('password', 100);
@@ -62,7 +62,7 @@ class DropUnusedUserFields extends DualMigration
         DB::statement('PRAGMA foreign_keys = OFF');
 
         Schema::create('users_temp', function ($table) {
-            $table->engine = "InnoDB";
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('email')->unique();
             $table->string('password', 100);

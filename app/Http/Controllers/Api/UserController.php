@@ -243,7 +243,7 @@ class UserController extends AbstractApiController
     /**
      *	Api route to edit user's email.
      *
-     * @param  \MXAbierto\Participa\Models\User  $user
+     * @param \MXAbierto\Participa\Models\User $user
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -257,7 +257,7 @@ class UserController extends AbstractApiController
         $user->email = Input::get('email');
         $user->password = Input::get('password');
 
-        if (! $user->save()) {
+        if (!$user->save()) {
             $errors = $user->getErrors();
             $messages = [];
 

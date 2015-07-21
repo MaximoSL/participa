@@ -3,13 +3,12 @@
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
+use MXAbierto\Participa\Models\Category;
 use MXAbierto\Participa\Models\Date;
 use MXAbierto\Participa\Models\Doc;
-use MXAbierto\Participa\Models\DocMeta;
 use MXAbierto\Participa\Models\DocContent;
-use MXAbierto\Participa\Models\Category;
+use MXAbierto\Participa\Models\DocMeta;
 use MXAbierto\Participa\Models\MadisonEvent;
-use MXAbierto\Participa\Models\UserMeta;
 
 /**
  * 	Controller for Document actions.
@@ -54,7 +53,7 @@ class DocumentController extends AbstractApiController
             $filter = explode(':', Input::get('filter'));
 
             if (in_array($filter[0], $availableFilters)) {
-                $docs->whereHas($filter[0], function($query) use ($filter) {
+                $docs->whereHas($filter[0], function ($query) use ($filter) {
                     $query->where('id', '=', $filter[1]);
                 });
             }

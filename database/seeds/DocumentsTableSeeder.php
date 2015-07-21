@@ -8,22 +8,22 @@ class DocumentsTableSeeder extends Seeder
     {
         $stubContent = [
             factory('MXAbierto\Participa\Models\DocContent')->make([
-                'content' => file_get_contents(base_path('database/stubs/the_last_question.md'))
+                'content' => file_get_contents(base_path('database/stubs/the_last_question.md')),
             ]),
             factory('MXAbierto\Participa\Models\DocContent')->make([
-                'content' => file_get_contents(base_path('database/stubs/logistic_regression.md'))
+                'content' => file_get_contents(base_path('database/stubs/logistic_regression.md')),
             ]),
         ];
 
         factory('MXAbierto\Participa\Models\Doc', 2)
             ->create()
-            ->each(function($doc, $key) use ($stubContent) {
+            ->each(function ($doc, $key) use ($stubContent) {
                 $doc->contents()->save($stubContent[$key]);
             });
 
         $docs = factory('MXAbierto\Participa\Models\Doc', 30)
             ->create()
-            ->each(function($doc) {
+            ->each(function ($doc) {
                 $doc->contents()->save(factory('MXAbierto\Participa\Models\DocContent')->make());
             });
     }
