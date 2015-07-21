@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-RUN apt-get update && apt-get -y install nginx php5-fpm php5-cli php5-mcrypt php5-gd php5-mysql git curl
+RUN apt-get update && apt-get -y install nginx php5-fpm php5-cli php5-mcrypt php5-gd php5-mysql php5-curl php5-json php5-redis git curl
 RUN apt-get -y autoremove && apt-get clean
 
 RUN git clone https://github.com/mxabierto/participa.git /var/www/participa
