@@ -9,9 +9,9 @@ RUN php5enmod mcrypt
 
 ADD participa.nginx /etc/nginx/sites-available/default
 
-# RUN touch -p /var/run/php5-fpm.sock
-RUN sed -i '/^listen = /clisten = 127.0.0.1:9000' /etc/php5/fpm/pool.d/www.conf
-RUN sed -i '/^listen.mode = /clisten.mode = 0660' /etc/php5/fpm/pool.d/www.conf
+# Set PHP-FMP
+RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php5/fpm/php-fpm.conf
+RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php5/fpm/pool.d/www.conf
 
 WORKDIR /var/www/participa
 RUN /usr/bin/curl -sS https://getcomposer.org/installer |/usr/bin/php
