@@ -136,12 +136,6 @@ class DocumentsController extends AbstractController
         $doc = Doc::find($docContent->doc_id);
         event(MadisonEvent::DOC_EDITED, $doc);
 
-        try {
-            $document->indexContent($docContent);
-        } catch (\Exception $e) {
-            return redirect()->route('documents')->with('error', ucfirst(strtolower(trans('messages.document').' '.trans('messages.saved').' '.trans('messages.but').' '.trans('messages.therewaserror').' '.trans('messages.with')))." Elasticsearch: {$e->getMessage()}");
-        }
-
         return redirect()->route('documents')->with('success_message', trans('messages.saveddoc'));
     }
 

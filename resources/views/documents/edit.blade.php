@@ -33,7 +33,7 @@
               </div>
             </div>
             <div class="form_actions">
-              <input class="btn btn-primary" type="submit" value="Save Doc" id="submit">
+              <input class="btn btn-primary" type="submit" value="{{ trans('messages.save').' '.trans('messages.document') }}" id="submit">
             </div>
             <div id="save_message" class="alert hidden"></div>
           </form>
