@@ -50,6 +50,11 @@ class Group extends Model
         return $this->belongsToMany('Doc');
     }
 
+    public function members()
+    {
+        return $this->belongsToMany('User', 'group_members');
+    }
+
     public function getDisplayName()
     {
         return !empty($this->display_name) ? $this->display_name : !empty($this->name) ? $this->name : '';
@@ -225,11 +230,6 @@ class Group extends Model
         }
     }
 
-    public function members()
-    {
-        return $this->hasMany('GroupMember');
-    }
-
     public static function findByUserId($userId, $onlyActive = true)
     {
         $groupMember = static::join('group_members', 'groups.id', '=', 'group_members.group_id')
@@ -288,7 +288,7 @@ class Group extends Model
         $members = GroupMember::where('role', '=', $role)->get();
 
         $retval = new Collection();
-        foreach ($members as $member) {
+        foreach ($members as x$member) {
             $userModel = User::where('id', '=', $member->user_id)->first();
 
             if ($userModel) {

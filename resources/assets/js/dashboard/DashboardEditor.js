@@ -2,16 +2,18 @@ angular.module('madisonApp.dashboardControllers')
     .controller('DashboardEditorController', [ '$scope', '$http', '$timeout', '$location', '$filter', 'growl', function ($scope, $http, $timeout, $location, $filter, growl) {
         $scope.doc                  = {};
         $scope.sponsor              = {};
+        $scope.group                = {};
         $scope.status               = {};
         $scope.newdate              = {
             label   : '',
             date    : new Date()
         };
         $scope.verifiedUsers        = [];
-        $scope.categories           = [];
+        $scope.categories           = [0];
         $scope.introtext            = "";
         $scope.suggestedCategories  = [];
         $scope.suggestedStatuses    = [];
+        $scope.suggestedGroups      = [];
         $scope.dates                = [];
 
         $scope.init             = function () {
@@ -32,6 +34,7 @@ angular.module('madisonApp.dashboardControllers')
             var initIntroText   = true;
             var initSponsor     = true;
             var initStatus      = true;
+            var initGroup       = true;
             var initTitle       = true;
             var initSlug        = true;
             var initContent     = true;
@@ -77,6 +80,17 @@ angular.module('madisonApp.dashboardControllers')
                             });
                         } else {
                             $scope.saveStatus();
+                        }
+                    });
+                });
+                $scope.getDocGroup().then(function () {
+                    $scope.$watch('group', function () {
+                        if (initGroup) {
+                            $timeout(function () {
+                                initGroup  = false;
+                            });
+                        } else {
+                            $scope.saveGroup();
                         }
                     });
                 });
@@ -193,6 +207,9 @@ angular.module('madisonApp.dashboardControllers')
                     return $scope.categories;
                 },
                 initSelection       : function (element, callback) {
+
+                  $scope.categories.splice(0, 1);
+
                     var returned    = [];
                     angular.forEach($scope.categories, function (category, index) {
                         returned.push(angular.copy({
@@ -210,7 +227,7 @@ angular.module('madisonApp.dashboardControllers')
                 placeholder         : 'Select Document Status',
                 allowClear          : true,
                 ajax                : {
-                    url         : _baseUrl + '/participa/api/docs/statuses',
+                    url         : _baseUrl + '/api/docs/statuses',
                     dataType    : 'json',
                     data        : function (term, page) {
                         return;
@@ -246,11 +263,51 @@ angular.module('madisonApp.dashboardControllers')
                 }
             };
 
+            $scope.groupOptions    = {
+                placeholder         : 'Select Document Group',
+                allowClear          : true,
+                ajax                : {
+                    url         : _baseUrl + '/api/docs/groups',
+                    dataType    : 'json',
+                    data        : function (term, page) {
+                        return;
+                    },
+                    results     : function (data, page) {
+                        var returned    = [];
+
+                        angular.forEach(data, function ( group) {
+                            returned.push({
+                                id      : group.id,
+                                text    : group.name
+                            });
+                        });
+                        return {
+                            results     : returned
+                        };
+                    }
+                },
+                data                : function () {
+                    return $scope.suggestedGroups;
+                },
+                results             : function () {
+                    return $scope.group;
+                },
+                createSearchChoice  : function (term) {
+                    return {
+                        id      : term,
+                        text    : term
+                    };
+                },
+                initSelection       : function (element, callback) {
+                    callback($scope.group);
+                }
+            };
+
             $scope.sponsorOptions   = {
                 placeholde          : 'Select Document Sponsor',
                 allowClear          : true,
                 ajax                : {
-                    url         : '/participa/api/user/sponsors/all',
+                    url         : _baseUrl + '/api/user/sponsors/all',
                     dataType    : 'json',
                     data        : function () {
                         return;
@@ -298,6 +355,9 @@ angular.module('madisonApp.dashboardControllers')
         };
         $scope.sponsorChange    = function (sponsor ) {
             $scope.sponsor  = sponsor;
+        };
+        $scope.groupChange    = function (group ) {
+            $scope.group  = group;
         };
         $scope.categoriesChange = function (categories) {
             $scope.categories   = categories;
@@ -459,6 +519,21 @@ angular.module('madisonApp.dashboardControllers')
                     console.error("Error getting document sponsor: %o", data);
                 });
         };
+        $scope.getDocGroup     = function () {
+            return $http.get(_baseUrl + '/api/docs/' + $scope.doc.id + '/group')
+                .success(function (data) {
+                    if (data.id === undefined) {
+                        $scope.group = null;
+                    } else {
+                        $scope.group = {
+                            id      : data.id,
+                            text    : data.name
+                        };
+                    }
+                }).error(function ( data) {
+                    console.error("Error getting document group: %o", data);
+                });
+        };
         $scope.getDocStatus     = function () {
             return $http.get(_baseUrl + '/api/docs/' + $scope.doc.id + '/status')
                 .success(function (data) {
@@ -484,6 +559,16 @@ angular.module('madisonApp.dashboardControllers')
                     console.error("Unable to get document statuses: %o", data);
                 });
         };
+        $scope.getAllGroups   = function () {
+            $http.get(_baseUrl + '/api/docs/groups')
+                .success(function ( data) {
+                    angular.forEach(data, function ( status) {
+                        $scope.suggestedGroups.push(status.label);
+                    });
+                }).error(function ( data) {
+                    console.error("Unable to get document groups: %o", data);
+                });
+        };
         $scope.getAllCategories = function () {
             return $http.get(_baseUrl + '/api/docs/categories')
                 .success(function (data) {
@@ -503,6 +588,16 @@ angular.module('madisonApp.dashboardControllers')
                     console.log("Status saved successfully: %o", data);
                 }).error(function (data) {
                     console.error("Error saving status: %o", data);
+                });
+        };
+        $scope.saveGroup       = function () {
+            return $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/group', {
+                group  : $scope.group
+            })
+                .success(function ( data) {
+                    console.log("Group saved successfully: %o", data);
+                }).error(function (data) {
+                    console.error("Error saving group: %o", data);
                 });
         };
         $scope.saveSponsor      = function () {

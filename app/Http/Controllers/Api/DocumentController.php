@@ -2,13 +2,17 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\Category;
 use MXAbierto\Participa\Models\Date;
 use MXAbierto\Participa\Models\Doc;
 use MXAbierto\Participa\Models\DocContent;
 use MXAbierto\Participa\Models\DocMeta;
+use MXAbierto\Participa\Models\Group;
 use MXAbierto\Participa\Models\MadisonEvent;
+use MXAbierto\Participa\Models\Role;
+use MXAbierto\Participa\Models\Status;
 
 /**
  * 	Controller for Document actions.
@@ -261,6 +265,52 @@ class DocumentController extends AbstractApiController
         return response()->json($response);
     }
 
+    public function getGroup($doc)
+    {
+        $doc = Doc::find($doc);
+
+        $group = $doc->group()->first();
+
+        return response()->json($group);
+    }
+
+    public function postGroup($doc)
+    {
+        $toAdd = null;
+
+        $group = Input::get('group');
+
+        $user = Auth::user();
+
+        $doc = Doc::find($doc);
+
+        if (!isset($group)) {
+            $doc->group()->sync([]);
+        } else {
+            $toAdd = Group::where('name', $group['text'])->first();
+
+            if (!$user->hasRole(Role::ROLE_ADMIN)) {
+                if (!isset($toAdd) || !$user->groups->contains($toAdd->id)) {
+                    $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.invalidgroup'))), 'severity' => 'error'];
+
+                    return response()->json($response);
+                }
+            }
+
+            if (!isset($toAdd)) {
+                $toAdd = new Group();
+                $toAdd->name = $group['text'];
+            }
+            $toAdd->save();
+
+            $doc->group()->sync([$toAdd->id]);
+        }
+
+        $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.document').' '.trans('messages.saved'))), 'severity' => 'info'];
+
+        return response()->json($response);
+    }
+
     public function getStatus($doc)
     {
         $doc = Doc::find($doc);
@@ -312,9 +362,11 @@ class DocumentController extends AbstractApiController
 
         $date = Input::get('date');
 
+        $datetime = \DateTime::createFromFormat('d/m/y H:i', $date['date']);
+
         $returned = new Date();
         $returned->label = $date['label'];
-        $returned->date = date('Y-m-d H:i:s', strtotime($date['date']));
+        $returned->date = $datetime->format('Y-m-d H:i:s');
 
         $doc->dates()->save($returned);
 
@@ -407,10 +459,23 @@ class DocumentController extends AbstractApiController
 
     public function getAllStatuses()
     {
-        $doc = Doc::with('statuses')->first();
-
-        $statuses = $doc->statuses;
+        $statuses = Status::all();
 
         return response()->json($statuses);
+    }
+
+    public function getAllGroups()
+    {
+        $user = Auth::user();
+
+        $groups = [];
+
+        if ($user->hasRole(Role::ROLE_ADMIN)) {
+            $groups = Group::all();
+        } elseif ($user->hasRole(Role::ROLE_INDEPENDENT_SPONSOR)) {
+            $groups = $user->groups;
+        }
+
+        return response()->json($groups);
     }
 }

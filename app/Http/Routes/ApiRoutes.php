@@ -72,6 +72,10 @@ class ApiRoutes
             $router->get('docs/categories', 'DocumentController@getCategories');
             $router->get('docs/statuses', 'DocumentController@getAllStatuses');
             $router->get('docs/sponsors', 'DocumentController@getAllSponsors');
+            $router->get('docs/groups', [
+                'as'   => 'docs.getAllGroups',
+                'uses' => 'DocumentController@getAllGroups',
+            ]);
             $router->get('docs/{doc}/categories', 'DocumentController@getCategories');
             $router->post('docs/{doc}/categories', 'DocumentController@postCategories');
             $router->get('docs/{doc}/introtext', 'DocumentController@getIntroText');
@@ -79,6 +83,8 @@ class ApiRoutes
             $router->get('docs/{doc}/sponsor/{sponsor}', 'DocumentController@hasSponsor');
             $router->get('docs/{doc}/sponsor', 'DocumentController@getSponsor');
             $router->post('docs/{doc}/sponsor', 'DocumentController@postSponsor');
+            $router->get('docs/{doc}/group', 'DocumentController@getGroup');
+            $router->post('docs/{doc}/group', 'DocumentController@postGroup');
             $router->get('docs/{doc}/status', 'DocumentController@getStatus');
             $router->post('docs/{doc}/status', 'DocumentController@postStatus');
             $router->get('docs/{doc}/dates', 'DocumentController@getDates');

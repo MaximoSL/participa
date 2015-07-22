@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\Doc;
 use MXAbierto\Participa\Models\DocContent;
 use MXAbierto\Participa\Models\MadisonEvent;
+use MXAbierto\Participa\Models\Role;
 
 class DocumentsController extends AbstractController
 {
@@ -56,39 +57,20 @@ class DocumentsController extends AbstractController
 
             $user = Auth::user();
 
-            $activeGroup = Session::get('activeGroupId');
-
-            if ($activeGroup > 0) {
-                $group = Group::where('id', '=', $activeGroup)->first();
-
-                if (!$group) {
-                    return redirect()->route('documents')->withInput()->with('error', trans('messages.invalidgroup'));
-                }
-
-                if (!$group->userHasRole($user, Group::ROLE_EDITOR) && !$group->userHasRole($user, Group::ROLE_OWNER)) {
-                    return redirect()->route('documents')->withInput()->with('error', ucfirst(strtolower(trans('messages.nopermission').' '.trans('messages.tocreate').' '.trans('messages.document').' '.trans('messages.forgroup'))));
-                }
-
-                $docOptions['sponsor'] = $activeGroup;
-                $docOptions['sponsorType'] = Doc::SPONSOR_TYPE_GROUP;
-            } else {
-                if (!$user->hasRole(Role::ROLE_INDEPENDENT_SPONSOR)) {
-                    return redirect()->route('documents')->withInput()->with('error', ucfirst(strtolower(trans('messages.nopermission').' '.trans('messages.tocreate').' '.trans('messages.document').' '.trans('messages.asindividual'))));
-                }
-
-                $docOptions['sponsor'] = Auth::user()->id;
-                $docOptions['sponsorType'] = Doc::SPONSOR_TYPE_INDIVIDUAL;
+            if (!$user->hasRole(Role::ROLE_INDEPENDENT_SPONSOR) && !$user->hasRole(Role::ROLE_ADMIN)) {
+                return redirect()->route('documents')->withInput()->with('error', ucfirst(strtolower(trans('messages.nopermission').' '.trans('messages.tocreate').' '.trans('messages.document').' '.trans('messages.asindividual'))));
             }
+
+            $docOptions['sponsor'] = Auth::user()->id;
+            $docOptions['sponsorType'] = Doc::SPONSOR_TYPE_INDIVIDUAL;
 
             $document = Doc::createEmptyDocument($docOptions);
 
-            if ($activeGroup > 0) {
-                event(MadisonEvent::NEW_GROUP_DOCUMENT, ['document' => $document, 'group' => $group]);
-            }
+            $user->docs()->attach($document->id);
 
-            return redirect()->to("documents/edit/{$document->id}")->with('success_message', trans('messages.saveddoc'));
+            return redirect()->route('documents.edit', $document->id)->with('success_message', trans('messages.saveddoc'));
         } catch (\Exception $e) {
-            return redirect()->to('documents')->withInput()->with('error', ucfirst(strtolower(trans('messages.sorry').', '.trans('messages.therewaserror')))." - {$e->getMessage()}");
+            return redirect()->route('documents')->withInput()->with('error', ucfirst(strtolower(trans('messages.sorry').', '.trans('messages.therewaserror')))." - {$e->getMessage()}");
         }
     }
 

@@ -206,6 +206,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Gets the groups relation.
+     *
+     *
+     * @return Illuminate\Database\Model\Relations\BelongsToMany
+     */
+    public function groups()
+    {
+        return $this->belongsToMany('MXAbierto\Participa\Models\Group', 'group_members');
+    }
+
+    /**
      * Returns current active group for this user
      * Grabs the active group id from Session.
      *
