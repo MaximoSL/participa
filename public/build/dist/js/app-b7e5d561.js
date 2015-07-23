@@ -1446,16 +1446,18 @@ angular.module('madisonApp.dashboardControllers')
     .controller('DashboardEditorController', [ '$scope', '$http', '$timeout', '$location', '$filter', 'growl', function ($scope, $http, $timeout, $location, $filter, growl) {
         $scope.doc                  = {};
         $scope.sponsor              = {};
+        $scope.group                = {};
         $scope.status               = {};
         $scope.newdate              = {
             label   : '',
             date    : new Date()
         };
         $scope.verifiedUsers        = [];
-        $scope.categories           = [];
+        $scope.categories           = [0];
         $scope.introtext            = "";
         $scope.suggestedCategories  = [];
         $scope.suggestedStatuses    = [];
+        $scope.suggestedGroups      = [];
         $scope.dates                = [];
 
         $scope.init             = function () {
@@ -1476,6 +1478,7 @@ angular.module('madisonApp.dashboardControllers')
             var initIntroText   = true;
             var initSponsor     = true;
             var initStatus      = true;
+            var initGroup       = true;
             var initTitle       = true;
             var initSlug        = true;
             var initContent     = true;
@@ -1521,6 +1524,17 @@ angular.module('madisonApp.dashboardControllers')
                             });
                         } else {
                             $scope.saveStatus();
+                        }
+                    });
+                });
+                $scope.getDocGroup().then(function () {
+                    $scope.$watch('group', function () {
+                        if (initGroup) {
+                            $timeout(function () {
+                                initGroup  = false;
+                            });
+                        } else {
+                            $scope.saveGroup();
                         }
                     });
                 });
@@ -1621,7 +1635,7 @@ angular.module('madisonApp.dashboardControllers')
                     $scope.short_url    = data.shorturl;
                 }).error(function ( data) {
                     console.error(data);
-                    growl.error('There was an error generating your short url.');
+                    growl.addErrorMessage('There was an error generating your short url.');
                 });
         };
         $scope.setSelectOptions = function () {
@@ -1637,6 +1651,9 @@ angular.module('madisonApp.dashboardControllers')
                     return $scope.categories;
                 },
                 initSelection       : function (element, callback) {
+
+                  $scope.categories.splice(0, 1);
+
                     var returned    = [];
                     angular.forEach($scope.categories, function (category, index) {
                         returned.push(angular.copy({
@@ -1654,7 +1671,7 @@ angular.module('madisonApp.dashboardControllers')
                 placeholder         : 'Select Document Status',
                 allowClear          : true,
                 ajax                : {
-                    url         : _baseUrl + '/participa/api/docs/statuses',
+                    url         : _baseUrl + '/api/docs/statuses',
                     dataType    : 'json',
                     data        : function (term, page) {
                         return;
@@ -1690,11 +1707,51 @@ angular.module('madisonApp.dashboardControllers')
                 }
             };
 
+            $scope.groupOptions    = {
+                placeholder         : 'Select Document Group',
+                allowClear          : true,
+                ajax                : {
+                    url         : _baseUrl + '/api/docs/groups',
+                    dataType    : 'json',
+                    data        : function (term, page) {
+                        return;
+                    },
+                    results     : function (data, page) {
+                        var returned    = [];
+
+                        angular.forEach(data, function ( group) {
+                            returned.push({
+                                id      : group.id,
+                                text    : group.name
+                            });
+                        });
+                        return {
+                            results     : returned
+                        };
+                    }
+                },
+                data                : function () {
+                    return $scope.suggestedGroups;
+                },
+                results             : function () {
+                    return $scope.group;
+                },
+                createSearchChoice  : function (term) {
+                    return {
+                        id      : term,
+                        text    : term
+                    };
+                },
+                initSelection       : function (element, callback) {
+                    callback($scope.group);
+                }
+            };
+
             $scope.sponsorOptions   = {
                 placeholde          : 'Select Document Sponsor',
                 allowClear          : true,
                 ajax                : {
-                    url         : '/participa/api/user/sponsors/all',
+                    url         : _baseUrl + '/api/user/sponsors/all',
                     dataType    : 'json',
                     data        : function () {
                         return;
@@ -1742,6 +1799,9 @@ angular.module('madisonApp.dashboardControllers')
         };
         $scope.sponsorChange    = function (sponsor ) {
             $scope.sponsor  = sponsor;
+        };
+        $scope.groupChange    = function (group ) {
+            $scope.group  = group;
         };
         $scope.categoriesChange = function (categories) {
             $scope.categories   = categories;
@@ -1903,6 +1963,21 @@ angular.module('madisonApp.dashboardControllers')
                     console.error("Error getting document sponsor: %o", data);
                 });
         };
+        $scope.getDocGroup     = function () {
+            return $http.get(_baseUrl + '/api/docs/' + $scope.doc.id + '/group')
+                .success(function (data) {
+                    if (data.id === undefined) {
+                        $scope.group = null;
+                    } else {
+                        $scope.group = {
+                            id      : data.id,
+                            text    : data.name
+                        };
+                    }
+                }).error(function ( data) {
+                    console.error("Error getting document group: %o", data);
+                });
+        };
         $scope.getDocStatus     = function () {
             return $http.get(_baseUrl + '/api/docs/' + $scope.doc.id + '/status')
                 .success(function (data) {
@@ -1928,6 +2003,16 @@ angular.module('madisonApp.dashboardControllers')
                     console.error("Unable to get document statuses: %o", data);
                 });
         };
+        $scope.getAllGroups   = function () {
+            $http.get(_baseUrl + '/api/docs/groups')
+                .success(function ( data) {
+                    angular.forEach(data, function ( status) {
+                        $scope.suggestedGroups.push(status.label);
+                    });
+                }).error(function ( data) {
+                    console.error("Unable to get document groups: %o", data);
+                });
+        };
         $scope.getAllCategories = function () {
             return $http.get(_baseUrl + '/api/docs/categories')
                 .success(function (data) {
@@ -1947,6 +2032,16 @@ angular.module('madisonApp.dashboardControllers')
                     console.log("Status saved successfully: %o", data);
                 }).error(function (data) {
                     console.error("Error saving status: %o", data);
+                });
+        };
+        $scope.saveGroup       = function () {
+            return $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/group', {
+                group  : $scope.group
+            })
+                .success(function ( data) {
+                    console.log("Group saved successfully: %o", data);
+                }).error(function (data) {
+                    console.error("Error saving group: %o", data);
                 });
         };
         $scope.saveSponsor      = function () {
@@ -2336,7 +2431,7 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.success( "Link copied to clipboard." );
+                                growl.addSuccessMessage( "Link copied to clipboard." );
                             });
                         });
 
@@ -2365,7 +2460,7 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.success( "Link copied to clipboard." );
+                                growl.addSuccessMessage( "Link copied to clipboard." );
                             });
                         });
 
@@ -2383,7 +2478,6 @@ angular.module( 'madisonApp.directives' )
             }
         };
     }]);
-
 angular.module( 'madisonApp.directives' )
     .directive( 'commentItem', [ 'growl', function ( growl ) {
         return {
@@ -2400,13 +2494,13 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.success( "Link copied to clipboard." );
+                                growl.addSuccessMessage( "Link copied to clipboard." );
                             });
                         });
 
                         var $span       = $( element ).find( '.activity-icon > span.ng-binding' );
                         $span.on( "click", function() {
-                            $( element ).parent().effect( "highlight",{
+                            $( element ).parent().effect( "highlight",{ 
                                 color   : "#2276d7"
                             }, 1000 );
                         });
@@ -2415,7 +2509,6 @@ angular.module( 'madisonApp.directives' )
             }
         };
     }]);
-
 angular.module( 'madisonApp.directives' )
     .directive( 'docComments', function () {
         return {
@@ -2462,7 +2555,7 @@ angular.module( 'madisonApp.directives' )
             link        : function ( scope ) {
                 scope.updateEmail   = function ( newEmail, newPassword ) {
                     //Issue PUT request to update user
-                    $http.put(_baseUrl + '/api/user/' + scope.user.id + '/edit/email', {
+                    $http.put( '/api/user/' + scope.user.id + '/edit/email', {
                         email       : newEmail,
                         password    : newPassword
                     })
@@ -2471,13 +2564,11 @@ angular.module( 'madisonApp.directives' )
                             scope.user.email = newEmail;
                         }).error( function ( data ) {
                             console.error( "Error updating user email: %o", data );
-                            $('.update-email-error').html(data.messages[0].text);
                         });
                 };
             }
         };
     }]);
-
 angular.module( 'madisonApp.directives' )
     .directive( 'subcommentLink', [ 'growl', '$anchorScroll', '$timeout', function ( growl, $anchorScroll, $timeout ) {
         return {
@@ -2493,7 +2584,7 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.success( "Link copied to clipboard." );
+                                growl.addSuccessMessage( "Link copied to clipboard." );
                             });
                         });
 
@@ -2512,7 +2603,6 @@ angular.module( 'madisonApp.directives' )
             }
         };
     }]);
-
 angular.module( 'madisonApp.filters', []);
 angular.module( 'madisonApp.filters' )
     .filter( 'getById', function () {
@@ -2641,26 +2731,26 @@ var app = angular.module('madisonApp', imports);
 //   });
 // });
 
-app.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
-    //Set up growl notifications
-  growlProvider.messagesKey("messages");
-  growlProvider.messageTextKey("text");
-  growlProvider.messageSeverityKey("severity");
-  // $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
-  growlProvider.onlyUniqueMessages(true);
-  growlProvider.globalTimeToLive(5000);
+// app.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
+//     //Set up growl notifications
+//   growlProvider.messagesKey("messages");
+//   growlProvider.messageTextKey("text");
+//   growlProvider.messageSeverityKey("severity");
+//   $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
+//   growlProvider.onlyUniqueMessages(true);
+//   growlProvider.globalTimeToLive(5000);
+//
+//   // $routeProvider
+//   //   .when(_baseUrl + '/user/edit/:user/notifications', {
+//   //     templateUrl: _baseUrl + "/templates/pages/user-notification-settings.html",
+//   //     controller: "UserNotificationsController",
+//   //     title: "Notification Settings"
+//   //   });
+// }]);
 
-  // $routeProvider
-  //   .when(_baseUrl + '/user/edit/:user/notifications', {
-  //     templateUrl: _baseUrl + "/templates/pages/user-notification-settings.html",
-  //     controller: "UserNotificationsController",
-  //     title: "Notification Settings"
-  //   });
-}]);
-
-app.config(function ($locationProvider) {
-  $locationProvider.html5Mode(true);
-});
+// app.config(function ($locationProvider) {
+//   $locationProvider.html5Mode(true);
+// });
 
 app.config(['$translateProvider', function ($translateProvider) {
   $translateProvider.translations('en', {

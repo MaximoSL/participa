@@ -69,6 +69,12 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label for="group">{{ trans('messages.group') }}: </label>
+                  <div class="select2-full-width">
+                    <input type="hidden" ui-select2="groupOptions" ng-model="group" ng-change="groupChange(group)" id="group">
+                  </div>
+                </div>
+                <div class="form-group">
                   <label for="categories">{{ trans('messages.categories') }}: </label>
                   <div class="select2-full-width">
                     <input type="hidden" ui-select2="categoryOptions" ng-model="categories" ng-change="categoriesChange(categories)" />

@@ -5,6 +5,8 @@ namespace MXAbierto\Participa\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
 class Doc extends Model implements HasPresenter
@@ -132,6 +134,13 @@ class Doc extends Model implements HasPresenter
 
         DB::transaction(function () use ($document, $params) {
             $document->title = $params['title'];
+
+            // Generate unique slug
+            $doc_model = new self();
+            $slug = Str::slug($params['title'], '-');
+            $slugCount = count($doc_model->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$doc_model->id}'")->get());
+            $document->slug = ($slugCount > 0) ? "{$slug}-{$slugCount}" : $slug;
+
             $document->save();
 
             $template = new DocContent();
