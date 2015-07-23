@@ -4,6 +4,7 @@ namespace MXAbierto\Participa\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
@@ -162,6 +163,6 @@ class RemindersController extends AbstractController
             $message->to($email);
         });
 
-        return redirect()->route('user/login')->with('message', trans('messages.confirmationresent'));
+        return redirect()->route('auth.login')->with('message', trans('messages.confirmationresent'));
     }
 }

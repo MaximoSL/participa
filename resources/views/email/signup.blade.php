@@ -8,8 +8,8 @@
 
     <p>{{ trans('messages.confirmationaction') }} <a href="{{ route('auth.verify', $token) }}">{{ trans('messages.confirmationlink') }}</a></p>
 
-    {{ trans('messages.whatcanverifiedaccountsdo') }}
+    {!! trans('messages.whatcanverifiedaccountsdo') !!}
 
-    {{ trans('messages.confirmationcontact') }}
+    {!! trans('messages.confirmationcontact') !!}
 	</body>
 </html>
