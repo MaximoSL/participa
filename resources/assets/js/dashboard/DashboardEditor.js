@@ -177,7 +177,7 @@ angular.module('madisonApp.dashboardControllers')
                     $scope.short_url    = data.shorturl;
                 }).error(function ( data) {
                     console.error(data);
-                    growl.addErrorMessage('There was an error generating your short url.');
+                    growl.error('There was an error generating your short url.');
                 });
         };
         $scope.setSelectOptions = function () {

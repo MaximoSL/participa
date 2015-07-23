@@ -1621,7 +1621,7 @@ angular.module('madisonApp.dashboardControllers')
                     $scope.short_url    = data.shorturl;
                 }).error(function ( data) {
                     console.error(data);
-                    growl.addErrorMessage('There was an error generating your short url.');
+                    growl.error('There was an error generating your short url.');
                 });
         };
         $scope.setSelectOptions = function () {
@@ -2336,7 +2336,7 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.addSuccessMessage( "Link copied to clipboard." );
+                                growl.success( "Link copied to clipboard." );
                             });
                         });
 
@@ -2365,7 +2365,7 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.addSuccessMessage( "Link copied to clipboard." );
+                                growl.success( "Link copied to clipboard." );
                             });
                         });
 
@@ -2383,6 +2383,7 @@ angular.module( 'madisonApp.directives' )
             }
         };
     }]);
+
 angular.module( 'madisonApp.directives' )
     .directive( 'commentItem', [ 'growl', function ( growl ) {
         return {
@@ -2399,13 +2400,13 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.addSuccessMessage( "Link copied to clipboard." );
+                                growl.success( "Link copied to clipboard." );
                             });
                         });
 
                         var $span       = $( element ).find( '.activity-icon > span.ng-binding' );
                         $span.on( "click", function() {
-                            $( element ).parent().effect( "highlight",{ 
+                            $( element ).parent().effect( "highlight",{
                                 color   : "#2276d7"
                             }, 1000 );
                         });
@@ -2414,6 +2415,7 @@ angular.module( 'madisonApp.directives' )
             }
         };
     }]);
+
 angular.module( 'madisonApp.directives' )
     .directive( 'docComments', function () {
         return {
@@ -2491,7 +2493,7 @@ angular.module( 'madisonApp.directives' )
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.addSuccessMessage( "Link copied to clipboard." );
+                                growl.success( "Link copied to clipboard." );
                             });
                         });
 
@@ -2510,6 +2512,7 @@ angular.module( 'madisonApp.directives' )
             }
         };
     }]);
+
 angular.module( 'madisonApp.filters', []);
 angular.module( 'madisonApp.filters' )
     .filter( 'getById', function () {
@@ -2638,26 +2641,26 @@ var app = angular.module('madisonApp', imports);
 //   });
 // });
 
-// app.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
-//     //Set up growl notifications
-//   growlProvider.messagesKey("messages");
-//   growlProvider.messageTextKey("text");
-//   growlProvider.messageSeverityKey("severity");
-//   $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
-//   growlProvider.onlyUniqueMessages(true);
-//   growlProvider.globalTimeToLive(5000);
-//
-//   // $routeProvider
-//   //   .when(_baseUrl + '/user/edit/:user/notifications', {
-//   //     templateUrl: _baseUrl + "/templates/pages/user-notification-settings.html",
-//   //     controller: "UserNotificationsController",
-//   //     title: "Notification Settings"
-//   //   });
-// }]);
+app.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
+    //Set up growl notifications
+  growlProvider.messagesKey("messages");
+  growlProvider.messageTextKey("text");
+  growlProvider.messageSeverityKey("severity");
+  // $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
+  growlProvider.onlyUniqueMessages(true);
+  growlProvider.globalTimeToLive(5000);
 
-// app.config(function ($locationProvider) {
-//   $locationProvider.html5Mode(true);
-// });
+  // $routeProvider
+  //   .when(_baseUrl + '/user/edit/:user/notifications', {
+  //     templateUrl: _baseUrl + "/templates/pages/user-notification-settings.html",
+  //     controller: "UserNotificationsController",
+  //     title: "Notification Settings"
+  //   });
+}]);
+
+app.config(function ($locationProvider) {
+  $locationProvider.html5Mode(true);
+});
 
 app.config(['$translateProvider', function ($translateProvider) {
   $translateProvider.translations('en', {

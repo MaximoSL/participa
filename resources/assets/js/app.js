@@ -72,26 +72,26 @@ var app = angular.module('madisonApp', imports);
 //   });
 // });
 
-// app.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
-//     //Set up growl notifications
-//   growlProvider.messagesKey("messages");
-//   growlProvider.messageTextKey("text");
-//   growlProvider.messageSeverityKey("severity");
-//   $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
-//   growlProvider.onlyUniqueMessages(true);
-//   growlProvider.globalTimeToLive(5000);
-//
-//   // $routeProvider
-//   //   .when(_baseUrl + '/user/edit/:user/notifications', {
-//   //     templateUrl: _baseUrl + "/templates/pages/user-notification-settings.html",
-//   //     controller: "UserNotificationsController",
-//   //     title: "Notification Settings"
-//   //   });
-// }]);
+app.config(['growlProvider', '$httpProvider', function (growlProvider, $httpProvider) {
+    //Set up growl notifications
+  growlProvider.messagesKey("messages");
+  growlProvider.messageTextKey("text");
+  growlProvider.messageSeverityKey("severity");
+  // $httpProvider.responseInterceptors.push(growlProvider.serverMessagesInterceptor);
+  growlProvider.onlyUniqueMessages(true);
+  growlProvider.globalTimeToLive(5000);
 
-// app.config(function ($locationProvider) {
-//   $locationProvider.html5Mode(true);
-// });
+  // $routeProvider
+  //   .when(_baseUrl + '/user/edit/:user/notifications', {
+  //     templateUrl: _baseUrl + "/templates/pages/user-notification-settings.html",
+  //     controller: "UserNotificationsController",
+  //     title: "Notification Settings"
+  //   });
+}]);
+
+app.config(function ($locationProvider) {
+  $locationProvider.html5Mode(true);
+});
 
 app.config(['$translateProvider', function ($translateProvider) {
   $translateProvider.translations('en', {
