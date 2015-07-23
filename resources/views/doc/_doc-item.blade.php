@@ -20,8 +20,11 @@
   </div>
   <div class="list-item-footer">
     <div class="categories">
-      @foreach($doc->categories as $category)
-      <span class="category">{{ $category->name }}</span>
+      @foreach($doc->docCategories as $category)
+        <span class="category">{{ $category->name }}</span>
+      @endforeach
+      @foreach($doc->docInstitutions as $category)
+        <span class="category">{{ $category->name }}</span>
       @endforeach
     </div>
     <div class="updated-at">

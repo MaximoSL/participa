@@ -79,6 +79,21 @@ class Doc extends Model implements HasPresenter
         return $this->belongsToMany('MXAbierto\Participa\Models\Category');
     }
 
+    public function docCategories()
+    {
+        return $this->belongsToMany('MXAbierto\Participa\Models\Category')->where('kind', 'category');
+    }
+
+    public function docLayouts()
+    {
+        return $this->belongsToMany('MXAbierto\Participa\Models\Category')->where('kind', 'layout');
+    }
+
+    public function docInstitutions()
+    {
+        return $this->belongsToMany('MXAbierto\Participa\Models\Category')->where('kind', 'institution');
+    }
+
     public function comments()
     {
         return $this->hasMany('MXAbierto\Participa\Models\Comment');

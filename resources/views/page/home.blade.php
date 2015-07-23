@@ -23,9 +23,14 @@
               <option value=""></option>
 							<optgroup label="{{ trans('messages.category') }}">
                 @foreach($categories as $category)
-								<option value="categories:{{ $category->id }}">{{ $category->name }}</option>
+								  <option value="docCategories:{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
 							</optgroup>
+              <optgroup label="{{ trans('messages.institution') }}">
+                @foreach($institutions as $institution)
+                  <option value="docInstitutions:{{ $institution->id }}">{{ $institution->name }}</option>
+                @endforeach
+              </optgroup>
 							<optgroup label="{{ trans('messages.status') }}">
                 @foreach($statuses as $status)
 								<option value="statuses:{{ $status->id }}">{{ $status->label }}</option>

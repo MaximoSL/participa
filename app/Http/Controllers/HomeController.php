@@ -19,14 +19,16 @@ class HomeController extends AbstractController
      */
     public function getHome()
     {
-        $categories = Category::all();
+        $categories = Category::where('kind', 'category')->get();
+        $institutions = Category::where('kind', 'institution')->get();
         $statuses = Status::all();
 
         return view('page.index', [
-            'page_id'    => 'home',
-            'page_title' => 'gob.mx/'.config('app.base_name'),
-            'categories' => $categories,
-            'statuses'   => $statuses,
+            'page_id'      => 'home',
+            'page_title'   => 'gob.mx/'.config('app.base_name'),
+            'categories'   => $categories,
+            'institutions' => $institutions,
+            'statuses'     => $statuses,
         ]);
     }
 }
