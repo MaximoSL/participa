@@ -7,7 +7,7 @@
     <h2>{{ trans('messages.resetemailtitle') }}</h2>
 
     <div>
-      {{ trans('messages.resetemailmessage') }} {{ route('password.reset', array($token)) }}.
+      {{ trans('messages.resetemailmessage') }} {{ route('password.reset').'/'.$token }}.
     </div>
   </body>
 </html>
