@@ -4,6 +4,7 @@ namespace MXAbierto\Participa\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
@@ -112,7 +113,7 @@ class RemindersController extends AbstractController
      */
     protected function resetPassword($user, $password)
     {
-        $user->password = bcrypt($password);
+        $user->password = $password;
 
         $user->save();
 
