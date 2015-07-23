@@ -34,7 +34,7 @@
           </div>
 
           <div><strong>{{ trans('messages.cofemer-ask-more-info') }}</strong></div>
-          <div>{{ trans('messages.cofemer-contact-info') }}</div>
+          <div>{!! trans('messages.cofemer-contact-info') !!}</div>
 
           <br />
           <div><strong>{{ trans('messages.cofemer-note-to-users') }}</strong></div>
