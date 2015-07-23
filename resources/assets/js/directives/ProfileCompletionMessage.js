@@ -6,7 +6,7 @@ angular.module( 'madisonApp.directives' )
             link        : function ( scope ) {
                 scope.updateEmail   = function ( newEmail, newPassword ) {
                     //Issue PUT request to update user
-                    $http.put( '/api/user/' + scope.user.id + '/edit/email', {
+                    $http.put(_baseUrl + '/api/user/' + scope.user.id + '/edit/email', {
                         email       : newEmail,
                         password    : newPassword
                     })
@@ -15,6 +15,7 @@ angular.module( 'madisonApp.directives' )
                             scope.user.email = newEmail;
                         }).error( function ( data ) {
                             console.error( "Error updating user email: %o", data );
+                            $('.update-email-error').html(data.messages[0].text);
                         });
                 };
             }

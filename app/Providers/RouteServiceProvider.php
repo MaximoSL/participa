@@ -52,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function registerBindings()
     {
-        //
+        $this->app->router->model('user', 'MXAbierto\Participa\Models\User');
     }
 
     /**

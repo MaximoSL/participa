@@ -21,7 +21,6 @@ class AuthController extends AbstractController
      */
     protected $scopes = [
         'facebook' => ['email', 'public_profile'],
-        'twitter'  => [],
         'linkedin' => ['r_basicprofile', 'r_emailaddress'],
     ];
 
@@ -244,7 +243,13 @@ class AuthController extends AbstractController
     public function getConnect($provider)
     {
         try {
-            return Socialite::driver($provider)->scopes(array_get($this->scopes, $provider))->redirect();
+            $socialite = Socialite::driver($provider);
+
+            if ($provider !== 'twitter') {
+                $socialite->scopes(array_get($this->scopes, $provider));
+            }
+
+            return $socialite->redirect();
         } catch (\Exception $e) {
             abort(404);
         }

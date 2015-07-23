@@ -251,7 +251,7 @@ class UserController extends AbstractApiController
     {
         //Check authorization
         if (Auth::user()->id !== $user->id) {
-            return Response::json($this->growlMessage('No estás autorizado a cambiar el email del usuario', 'error'));
+            return response()->json($this->growlMessage('No estás autorizado a cambiar el email del usuario', 'error'));
         }
 
         $user->email = Input::get('email');
