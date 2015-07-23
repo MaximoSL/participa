@@ -198,7 +198,7 @@ angular.module('madisonApp.controllers')
               event.stopPropagation();
               event.preventDefault();
 
-              $.get(_baseUrl + '/api/user/login', {}, function (data) {
+              $.get(_baseUrl + '/api/auth/login', {}, function (data) {
                 data = $(data);
 
                 ajaxify_form(data.find('form'), function () {
@@ -215,7 +215,7 @@ angular.module('madisonApp.controllers')
               event.stopPropagation();
               event.preventDefault();
 
-              $.get(_baseUrl + '/api/user/signup', {}, function (data) {
+              $.get(_baseUrl + '/api/auth/signup', {}, function (data) {
                 data = $(data);
 
                 ajaxify_form(data.find('form'), function (result) {
