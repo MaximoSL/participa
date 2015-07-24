@@ -210,15 +210,18 @@ angular.module('madisonApp.dashboardControllers')
 
                   $scope.categories.splice(0, 1);
 
-                    var returned    = [];
-                    angular.forEach($scope.categories, function (category, index) {
-                        returned.push(angular.copy({
-                            id      : index,
-                            text    : category
-                        }));
-                    });
+                    setTimeout(function(){
+                      var returned    = [];
+                      angular.forEach($scope.categories, function (category, index) {
+                          returned.push(angular.copy({
+                              id      : index,
+                              text    : category
+                          }));
+                      });
 
-                    callback(returned);
+                      callback(returned);
+                    }, 2000);
+
                 }
             };
 
