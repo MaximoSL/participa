@@ -2727,7 +2727,7 @@ var app = angular.module('madisonApp', imports);
 //           // e.g. angular.module("template/tabs/tabset.html",[])
 //           // or defined as ng-templates
 //         } else if (request.url.indexOf("templates/") < 0) {
-//           request.url = "/participa/" + request.url;
+//           request.url = "/consulta/" + request.url;
 //           request.url = request.url.replace(/\/\//g, "/");
 //         } else {
 //           request.url = "/" + request.url;

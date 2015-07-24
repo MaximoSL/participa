@@ -24,7 +24,7 @@ class HomeController extends AbstractController
 
         return view('page.index', [
             'page_id'    => 'home',
-            'page_title' => 'gob.mx/participa',
+            'page_title' => 'gob.mx/'.config('app.base_name'),
             'categories' => $categories,
             'statuses'   => $statuses,
         ]);

@@ -13,7 +13,7 @@ class PageController extends AbstractController
     {
         return view('page.index', [
             'page_id'    => 'about',
-            'page_title' => 'gob.mx/participa - Acerca de',
+            'page_title' => 'gob.mx/'.config('app.base_name').' - Acerca de',
         ]);
     }
 
@@ -26,7 +26,7 @@ class PageController extends AbstractController
     {
         return view('page.index', [
             'page_id'    => 'faq',
-            'page_title' => 'gob.mx/participa - Pregunstas Frecuentes',
+            'page_title' => 'gob.mx/'.config('app.base_name').' - Pregunstas Frecuentes',
         ]);
     }
 
@@ -39,7 +39,7 @@ class PageController extends AbstractController
     {
         return view('page.index', [
             'page_id'    => 'privacy',
-            'page_title' => 'gob.mx/participa - Privacidad',
+            'page_title' => 'gob.mx/'.config('app.base_name').' - Privacidad',
         ]);
     }
 
@@ -52,7 +52,7 @@ class PageController extends AbstractController
     {
         return view('page.index', [
             'page_id'    => 'terms',
-            'page_title' => 'gob.mx/participa - Términos y condiciones',
+            'page_title' => 'gob.mx/'.config('app.base_name').' - Términos y condiciones',
         ]);
     }
 
@@ -65,7 +65,7 @@ class PageController extends AbstractController
     {
         return view('page.index', [
             'page_id'    => 'copyright',
-            'page_title' => 'gob.mx/participa - Licencia',
+            'page_title' => 'gob.mx/'.config('app.base_name').' - Licencia',
         ]);
     }
 }

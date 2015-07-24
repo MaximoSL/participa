@@ -23,7 +23,7 @@ abstract class AbstractController extends BaseController
      */
     protected function growlMessage($messages, $severity)
     {
-        $growled = ['messages'    => []];
+        $growled = ['messages' => []];
 
         //If we've been passed an array of messages
         if (is_array($messages)) {
@@ -42,7 +42,7 @@ abstract class AbstractController extends BaseController
                 throw new Exception('Unable to create growl message array because of size mismatches');
             }
         } else {
-            array_push($growled['messages'], ['text'    => $messages, 'severity' => $severity]);
+            array_push($growled['messages'], ['text' => $messages, 'severity' => $severity]);
         }
 
         return $growled;

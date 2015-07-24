@@ -41,7 +41,7 @@ class CommentController extends AbstractApiController
         $user = Auth::user();
         $comment = Input::get('comment');
 
-        $comment['private'] = (!empty($comment['private']) && $comment['private'] != 'false') ? 1 : 0;
+        $comment['private'] = (!empty($comment['private']) && $comment['private'] !== 'false') ? 1 : 0;
 
         $newComment = new Comment();
         $newComment->user_id = $user->id;
@@ -157,7 +157,7 @@ class CommentController extends AbstractApiController
             try {
                 return redirect()->back()->with('error', ucfirst(strtolower(trans('messages.notauthorized'))));
             } catch (Exception $e) {
-                return redirect()->to('/participa')->with('error', ucfirst(strtolower(trans('messages.notauthorized'))));
+                return redirect()->route('home')->with('error', ucfirst(strtolower(trans('messages.notauthorized'))));
             }
         }
 
