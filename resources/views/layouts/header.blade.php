@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ route('home') }}">
+      <a class="navbar-brand" href="{{ url('http://www.gob.mx/') }}">
         <img src="{{ url('svg/gob-mx-logo.svg') }}" width="75" height="23" alt="gob.mx">
       </a>
     </div>

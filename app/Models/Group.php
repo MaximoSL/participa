@@ -288,7 +288,7 @@ class Group extends Model
         $members = GroupMember::where('role', '=', $role)->get();
 
         $retval = new Collection();
-        foreach ($members as x$member) {
+        foreach ($members as $member) {
             $userModel = User::where('id', '=', $member->user_id)->first();
 
             if ($userModel) {
