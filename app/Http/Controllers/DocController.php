@@ -95,7 +95,7 @@ class DocController extends AbstractController
             //Render view and return
             return view('doc.reader.index', $data);
         } catch (Exception $e) {
-            return Redirect::to('/participa')->with('error', $e->getMessage());
+            return Redirect::route('home')->with('error', $e->getMessage());
         }
     }
 

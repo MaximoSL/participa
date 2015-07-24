@@ -30,6 +30,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application BASE NAME
+    |--------------------------------------------------------------------------
+    |
+    | This name is used as the prefix for all routes and
+    | inside some of the views that reference the platform
+    |
+    */
+
+    'base_name' => env('APP_BASE', 'consulta'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

@@ -147,7 +147,7 @@ class AuthController extends AbstractController
 
        return view('auth.signup', [
            'page_id'    => 'signup',
-           'page_title' => 'Registro a Participa',
+           'page_title' => 'Registro a gob.mx/'.config('app.base_name'),
        ]);
    }
 

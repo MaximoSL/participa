@@ -34,7 +34,7 @@ class NotificationsController extends AbstractController
         $notifications = Input::get('notifications');
 
         if (!is_array($notifications)) {
-            return Redirect::to('/participa/dashboard/notifications');
+            return Redirect::route('dashboard.notifications');
         }
 
         Notification::where('user_id', '=', Auth::user()->id)
@@ -45,6 +45,6 @@ class NotificationsController extends AbstractController
             Notification::addNotificationForUser($n, Auth::user()->id);
         }
 
-        return Redirect::to('/participa/dashboard/notifications')->with('success_message', trans('messages.updatednotif'));
+        return Redirect::route('dashboard.notifications')->with('success_message', trans('messages.updatednotif'));
     }
 }

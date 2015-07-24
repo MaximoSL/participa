@@ -9,10 +9,10 @@
         </div>
       </div>
       <div class="col-md-9">
-        <a class="list-item-title" href="/participa/docs/{{ doc.slug }}" title="{{ doc.title }}" target="_self">{{ doc.title }}</a>
+        <a class="list-item-title" href="/consulta/docs/{{ doc.slug }}" title="{{ doc.title }}" target="_self">{{ doc.title }}</a>
       </div>
       <div class="col-md-1">
-        <a class="list-item-arrow-link" href="/participa/docs/{{ doc.slug }}" title="{{ doc.title }}" target="_self">
+        <a class="list-item-arrow-link" href="/consulta/docs/{{ doc.slug }}" title="{{ doc.title }}" target="_self">
           <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
       </div>
@@ -20,7 +20,7 @@
   </div>
   <div class="list-item-footer">
     <div class="categories">
-      <span class="category" ng-repeat="category in doc.categories">{{ category.name }}</span>  
+      <span class="category" ng-repeat="category in doc.categories">{{ category.name }}</span>
     </div>
     <div class="updated-at">
       <span>{{ 'UPDATED' | translate }}: <b>{{ doc.updated_at | date:'longDate' }}</b></span>

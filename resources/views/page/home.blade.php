@@ -1,8 +1,8 @@
 <div class="main-banner">
   <div class="container">
-    <h1><strong>gob<span class="red">.</span>mx/participa</strong></h1>
+    <h1><strong>gob<span class="red">.</span>mx/{{ config('app.base_name') }}</strong></h1>
     <p class="text-sub">Una plataforma de participación ciudadana, que te permite a través de foros, encuestas y ejercicios de co-edición crear mejores propuestas de política pública en México.</p>
-    <p  class="text-sub-2"><strong>gob.mx/participa</strong> cuenta con tres herramientas <br>de participación: <strong>Encuesta</strong> + <strong>Foro</strong> + <strong>Co-Edición</strong></p>
+    <p  class="text-sub-2"><strong>gob.mx/{{ config('app.base_name') }}</strong> cuenta con tres herramientas <br>de participación: <strong>Encuesta</strong> + <strong>Foro</strong> + <strong>Co-Edición</strong></p>
   </div>
 </div>
 

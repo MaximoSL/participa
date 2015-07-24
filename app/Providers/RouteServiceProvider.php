@@ -64,7 +64,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace, 'prefix' => 'participa'], function (Router $router) {
+        $router->group(['namespace' => $this->namespace, 'prefix' => config('app.base_name')], function (Router $router) {
             foreach (glob(app_path('Http//Routes').'/*.php') as $file) {
                 $this->app->make('MXAbierto\\Participa\\Http\\Routes\\'.basename($file, '.php'))->map($router);
             }
