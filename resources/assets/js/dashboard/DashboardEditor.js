@@ -212,6 +212,9 @@ angular.module('madisonApp.dashboardControllers')
 
                     setTimeout(function(){
                       var returned    = [];
+
+                      $scope.categories = $.unique( $scope.categories );
+
                       angular.forEach($scope.categories, function (category, index) {
                           returned.push(angular.copy({
                               id      : index,
@@ -371,7 +374,7 @@ angular.module('madisonApp.dashboardControllers')
                     $scope.doc  = data;
 
                     angular.forEach(data.categories, function (category) {
-                        $scope.categories.push(angular.copy(category.name));
+                        $scope.categories.push(angular.copy(category.name + ' - ' + category.kind));
                     });
             });
         };
@@ -481,7 +484,7 @@ angular.module('madisonApp.dashboardControllers')
             return $http.get(_baseUrl + '/api/docs/' + $scope.doc.id + '/categories')
                 .success(function (data) {
                     angular.forEach(data, function ( category) {
-                        $scope.categories.push(category.name);
+                        $scope.categories.push(category.name + ' - ' + category.kind);
                     });
                 }).error(function ( data) {
                     console.error("Unable to get categories for document %o: %o", $scope.doc, data);
@@ -576,7 +579,7 @@ angular.module('madisonApp.dashboardControllers')
             return $http.get(_baseUrl + '/api/docs/categories')
                 .success(function (data) {
                     angular.forEach(data, function (category) {
-                        $scope.suggestedCategories.push(category.name);
+                        $scope.suggestedCategories.push(category.name + ' - ' + category.kind);
                     });
                 })
                 .error(function (data) {

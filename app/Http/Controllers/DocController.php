@@ -52,7 +52,7 @@ class DocController extends AbstractController
     {
         try {
             //Retrieve requested document
-            $doc = Doc::with('statuses', 'userSponsor', 'categories', 'dates')->where('slug', $slug)->first();
+            $doc = Doc::with('statuses', 'userSponsor', 'categories', 'docCategories', 'docLayouts', 'docInstitutions', 'dates')->where('slug', $slug)->first();
 
             if (!$doc) {
                 abort('404');
@@ -83,12 +83,12 @@ class DocController extends AbstractController
             ];
 
             //Render the cofemer view and return
-            if (in_array('cofemer', $doc->categories->lists('name', 'id')->all())) {
+            if (in_array('cofemer', $doc->categories()->where('kind', 'layout')->lists('name', 'id')->all())) {
                 return view('doc.reader.cofemer.index', $data);
             }
 
             //Render the votes view and return
-            if (in_array('votos', $doc->categories->lists('name', 'id')->all())) {
+            if (in_array('votos', $doc->categories()->where('kind', 'layout')->lists('name', 'id')->all())) {
                 return view('doc.reader.votes.index', $data);
             }
 

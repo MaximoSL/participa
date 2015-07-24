@@ -91,7 +91,7 @@ angular.module( 'madisonApp.controllers' )
                 };
 
             $scope.layoutTexts  = texts.common;
-            angular.forEach( $scope.doc.categories, function ( category ) {
+            angular.forEach( $scope.doc.doc_layouts, function ( category ) {
                 if ( texts[category.name] !== undefined )
                     $scope.layoutTexts  = texts[category.name];
             });

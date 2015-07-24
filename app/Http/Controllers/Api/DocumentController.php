@@ -33,7 +33,7 @@ class DocumentController extends AbstractApiController
     {
         $doc_id = $doc;
 
-        $doc = Doc::with('content', 'categories', 'introtext')->find($doc);
+        $doc = Doc::with('content', 'categories', 'docCategories', 'introtext')->find($doc);
 
         return response()->json($doc);
     }
@@ -43,7 +43,7 @@ class DocumentController extends AbstractApiController
         $perPage = Input::get('per_page', 20);
         $orderBy = Input::get('order', 'updated_at');
 
-        $availableFilters = ['categories', 'statuses', 'dates'];
+        $availableFilters = ['docCategories', 'docInstitutions', 'statuses', 'dates'];
 
         $docs = Doc::with($availableFilters);
 
@@ -137,7 +137,7 @@ class DocumentController extends AbstractApiController
             $recent = $query;
         }
 
-        $docs = Doc::take(10)->with('categories')->orderBy('updated_at', 'DESC')->get();
+        $docs = Doc::take(10)->with('categories', 'docCategories')->orderBy('updated_at', 'DESC')->get();
 
         foreach ($docs as $doc) {
             $doc->setActionCount();
@@ -166,6 +166,16 @@ class DocumentController extends AbstractApiController
         $categoryIds = [];
 
         foreach ($categories as $category) {
+            $category['text'] = str_replace(
+                [
+                    ' - category',
+                    ' - layout',
+                    ' - institution',
+                ],
+                '',
+                $category['text']
+            );
+
             $toAdd = Category::where('name', $category['text'])->first();
 
             if (!isset($toAdd)) {
