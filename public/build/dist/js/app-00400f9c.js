@@ -841,6 +841,20 @@ angular.module( 'madisonApp.controllers' )
         }
     }]);
 angular.module('madisonApp.controllers')
+  .controller('EmailSubscribeController', ['$scope', '$http', function ($scope, $http) {
+    $scope.email = '';
+    $scope.successMessage = false;
+    $scope.subscribeEmail = function () {
+      $http.post('http://www.gob.mx/subscribe', { email: $scope.email })
+        .success(function (data) {
+          $scope.successMessage = true;
+        }).error(function (data) {
+          console.error( "Unable to mark activity as seen: %o", data );
+        });
+    };
+  }]);
+
+angular.module('madisonApp.controllers')
   .controller('HomePageController', ['$scope', '$location', '$http', '$filter', '$cookies', 'Doc', function ($scope, $location, $http, $filter, $cookies, Doc) {
     var refEl     = $('.main-banner'),
         search    = $location.search(),
@@ -2756,6 +2770,8 @@ app.config(function ($locationProvider) {
 });
 
 app.config(['$translateProvider', function ($translateProvider) {
+  $translateProvider.useSanitizeValueStrategy('sanitize');
+
   $translateProvider.translations('en', {
     'POSTED': 'Posted',
     'UPDATED': 'Updated'
