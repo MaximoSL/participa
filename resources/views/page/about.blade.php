@@ -1,4 +1,14 @@
 <div class="container">
+  @include('partials._secondary-nav', [
+      'breadcrumbs' => [
+        [
+          'route' => 'about',
+          'label' => trans('messages.about')
+        ],
+      ]
+    ])
+
+    <br><br>
   <div class="row">
     <div class="col-md-12">
       <h1>Acerca de gob.mx/{{ config('app.base_name') }}</h1>

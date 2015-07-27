@@ -18,7 +18,7 @@
 				<input type="checkbox" name="{{ $key }}" value="{{ $value }}" @if(in_array($key, $selectedNotifications)) checked @endif>
 			</div>
 			@endforeach
-			<input type="submit" class="btn btn-default" value="{{ trans('message.savesettings') }}">
+			<input type="submit" class="btn btn-default" value="{{ trans('messages.savesettings') }}">
 		</form>
 	</div>
 </div>

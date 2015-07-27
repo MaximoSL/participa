@@ -2770,7 +2770,7 @@ app.config(function ($locationProvider) {
 });
 
 app.config(['$translateProvider', function ($translateProvider) {
-  $translateProvider.useSanitizeValueStrategy('sanitize');
+  // $translateProvider.useSanitizeValueStrategy('sanitize');
 
   $translateProvider.translations('en', {
     'POSTED': 'Posted',

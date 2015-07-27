@@ -7,6 +7,8 @@
 </div>
 
 <div class="home-docs container">
+  @include('partials._secondary-nav')
+
 	<div class="row">
 		<div class="col-lg-12 col-md-12">
 			<h4>Temas y/o encuestas de participación</h4>

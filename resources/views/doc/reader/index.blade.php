@@ -10,6 +10,16 @@
   <div class="document-wrapper" ng-controller="DocumentPageController">
     <div class="container">
 
+      @include('partials._secondary-nav', [
+        'breadcrumbs' => [
+          [
+            'route' => 'docs.doc',
+            'params' => ['slug' => $doc->slug],
+            'label' => $doc->title
+          ],
+        ]
+      ])
+
       <div class="row" ng-controller="ReaderController" ng-init="init({{ $doc->id }})">
         <div class="col-md-8">
           <div class="doc-head">
