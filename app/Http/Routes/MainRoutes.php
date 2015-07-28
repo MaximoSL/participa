@@ -122,7 +122,7 @@ class MainRoutes
         ]);
 
         // Confirmation email resend
-        $router->get('verification/remind',  [
+        $router->get('verification/remind', [
             'as'   => 'verification.remind',
             'uses' => 'RemindersController@getConfirmation',
         ]);

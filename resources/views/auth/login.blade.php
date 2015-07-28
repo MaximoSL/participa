@@ -1,6 +1,15 @@
 @extends('layouts.main')
 @section('content')
 	<div class="container">
+    @include('partials._secondary-nav', [
+      'breadcrumbs' => [
+        [
+          'route' => 'auth.login',
+          'label' => trans('messages.login')
+        ],
+      ]
+    ])
+    <br><br>
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
 				<div class="content">

@@ -723,3 +723,18 @@ input[type="search"].blue-search{
 		}
 	}
 }
+
+/* HELPERS
+------------------------------ */
+
+.clear-both {
+    clear: both;
+}
+
+.no-margin-top {
+    margin-top: 0 !important;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0 !important;
+}
