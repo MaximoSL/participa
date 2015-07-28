@@ -24,6 +24,8 @@ class Doc extends Model implements HasPresenter
     const SPONSOR_TYPE_INDIVIDUAL = 'individual';
     const SPONSOR_TYPE_GROUP = 'group';
 
+    protected $appends = ['is_opened'];
+
     public function getEmbedCode()
     {
         $dom = new \DOMDocument();
@@ -130,6 +132,43 @@ class Doc extends Model implements HasPresenter
         }
 
         return false;
+    }
+
+    public function is_opened()
+    {
+        if (!$this->statuses->first() ||
+            (
+                $this->statuses->first()->id != config('statuses.closed_comments') &&
+                $this->statuses->first()->id != config('statuses.closed_document')
+            )
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function is_closed_for_comments()
+    {
+        if ($this->statuses->first() && $this->statuses->first()->id == config('statuses.closed_comments')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function is_closed()
+    {
+        if ($this->statuses->first() && $this->statuses->first()->id == config('statuses.closed_document')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getIsOpenedAttribute($value)
+    {
+        return $this->is_opened();
     }
 
     public function getLink()

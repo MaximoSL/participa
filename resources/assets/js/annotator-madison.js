@@ -103,6 +103,11 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       }
     };
 
+    errorNotification = function (message) {
+      Annotator.showNotification(message.replace(/<\/?[^>]+(>|$)/g, ""),Annotator.Notification.ERROR);
+      feedbackMessage( message, 'error', '#participate-activity-message' );
+    }
+
     this.annotator.editor.addField({
       load: function (field, annotation) {
         this.addEditFields(field, annotation);
@@ -211,7 +216,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
     });
 
     //If the user is logged in, allow them to comment
-    if (user.id !== '') {
+    if (user.id !== '' && doc.is_opened) {
       var annotationComments = $('<div class="annotation-comments"></div>');
       var commentText = $('<input type="text" class="form-control" />');
       var commentSubmit = $('<button type="button" class="btn btn-primary" >Enviar</button>');
@@ -291,7 +296,13 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
     //POST request to add user's comment
     $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/comments', {
       comment: comment
-    }, function () {
+    }, function (data) {
+
+      if(data.status === 'error') {
+        message = '<b>Lo sentimos</b>, Este documento se encuentra cerrado';
+        return errorNotification(message);
+      }
+
       annotation.comments.push(comment);
 
       return this.annotator.publish('commentCreated', comment);
@@ -302,6 +313,11 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       element = $(element);
       element.children('.action-count').text(data.likes);
       element.siblings('.glyphicon').removeClass('selected');
+
+      if(typeof data.document_closed !== 'undefined'){
+        message = '<b>Lo sentimos</b>, Este documento se encuentra cerrado';
+        return errorNotification(message);
+      }
 
       if (data.action) {
         element.addClass('selected');
@@ -325,6 +341,11 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       element.children('.action-count').text(data.dislikes);
       element.siblings('.glyphicon').removeClass('selected');
 
+      if(typeof data.document_closed !== 'undefined'){
+        message = '<b>Lo sentimos</b>, Este documento se encuentra cerrado';
+        return errorNotification(message);
+      }
+
       if (data.action) {
         element.addClass('selected');
       } else {
@@ -346,6 +367,11 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       element = $(element);
       element.children('.action-count').text(data.flags);
       element.siblings('.glyphicon').removeClass('selected');
+
+      if(typeof data.document_closed !== 'undefined'){
+        message = '<b>Lo sentimos</b>, Este documento se encuentra cerrado';
+        return errorNotification(message);
+      }
 
       if (data.action) {
         element.addClass('selected');

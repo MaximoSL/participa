@@ -38,6 +38,14 @@ class CommentController extends AbstractApiController
 
     public function postIndex($doc)
     {
+        $doc = Doc::findOrFail($doc);
+
+        if (!$doc->is_opened()) {
+            $return = Comment::loadComments($newComment->doc_id, $newComment->id, $user);
+
+            return response()->json($return);
+        }
+
         $user = Auth::user();
         $comment = Input::get('comment');
 
@@ -96,6 +104,14 @@ class CommentController extends AbstractApiController
     public function postLikes($docId, $commentId)
     {
         $comment = Comment::find($commentId);
+
+        if ($comment->doc->is_closed()) {
+            $comment = $comment->loadArray();
+            $comment['document_closed'] = 1;
+
+            return response()->json($comment);
+        }
+
         $comment->saveUserAction(Auth::user()->id, Comment::ACTION_LIKE);
 
         //Load fields for notification
@@ -110,6 +126,14 @@ class CommentController extends AbstractApiController
     public function postDislikes($docId, $commentId)
     {
         $comment = Comment::find($commentId);
+
+        if ($comment->doc->is_closed()) {
+            $comment = $comment->loadArray();
+            $comment['document_closed'] = 1;
+
+            return response()->json($comment);
+        }
+
         $comment->saveUserAction(Auth::user()->id, Comment::ACTION_DISLIKE);
 
         //Load fields for notification
@@ -124,6 +148,14 @@ class CommentController extends AbstractApiController
     public function postFlags($docId, $commentId)
     {
         $comment = Comment::find($commentId);
+
+        if ($comment->doc->is_closed()) {
+            $comment = $comment->loadArray();
+            $comment['document_closed'] = 1;
+
+            return response()->json($comment);
+        }
+
         $comment->saveUserAction(Auth::user()->id, Comment::ACTION_FLAG);
 
         return response()->json($comment->loadArray());

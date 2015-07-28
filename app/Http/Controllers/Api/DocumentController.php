@@ -63,7 +63,11 @@ class DocumentController extends AbstractApiController
             }
         }
 
-        $docs = $docs->orderBy($orderBy, 'DESC')->paginate($perPage);
+        $docs->leftJoin('doc_status', 'docs.id', '=', 'doc_status.doc_id');
+        $docs->orderByRaw('FIELD(doc_status.status_id, 1, 2, 3) ASC');
+
+        $docs->orderBy($orderBy, 'DESC');
+        $docs = $docs->paginate($perPage);
 
         $response = [];
         $response['results'] = [];

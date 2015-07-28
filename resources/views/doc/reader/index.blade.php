@@ -24,6 +24,9 @@
         <div class="col-md-8">
           <div class="doc-head">
             <h1>{{ $doc->title }}</h1>
+            @if(!$doc->is_opened)
+              <p class="text-danger"><b>{{ $doc->statuses->first()->label }}</b></p>
+            @endif
             <ul class="list-unstyled">
               <li>
                 <small>@{{ 'POSTED' | translate }}: @{{ doc.created_at | date: 'longDate' }}, @{{ doc.created_at | date: 'HH:mm:ss' }}</small>

@@ -24,6 +24,9 @@
       <div class="col-md-8">
         <div class="doc-head">
           <h1>{{ trans('messages.cofemer-layout-header') }}</h1>
+          @if(!$doc->is_opened)
+            <p class="text-danger"><b>{{ $doc->statuses->first()->label }}</b></p>
+          @endif
           <ul class="list-unstyled">
             <li>
               <small>{{ trans('messages.dependency') }}: {{ $doc->group_name }}</small>

@@ -115,6 +115,10 @@ angular.module( 'madisonApp.controllers' )
                         activity.likes      = data.likes;
                         activity.dislikes   = data.dislikes;
                         activity.flags      = data.flags;
+
+                        if(typeof data.document_closed !== 'undefined'){
+                          growl.error('Éste documento se encuentra cerrado');
+                        }
                     }).error( function ( data ) {
                         console.error( data );
                     });
@@ -150,6 +154,12 @@ angular.module( 'madisonApp.controllers' )
                     'comment'   : subcomment
                 })
                 .success( function ( data ) {
+
+                    if(data.status === 'error') {
+                      growl.error('Éste documento se encuentra cerrado');
+                      return;
+                    }
+
                     activity.comments.push( data );
                     subcomment.text = '';
                     subcomment.user = '';

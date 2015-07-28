@@ -109,6 +109,8 @@ return [
     'createdoc'                 => 'Create Document',
     'createddoc'                => 'Document created successfully',
     'saveddoc'                  => 'Document saved successfully',
+    'closedcommentsdoc'         => 'Document closed for comments',
+    'closeddoc'                 => 'Document closed',
     'title'                     => 'Title',
     'slug'                      => 'Slug',
     'character'                 => 'Character',

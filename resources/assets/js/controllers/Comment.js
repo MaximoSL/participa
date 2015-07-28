@@ -184,6 +184,10 @@ angular.module( 'madisonApp.controllers' )
                         activity.dislikes   = data.dislikes;
                         activity.flags      = data.flags;
                         activity.deleted_at = data.deleted_at;
+
+                        if(typeof data.document_closed !== 'undefined'){
+                          growl.error('Éste documento se encuentra cerrado');
+                        }
                     }).error( function ( data ) {
                         console.error( data );
                     });
