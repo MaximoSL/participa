@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use MXAbierto\Participa\Models\Doc;
 use MXAbierto\Participa\Models\DocContent;
 use MXAbierto\Participa\Models\MadisonEvent;
@@ -131,6 +134,20 @@ class DocumentsController extends AbstractController
 
         if (!$doc->canUserEdit(Auth::user())) {
             return redirect()->route('documents')->with('error', ucfirst(strtolower(trans('messages.notauthorized').' '.trans('messages.toviewdocument'))));
+        }
+
+        if (!$doc->content) {
+            $template = new DocContent();
+            $template->doc_id = $doc->id;
+            $template->content = 'New Document Content';
+            $template->save();
+
+            $doc->init_section = $template->id;
+            $doc->save();
+
+            $empty_content_log = new Logger('Documento sin contenido');
+            $empty_content_log->pushHandler(new StreamHandler(storage_path().'/logs/empty_content_log.log', Logger::INFO));
+            $empty_content_log->addInfo('El documento '.$doc->id.' - '.$doc->title.', no tenía registro relacionado en la tabla doc_contents, el registro '.$template->id.' se ha creado en la tabla doc_contents');
         }
 
         return view('documents.edit', [
