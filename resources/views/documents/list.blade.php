@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<ol class="breadcrumb">
-					<li><a href="{{ route('home') }}"><i class="icon icon-home"></i> {{ trans('messages.home')}}</a></li>
+					<li><a href="{{ route('home') }}" target="_self"><i class="icon icon-home"></i> {{ trans('messages.home')}}</a></li>
 					<li class="active">{{ trans('messages.document') }}s</li>
 				</ol>
 			</div>

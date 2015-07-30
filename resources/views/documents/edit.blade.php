@@ -5,7 +5,7 @@
   <div class="row" ng-controller="DashboardEditorController" ng-init="init()">
     <div class="col-md-12">
       <ol class="breadcrumb">
-        <li><a href="{{ route('home') }}"><i class="icon icon-home"></i> {{ trans('messages.home')}}</a></li>
+        <li><a href="{{ route('home') }}" target="_self"><i class="icon icon-home"></i> {{ trans('messages.home')}}</a></li>
         <li><a href="{{ route('docs') }}" target="_self">{{ trans('messages.document') }}s</a></li>
         <li class="active">{{ $doc->title }}</li>
       </ol>
