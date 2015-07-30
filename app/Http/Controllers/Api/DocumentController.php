@@ -121,6 +121,7 @@ class DocumentController extends AbstractApiController
         $doc_content->save();
         $doc->content([$doc_content]);
         $doc->save();
+        $doc->touch();
 
         event(MadisonEvent::DOC_EDITED, $doc);
 
@@ -189,6 +190,9 @@ class DocumentController extends AbstractApiController
         }
 
         $doc->categories()->sync($categoryIds);
+
+        $doc->touch();
+
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.categories').' '.trans('messages.savedfeminineplural'))), 'severity' => 'info'];
 
         return response()->json($response);
@@ -215,6 +219,9 @@ class DocumentController extends AbstractApiController
         $introText->meta_value = $text;
 
         $introText->save();
+
+        $doc = Doc::find($doc);
+        $doc->touch();
 
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.docintrotext').' '.trans('messages.saved'))), 'severity' => 'info'];
 
@@ -270,6 +277,8 @@ class DocumentController extends AbstractApiController
             }
         }
 
+        $doc->touch();
+
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.sponsor').' '.trans('messages.saved'))), 'severity' => 'info'];
 
         return response()->json($response);
@@ -316,6 +325,8 @@ class DocumentController extends AbstractApiController
             $doc->group()->sync([$toAdd->id]);
         }
 
+        $doc->touch();
+
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.document').' '.trans('messages.saved'))), 'severity' => 'info'];
 
         return response()->json($response);
@@ -352,6 +363,8 @@ class DocumentController extends AbstractApiController
             $doc->statuses()->sync([$toAdd->id]);
         }
 
+        $doc->touch();
+
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.document').' '.trans('messages.saved'))), 'severity' => 'info'];
 
         return response()->json($response);
@@ -379,6 +392,8 @@ class DocumentController extends AbstractApiController
         $returned->date = $datetime->format('Y-m-d H:i:s');
 
         $doc->dates()->save($returned);
+
+        $doc->touch();
 
         return response()->json($returned);
     }
