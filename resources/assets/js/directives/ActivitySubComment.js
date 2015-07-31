@@ -3,7 +3,7 @@ angular.module( 'madisonApp.directives' )
         return {
             restrict    : 'A',
             transclude  : true,
-            templateUrl : '/templates/activity-sub-comment.html',
+            templateUrl : '/consulta-public/templates/activity-sub-comment.html',
             compile     : function () {
                 return {
                     post: function ( scope, element, attrs ) {

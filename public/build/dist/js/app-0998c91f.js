@@ -2375,7 +2375,7 @@ angular.module( 'madisonApp.services' )
             backdrop            : true,
             keyboard            : true,
             modalFade           : true,
-            templateUrl         : '/templates/modal.html'
+            templateUrl         : '/consulta-public/templates/modal.html'
         };
         var modalOptions    = {
             closeButtonText     : 'Close',
@@ -2418,6 +2418,7 @@ angular.module( 'madisonApp.services' )
             return $modal.open( tempModalDefaults ).result;
         };
     }]);
+
 angular.module('madisonApp.services')
     .factory('UserService', ['$rootScope', '$http', function ($rootScope, $http) {
         var UserService  = {};
@@ -2440,7 +2441,7 @@ angular.module( 'madisonApp.directives' )
         return {
             restrict    : 'A',
             transclude  : true,
-            templateUrl : '/templates/activity-sub-comment.html',
+            templateUrl : '/consulta-public/templates/activity-sub-comment.html',
             compile     : function () {
                 return {
                     post: function ( scope, element, attrs ) {
@@ -2469,7 +2470,7 @@ angular.module( 'madisonApp.directives' )
         return {
             restrict    : 'A',
             transclude  : true,
-            templateUrl : '/templates/annotation-item.html',
+            templateUrl : '/consulta-public/templates/annotation-item.html',
             compile     : function () {
                 return {
                     post    : function ( scope, element, attrs ) {
@@ -2504,7 +2505,7 @@ angular.module( 'madisonApp.directives' )
         return {
             restrict    : 'A',
             transclude  : true,
-            templateUrl : '/templates/comment-item.html',
+            templateUrl : '/consulta-public/templates/comment-item.html',
             compile     : function () {
                 return {
                     post: function ( scope, element, attrs ) {
@@ -2535,9 +2536,10 @@ angular.module( 'madisonApp.directives' )
     .directive( 'docComments', function () {
         return {
             restrict    : 'AECM',
-            templateUrl : '/templates/doc-comments.html'
+            templateUrl : '/consulta-public/templates/doc-comments.html'
         };
     });
+
 angular.module( 'madisonApp.directives' )
     .directive( 'docLink', [ '$http', '$compile', function ( $http, $compile ) {
         return {
@@ -2558,9 +2560,10 @@ angular.module( 'madisonApp.directives' )
     .directive( 'docListItem', function() {
         return {
             restrict    : 'A',
-            templateUrl : '/templates/doc-list-item.html'
+            templateUrl : '/consulta-public/templates/doc-list-item.html'
         };
     });
+
 angular.module( 'madisonApp.directives' )
     .directive( 'ngBlur', function () {
         return function ( scope, elem, attrs ) {
@@ -2573,7 +2576,7 @@ angular.module( 'madisonApp.directives' )
     .directive( 'profileCompletionMessage', [ '$http', function ( $http ) {
         return {
             restrict    : 'A',
-            templateUrl : '/templates/profile-completion-message.html',
+            templateUrl : '/consulta-public/templates/profile-completion-message.html',
             link        : function ( scope ) {
                 scope.updateEmail   = function ( newEmail, newPassword ) {
                     //Issue PUT request to update user
@@ -2791,3 +2794,4 @@ window.console.log = window.console.log || function () {};
 function googleTranslateElementInit() {
   	new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
+//# sourceMappingURL=app.js.map
