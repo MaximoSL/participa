@@ -73,7 +73,7 @@
       <div class="col-md-8">
         <ul class="nav nav-tabs" role="tablist" tourtip="@{{ step_messages.step_3 }}" tourtip-step="3" tourtip-next-label="Siguiente">
           <li ng-class="{'active':secondtab == false}"><a href="#tab-discussion" target="_self" role="tab" data-toggle="tab">Comentarios a la Propuesta</a></li>
-          <a href="{{ route('docs.feed', $doc->slug) }}" class="rss-link" target="_self"><img src="{{ url('img/rss-fade.png') }}" class="rss-icon" alt="RSS Icon"></a>
+          <a href="{{ route('docs.feed', $doc->slug) }}" class="rss-link" target="_self"><img src="{{ asset_url('img/rss-fade.png') }}" class="rss-icon" alt="RSS Icon"></a>
         </ul>
 
         <div class="tab-content">
@@ -95,7 +95,7 @@
               <li>{{ trans('messages.signupnaddvoice') }}</li>
               <li>{{ trans('messages.anncommsuppopp') }}</li>
             </ol>
-            <img src="{{ url('img/como-comentar.gif') }}" class="how-to-annotate-img img-responsive" />
+            <img src="{{ asset_url('img/como-comentar.gif') }}" class="how-to-annotate-img img-responsive" />
           </div>
 
           <div class="sidebar-unit" ng-controller="DocumentTocController" ng-show="headings.length > 0">

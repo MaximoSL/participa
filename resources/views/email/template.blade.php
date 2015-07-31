@@ -6,7 +6,7 @@
 	<body>
 		<h1>Welcome to the Madison Community</h1>
 
-		<p>Congratulations!  After clicking <a href="{{ url('user/verify/' . $token, $parameters = array(), $secure = null) }}">here</a> to verify your account, you can:</p>
+		<p>Congratulations!  After clicking <a href="{{ asset_url('user/verify/' . $token, $parameters = array(), $secure = null) }}">here</a> to verify your account, you can:</p>
 
 		<ol>
 			<li>Find a document by browsing through the full list or filtering by sponsor, status, or category</li>
@@ -21,7 +21,7 @@
 		</ol>
 
 		<p>Welcome to the Madison community: everyday Americans working together to improve state, local and federal government, and hold it accountable.</p>
-		<p>Click <a href="{{ url('user/verify/' . $token, $parameters = array(), $secure = null) }}">here</a> to start co-creating laws with Madison</p>
+		<p>Click <a href="{{ asset_url('user/verify/' . $token, $parameters = array(), $secure = null) }}">here</a> to start co-creating laws with Madison</p>
 
 		<p>You can also check us out on <a href="https://www.facebook.com/opengovfoundation">Facebook</a>, <a href="https://twitter.com/foundopengov">Twitter</a>, <a href="http://opengovfoundation.tumblr.com">Tumblr</a>, and <a href="http://www.linkedin.com/company/opengov-foundation">LinkedIn</a></p>
 	</body>

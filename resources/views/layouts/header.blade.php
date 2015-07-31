@@ -7,8 +7,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ url('http://www.gob.mx/') }}">
-        <img src="{{ url('svg/gob-mx-logo.svg') }}" width="75" height="23" alt="gob.mx">
+      <a class="navbar-brand" href="http://www.gob.mx">
+        <img src="{{ asset_url('svg/gob-mx-logo.svg') }}" width="75" height="23" alt="gob.mx">
       </a>
     </div>
     <div class="collapse navbar-collapse" id="navbarMainCollapse">

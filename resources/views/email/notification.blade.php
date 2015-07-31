@@ -6,6 +6,6 @@
 	<body>
 		<h1>Just a quick note..</h1>
 		<p>{{ $text }} </p>
-		<p> &nbsp;&ndash; Your friends at <a href="{{ url('/', $parameters = array(), $secure = null) }}">Madison</a>.</p>
+		<p> &nbsp;&ndash; Your friends at <a href="{{ asset_url('/', $parameters = array(), $secure = null) }}">Madison</a>.</p>
 	</body>
 </html>
