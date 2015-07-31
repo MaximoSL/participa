@@ -2,7 +2,7 @@ angular.module( 'madisonApp.directives' )
     .directive( 'profileCompletionMessage', [ '$http', function ( $http ) {
         return {
             restrict    : 'A',
-            templateUrl : '/templates/profile-completion-message.html',
+            templateUrl : _baseUrl + '-public/templates/profile-completion-message.html',
             link        : function ( scope ) {
                 scope.updateEmail   = function ( newEmail, newPassword ) {
                     //Issue PUT request to update user
