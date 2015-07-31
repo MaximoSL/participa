@@ -3,7 +3,7 @@ angular.module( 'madisonApp.directives' )
         return {
             restrict    : 'A',
             transclude  : true,
-            templateUrl : _baseUrl + '-public/templates/annotation-item.html',
+            templateUrl : '/consulta-public/templates/annotation-item.html',
             compile     : function () {
                 return {
                     post    : function ( scope, element, attrs ) {

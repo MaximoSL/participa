@@ -5,7 +5,7 @@ angular.module( 'madisonApp.services' )
             backdrop            : true,
             keyboard            : true,
             modalFade           : true,
-            templateUrl         : _baseUrl + '-public/templates/modal.html'
+            templateUrl         : '/consulta-public/templates/modal.html'
         };
         var modalOptions    = {
             closeButtonText     : 'Close',
