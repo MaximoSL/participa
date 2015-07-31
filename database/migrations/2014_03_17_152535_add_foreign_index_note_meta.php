@@ -24,7 +24,7 @@ class AddForeignIndexNoteMeta extends Migration
     public function down()
     {
         Schema::table('note_meta', function ($table) {
-            $table->dropIndex('note_meta_annotation_id_foreign');
+            $table->dropForeign('note_meta_annotation_id_foreign');
         });
     }
 }

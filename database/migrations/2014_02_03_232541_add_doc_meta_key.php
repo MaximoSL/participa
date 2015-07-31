@@ -24,6 +24,7 @@ class AddDocMetaKey extends Migration
     public function down()
     {
         Schema::table('doc_meta', function ($table) {
+            $table->dropForeign('doc_meta_doc_id_foreign');
             $table->dropUnique('doc_meta_doc_id_user_id_meta_key_unique');
         });
     }

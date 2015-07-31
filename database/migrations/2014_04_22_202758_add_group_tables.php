@@ -48,7 +48,7 @@ class AddGroupTables extends Migration
      */
     public function down()
     {
-        Schema::drop('groups');
         Schema::drop('group_members');
+        Schema::drop('groups');
     }
 }
