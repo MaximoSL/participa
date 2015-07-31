@@ -13,14 +13,7 @@ return [
      * a requirement when you cannot know the address
      * of your proxy (e.g. if using Rackspace balancers).
      */
-    'proxies' => [
-        '*',
-    ],
-
-    /*
-     * Or, to trust all proxies, uncomment this:
-     */
-     # 'proxies' => '*',
+     'proxies' => '*',
 
     /*
      * Default Header Names
