@@ -4,6 +4,7 @@ namespace MXAbierto\Participa\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Annotation extends Model implements ActivityInterface
 {
@@ -30,6 +31,11 @@ class Annotation extends Model implements ActivityInterface
      * @var array
      */
     protected $fillable = ['quote', 'text', 'uri', 'seen'];
+
+    public function doc()
+    {
+        return $this->belongsTo('MXAbierto\Participa\Models\Doc', 'doc_id');
+    }
 
     public function user()
     {
@@ -423,7 +429,7 @@ class Annotation extends Model implements ActivityInterface
     {
         $slug = DB::table('docs')->where('id', $this->doc_id)->pluck('slug');
 
-        return URL::to('docs/'.$slug.'#annotation_'.$this->id);
+        return route('docs.doc', ['slug' => $slug]).'#annotation_'.$this->id;
     }
 
     /**
