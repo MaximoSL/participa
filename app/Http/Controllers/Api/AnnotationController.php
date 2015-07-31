@@ -12,6 +12,7 @@ use MXAbierto\Participa\Models\AnnotationComment;
 use MXAbierto\Participa\Models\AnnotationPermission;
 use MXAbierto\Participa\Models\AnnotationRange;
 use MXAbierto\Participa\Models\AnnotationTag;
+use MXAbierto\Participa\Models\Doc;
 use MXAbierto\Participa\Models\MadisonEvent;
 
 /**

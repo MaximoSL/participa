@@ -50,7 +50,7 @@ angular.module( 'madisonApp.controllers' )
             return sponsored;
         };
         $scope.notifyAuthor     = function ( annotation ) {
-            $http.post( '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/' + 'seen' )
+            $http.post( _baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/' + 'seen' )
                 .success(function ( data ) {
                     annotation.seen = data.seen;
                 }).error(function ( data ) {
@@ -60,7 +60,7 @@ angular.module( 'madisonApp.controllers' )
         $scope.getDocComments   = function ( docId ) {
             $http({
                 method  : 'GET',
-                url     : '/api/docs/' + docId + '/comments'
+                url     : _baseUrl + '/api/docs/' + docId + '/comments'
             })
             .success( function ( data ) {
                 angular.forEach( data, function ( comment ) {
@@ -88,7 +88,7 @@ angular.module( 'madisonApp.controllers' )
             comment.user    = $scope.user;
             comment.doc     = $scope.doc;
 
-            $http.post( '/api/docs/' + comment.doc.id + '/comments', {
+            $http.post( _baseUrl + '/api/docs/' + comment.doc.id + '/comments', {
                 'comment'   : comment
                 })
                 .success( function () {
@@ -110,7 +110,7 @@ angular.module( 'madisonApp.controllers' )
         };
         $scope.addAction        = function ( activity, action, $event ) {
             if ( $scope.user.id !== '' ) {
-                $http.post( '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
+                $http.post( _baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
                     .success( function ( data ) {
                         activity.likes      = data.likes;
                         activity.dislikes   = data.dislikes;
@@ -139,7 +139,7 @@ angular.module( 'madisonApp.controllers' )
 
                 createLoginPopup( jQuery.Event( "click", {
                     clientX : clientX,
-                    pageY   : pageY 
+                    pageY   : pageY
                 }));
                 return;
             }

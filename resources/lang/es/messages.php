@@ -253,6 +253,8 @@ return [
     'annotationidnotfound'      => 'No se encontró el id del comentario',
     'noteidnotfound'            => 'No se encontró el id de la nota',
     'documentnotfound'          => 'No se encontró el documento',
+    'categorynotfound'          => 'No se encontró la categoría',
+    'categorykindnotfound'      => 'No se encontró el tipo de categoría',
     'invalidid'                 => 'ID inválido',
     'invalidslugcharacter'      => 'Caracter de slug inválido',
     'invalidgroup'              => 'Grupo inválido',

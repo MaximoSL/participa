@@ -253,6 +253,8 @@ return [
     'annotationidnotfound'      => 'Annotation id not found',
     'noteidnotfound'            => 'Note id not found',
     'documentnotfound'          => 'Document not found',
+    'categorynotfound'          => 'Category not found',
+    'categorykindnotfound'      => 'Category kind not found',
     'invalidid'                 => 'Invalid ID',
     'invalidslugcharacter'      => 'Invalid slug character',
     'invalidgroup'              => 'Invalid group',
