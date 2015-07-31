@@ -877,8 +877,8 @@ th {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("../../../fonts/glyphicons-halflings-regular.eot");
-  src: url("../../../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../../../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../../../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../../../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../../../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+  src: url("../fonts/glyphicons-halflings-regular.eot");
+  src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 
 .glyphicon {
   position: relative;
@@ -6634,8 +6634,8 @@ button.close {
 
 @font-face {
   font-family: 'icogobmx';
-  src: url("/fonts/icogobmx.eot?-jluxo2");
-  src: url("/fonts/icogobmx.eot?#iefix-jluxo2") format("embedded-opentype"), url("/fonts/icogobmx.woff?-jluxo2") format("woff"), url("/fonts/icogobmx.ttf?-jluxo2") format("truetype"), url("/fonts/icogobmx.svg?-jluxo2#icogobmx") format("svg");
+  src: url("../fonts/icogobmx.eot?-jluxo2");
+  src: url("../fonts/icogobmx.eot?#iefix-jluxo2") format("embedded-opentype"), url("../fonts/icogobmx.woff?-jluxo2") format("woff"), url("../fonts/icogobmx.ttf?-jluxo2") format("truetype"), url("../fonts/icogobmx.svg?-jluxo2#icogobmx") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -7093,7 +7093,7 @@ ul.format {
     display: block; } }
 
 .social-icon {
-  background-image: url(../../../img/icons_full.png);
+  background-image: url("../img/icons_full.png");
   display: block;
   text-indent: -9999px;
   margin-right: 5px; }
@@ -9193,7 +9193,7 @@ ol.breadcrumb {
     color: #ffffff; }
 
 .i {
-  background-image: url("/img/mx-pack.png");
+  background-image: url("../img/mx-pack.png");
   background-repeat: no-repeat;
   vertical-align: middle;
   display: inline-block;
@@ -10188,7 +10188,7 @@ disabled look for disabled choices in the results dropdown
   cursor: pointer; }
 
 .wmd-button > span {
-  background-image: url("../../../img/wmd-buttons.png");
+  background-image: url("../img/wmd-buttons.png");
   background-repeat: no-repeat;
   background-position: 0px 0px;
   width: 20px;
@@ -10332,7 +10332,7 @@ textarea.form-inline {
   right: 5px;
   top: 50%;
   text-indent: -9999px;
-  background: transparent url(../img/dark-blue-search.png) center no-repeat; }
+  background: transparent url("../img/dark-blue-search.png") center no-repeat; }
 
 /* CONTENT
 ------------------------------ */
