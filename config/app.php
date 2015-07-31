@@ -152,6 +152,7 @@ return [
         /*
          * Packages Service Providers...
          */
+         'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
          'Laravel\Socialite\SocialiteServiceProvider',
          'Zizaco\Entrust\EntrustServiceProvider',
          'Roumen\Feed\FeedServiceProvider',
@@ -214,6 +215,8 @@ return [
         'URL'       => 'Illuminate\Support\Facades\URL',
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View'      => 'Illuminate\Support\Facades\View',
+
+        'Bugsnag'   => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
 
     ],
 
