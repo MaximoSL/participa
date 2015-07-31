@@ -1,119 +1,205 @@
-<!doctype html>
-<html lang="en">
+
+<!DOCTYPE html>
+<html class='no-js' lang='es'>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Error 404 - Not Found</title>
-	<meta name="viewport" content="width=device-width">
-	<style type="text/css">
-		@import asset_url(http://fonts.googleapis.com/css?family=Droid+Sans);
-
-		article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
-		audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
-		audio:not([controls]) { display: none; }
-		[hidden] { display: none; }
-		html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-		html, button, input, select, textarea { font-family: sans-serif; color: #222; }
-		body { margin: 0; font-size: 1em; line-height: 1.4; }
-		::-moz-selection { background: #E37B52; color: #fff; text-shadow: none; }
-		::selection { background: #E37B52; color: #fff; text-shadow: none; }
-		a { color: #00e; }
-		a:visited { color: #551a8b; }
-		a:hover { color: #06e; }
-		a:focus { outline: thin dotted; }
-		a:hover, a:active { outline: 0; }
-		abbr[title] { border-bottom: 1px dotted; }
-		b, strong { font-weight: bold; }
-		blockquote { margin: 1em 40px; }
-		dfn { font-style: italic; }
-		hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
-		ins { background: #ff9; color: #000; text-decoration: none; }
-		mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
-		pre, code, kbd, samp { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; }
-		pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
-		q { quotes: none; }
-		q:before, q:after { content: ""; content: none; }
-		small { font-size: 85%; }
-		sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
-		sup { top: -0.5em; }
-		sub { bottom: -0.25em; }
-		ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
-		dd { margin: 0 0 0 40px; }
-		nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
-		img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
-		svg:not(:root) { overflow: hidden; }
-		figure { margin: 0; }
-		form { margin: 0; }
-		fieldset { border: 0; margin: 0; padding: 0; }
-		label { cursor: pointer; }
-		legend { border: 0; *margin-left: -7px; padding: 0; white-space: normal; }
-		button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
-		button, input { line-height: normal; }
-		button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; *overflow: visible; }
-		button[disabled], input[disabled] { cursor: default; }
-		input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; *width: 13px; *height: 13px; }
-		input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
-		input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
-		button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
-		textarea { overflow: auto; vertical-align: top; resize: vertical; }
-		input:valid, textarea:valid {  }
-		input:invalid, textarea:invalid { background-color: #f0dddd; }
-		table { border-collapse: collapse; border-spacing: 0; }
-		td { vertical-align: top; }
-
-		body
-		{
-			font-family:'Droid Sans', sans-serif;
-			font-size:10pt;
-			color:#555;
-			line-height: 25px;
-		}
-
-		.wrapper
-		{
-			width:760px;
-			margin:0 auto 5em auto;
-		}
-
-		.main
-		{
-			overflow:hidden;
-		}
-
-		.error-spacer
-		{
-			height:4em;
-		}
-
-		a, a:visited
-		{
-			color:#2972A3;
-		}
-
-		a:hover
-		{
-			color:#72ADD4;
-		}
-	</style>
+<meta content='index,follow' name='robots'>
+<meta charset='utf-8'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<title>gob.mx - El portal único del gobierno.</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400italic,400,600,700' rel='stylesheet' type='text/css'>
+<link href='/assets/favicon.ico' rel='shortcut icon'>
+<link data-turbolinks-track="true" href="/assets/application.css" media="all" rel="stylesheet" />
+<meta content="authenticity_token" name="csrf-param" />
+<meta content="lq9e9JTG5uBVKc94BMPXfOfyV9SUiCWKuxYVZrms0vQ=" name="csrf-token" />
+<script>
+  var ele = $('#route').val().split('/')[1];
+  var doc = 'landing';
+  if( ele == '') {
+    ele = 'home'
+    doc = 'landing';
+  } else if ( ele == 'tramites') {
+    doc = 'tramites';
+  }
+  function udm_(e){var t="comScore=",n=document,r=n.cookie,i="",s="indexOf",o="substring",u="length",a=2048,f,l="&ns_",c ="&",h,p,d,v,m=window,g=m.encodeURIComponent||escape;if(r[s](t)+1)for(d=0,p=r.split(";"),v=p[u];d< v;d++)h=p[d][s](t),h+1&&(i=c+unescape(p[d][o](h+t[u])));e+=l+"_t="+ +(new Date)+l+"c="+(n.characterSet||n.defaultCharset||"")+"&c8="+g(n.title)+i+"&c7="+g(n.URL)+"&c9="+g(n .referrer),e[u]>a&&e[s](c)>0&&(f=e[o](0,a- 8).lastIndexOf(c),e=(e[o](0,f)+l+"cut="+g(e[o](f+1)))[o](0,a)),n.images?(h=new Image,m.ns_p||(ns_p=h),h.src=e):n.write("<","p","><",'img src="',e,'" height="1" width="1" alt="*"',"><","/p",">")}; udm_('http'+(document.location.href.charAt(4)=='s'?'s://sb':'://b')+'.scorecardresearch.com/b?c1=2&c2 =17183199&ns_site=beta&name='+doc+'.'+ele);
+</script>
+<noscript>
+<p>
+<img alt='*' height='1' src='http://b.scorecardresearch.com/p?c1=2&amp;amp;c2=17183199&amp;amp;site=beta&amp;amp;name=landing.404' width='1'>
+</p>
+</noscript>
 </head>
-<body>
-	<div class="wrapper">
-		<div class="error-spacer"></div>
-		<div role="main" class="main">
-			<h2>Error 404</h2>
+<body data-no-turbolink='true'>
+<header>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarMainCollapse">
+          <span class="sr-only">Interruptor de Navegación</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+          <img src="/assets/gobmxlogo.svg" width="75" height="23" alt="gob.mx">
+        </a>
+      </div>
+      <div class='collapse navbar-collapse' id='navbarMainCollapse'>
+<ul class='nav navbar-nav navbar-right'>
+<li>
+<a href='/tramites'>Trámites</a>
+</li>
+<li>
+<a href='/gobierno'>Gobierno</a>
+</li>
+<li>
+<a href='/participa'>Participa</a>
+</li>
+<li>
+<a href='/busqueda'>
+<i class='icon-search'></i>
+</a>
+</li>
+</ul>
+</div>
 
-			<hr>
+    </div><!-- /.container-fluid -->
+  </nav>
+</header>
 
-			<h3>¿Qué significa esto?</h3>
-
-			<p>
-        No pudimos localizar la página que solicitaste. Esto se puede deber a que la página no existe o tenemos un problema en nuestros servidores.
-			</p>
-
-			<p>
-				Te invitamos a que regreses a la <?php echo HTML::link('/', 'página principal'); ?>.
-			</p>
+<main class="inner-page pagina" role="main">
+	<div class="container">
+		<div class="col-sm-12" style="text-align: center; margin: 34px auto; padding: 0 !important;">
+		  <h1 style="font-size: 8em; font-weight: 700;">404</h1>
+		  <p>No se encontró la página.</p>
+		  <a href="/">Regresar al inicio</a>
 		</div>
 	</div>
+</main>
+<footer class='main-footer' style='z-index:100;position:relative'>
+<div class='list-info'>
+<div class='container'>
+<div class='row'>
+<div class='col-sm-4'>
+<h5>Enlaces</h5>
+<ul>
+<li>
+<a href='/accesibilidad'>Accesibilidad</a>
+</li>
+<li>
+<a href='/privacidad'>Política de privacidad</a>
+</li>
+<li>
+<a href='/terminos'>Términos y Condiciones</a>
+</li>
+<li>
+<a href='http://www.ordenjuridico.gob.mx' target='_blank'>Marco Jurídico</a>
+</li>
+<li>
+<a href='http://reformas.gob.mx' target='_blank'>Reformas</a>
+</li>
+<li>
+<a href='http://portaltransparencia.gob.mx' target='_blank'>Portal de Obligaciones de Transparencia</a>
+</li>
+<li>
+<a href='https://www.infomex.org.mx/gobiernofederal/home.action' target='_blank'>Sistema Infomex</a>
+</li>
+<li>
+<a href='http://inicio.ifai.org.mx/SitePages/ifai.aspx'>
+INAI
+</a>
+</li>
+<li>
+<a href='/en/index'>English</a>
+</li>
+<li>
+<a href='/temas'>Temas</a>
+</li>
+</ul>
+</div>
+<div class='col-sm-4'>
+<h5>¿Qué es gob.mx?</h5>
+<p>Es el portal único de trámites, información y participación ciudadana.</p>
+<a href='/que-es-gobmx'>Leer más</a>
+</div>
+<div class='col-sm-4'>
+<h5>Contacto</h5>
+<p>
+Insurgentes Sur 1735, Col. Guadalupe Inn.
+<br>
+Delegación Álvaro Obregón
+<br>
+México, D.F. C.P. 01020
+</p>
+<p>gobmx@funcionpublica.gob.mx</p>
+</div>
+</div>
+<div class='row'>
+<div class='col-sm-4'>
+<div id='subscribete'>
+<label style='font-weight: 300;'>Mantente informado. Suscríbete.</label>
+<div class='form-group-icon'>
+<input class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" type="email" />
+<button class='blue-right btn' id='subscribe' type='button'>
+<i class='icon-caret-right'></i>
+</button>
+</div>
+<div class='message-subscribe hidden'></div>
+</div>
+</div>
+<div class='col-sm-4 col-sm-offset-4'>
+<h5>Síguenos en</h5>
+<ul class='list-inline'>
+<li>
+<a class='social-icon facebook' href='https://www.facebook.com/PresidenciaMX'></a>
+</li>
+<li>
+<a class='social-icon twitter' href='https://twitter.com/PresidenciaMX'></a>
+</li>
+<li>
+<a class='social-icon instagram' href='https://instagram.com/PresidenciaMX/'></a>
+</li>
+<li>
+<a class='social-icon youtube' href='https://www.youtube.com/gobiernorepublicamx'></a>
+</li>
+<li>
+<a class='social-icon flickr' href='https://www.flickr.com/photos/presidenciamx'></a>
+</li>
+<li>
+<a class='social-icon feed' href='http://www.presidencia.gob.mx/feed/'></a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class='container'>
+<div class='row'>
+<div class='col-sm-4'>
+<img alt="gob.mx" height="39" src="/assets/gobmxlogo.svg" width="126" />
+</div>
+<div class='col-sm-4 col-sm-offset-4'>
+<img alt="gob.mx" height="70" src="/assets/logo_mexico.svg" width="172" />
+</div>
+</div>
+</div>
+</footer>
+
+<input class='hidden' id='route' value='/404'>
+<script src="http://b.scorecardresearch.com/c2/17183199/ct.js"></script>
+<script src="/assets/application.js"></script>
+
+<script>
+  var _sf_async_config = { uid: 43659, domain: 'www.gob.mx', useCanonical: true } ;
+  (function() {
+    function loadChartbeat() { window._sf_endpt = (new Date()).getTime(); var e = document.createElement('script'); e.setAttribute('language', 'javascript'); e.setAttribute('type', 'text/javascript'); e.setAttribute('src','//static.chartbeat.com/js/chartbeat.js'); document.body.appendChild(e); };
+    var oldonload = window.onload;
+    window.onload = (typeof window.onload != 'function') ?
+    loadChartbeat : function()
+    { oldonload(); loadChartbeat(); };
+  })();
+</script>
 </body>
 </html>
