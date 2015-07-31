@@ -72,8 +72,10 @@ elixir(function(mix) {
         'resources/assets/js/googletranslate.js',
       ], 'public/dist/js/app.js', './')
       .version(['public/dist/css/app.css', 'public/dist/js/libs.js', 'public/dist/js/app.js'])
-      .copy('bower_components/pagedown/wmd-buttons.png', 'public/img/wmd-buttons.png')
+      .copy('public/img/', 'public/build/dist/img/')
+      .copy('bower_components/pagedown/wmd-buttons.png', 'public/build/dist/img/wmd-buttons.png')
       .copy('bower_components/select2/select2-spinner.gif', 'public/build/dist/css/select2-spinner.gif')
       .copy('bower_components/zeroclipboard/dist/ZeroClipboard.swf', 'public/swf/ZeroClipboard.swf')
-      .copy('bower_components/bootstrap-sass/assets/fonts/bootstrap/', 'public/fonts/');
+      .copy('bower_components/bootstrap-sass/assets/fonts/bootstrap/', 'public/fonts/')
+      .copy('public/fonts/', 'public/build/dist/fonts/');
 });

@@ -56,19 +56,19 @@
 			  <div class="row">
 			    <div class="col-md-4">
 			      <a href="{{ route('auth.connect', 'facebook') }}" class="btn social-login-btn facebook-login-btn">
-			        <img src="{{ url('img/icon-facebook.png') }}" alt="facebook icon" />
+			        <img src="{{ asset_url('img/icon-facebook.png') }}" alt="facebook icon" />
 			        Facebook
 			      </a>
 			    </div>
 			    <div class="col-md-4">
 			      <a href="{{ route('auth.connect', 'twitter') }}" class="btn social-login-btn twitter-login-btn">
-			        <img src="{{ url('img/icon-twitter.png') }}" alt="twitter icon" />
+			        <img src="{{ asset_url('img/icon-twitter.png') }}" alt="twitter icon" />
 			        Twitter
 			      </a>
 			    </div>
 			    <div class="col-md-4">
 			      <a href="{{ route('auth.connect', 'linkedin') }}" class="btn social-login-btn linkedin-login-btn">
-			        <img src="{{ url('img/icon-linkedin.png') }}" alt="linkedin icon" />
+			        <img src="{{ asset_url('img/icon-linkedin.png') }}" alt="linkedin icon" />
 			        LinkedIn
 			      </a>
 			    </div>
