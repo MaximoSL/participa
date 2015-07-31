@@ -152,6 +152,7 @@ return [
         /*
          * Packages Service Providers...
          */
+         'Fideloper\Proxy\TrustedProxyServiceProvider',
          'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
          'Laravel\Socialite\SocialiteServiceProvider',
          'Zizaco\Entrust\EntrustServiceProvider',
