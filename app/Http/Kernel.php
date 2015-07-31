@@ -12,6 +12,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        'Fideloper\Proxy\TrustProxies',
         'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
         'Illuminate\Cookie\Middleware\EncryptCookies',
         'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
