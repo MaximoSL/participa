@@ -4,6 +4,7 @@ namespace MXAbierto\Participa\Exceptions;
 
 use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -40,6 +41,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof NotFoundHttpException) {
+            return response()->view('error.404');
+        }
+
         return parent::render($request, $e);
     }
 }
