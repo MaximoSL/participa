@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
         $this->call('UsersTableSeeder');
         $this->call('RbacSeeder');
         $this->call('DocumentsTableSeeder');
+        $this->call('CategoriesTableSeeder');
 
         if (App::environment() === 'testing') {
             $this->call('TestSeeder');

@@ -417,7 +417,7 @@ angular.module( 'madisonApp.controllers' )
             return sponsored;
         };
         $scope.notifyAuthor     = function ( annotation ) {
-            $http.post( '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/' + 'seen' )
+            $http.post( _baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/' + 'seen' )
                 .success(function ( data ) {
                     annotation.seen = data.seen;
                 }).error(function ( data ) {
@@ -427,7 +427,7 @@ angular.module( 'madisonApp.controllers' )
         $scope.getDocComments   = function ( docId ) {
             $http({
                 method  : 'GET',
-                url     : '/api/docs/' + docId + '/comments'
+                url     : _baseUrl + '/api/docs/' + docId + '/comments'
             })
             .success( function ( data ) {
                 angular.forEach( data, function ( comment ) {
@@ -455,7 +455,7 @@ angular.module( 'madisonApp.controllers' )
             comment.user    = $scope.user;
             comment.doc     = $scope.doc;
 
-            $http.post( '/api/docs/' + comment.doc.id + '/comments', {
+            $http.post( _baseUrl + '/api/docs/' + comment.doc.id + '/comments', {
                 'comment'   : comment
                 })
                 .success( function () {
@@ -477,7 +477,7 @@ angular.module( 'madisonApp.controllers' )
         };
         $scope.addAction        = function ( activity, action, $event ) {
             if ( $scope.user.id !== '' ) {
-                $http.post( '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
+                $http.post( _baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
                     .success( function ( data ) {
                         activity.likes      = data.likes;
                         activity.dislikes   = data.dislikes;
@@ -506,7 +506,7 @@ angular.module( 'madisonApp.controllers' )
 
                 createLoginPopup( jQuery.Event( "click", {
                     clientX : clientX,
-                    pageY   : pageY 
+                    pageY   : pageY
                 }));
                 return;
             }
@@ -528,6 +528,7 @@ angular.module( 'madisonApp.controllers' )
                 });
         };
     }]);
+
 angular.module('madisonApp.controllers')
   .controller('AppController', ['$rootScope', '$scope', 'UserService', function ($rootScope, $scope, UserService) {
     // Update page title
@@ -1394,8 +1395,9 @@ angular.module('madisonApp.dashboardControllers')
         $scope.init             = function () {
             var abs = $location.absUrl();
             var id  = abs.match(/.*\/(\d+)$/)[1];
+            $scope.doc_id = id;
 
-            function clean_slug( string) {
+            function clean_slug(string) {
                 return string.toLowerCase().replace(/[^a-zA-Z0-9\- ]/g, '').replace(/ +/g, '-');
             }
 
@@ -1427,12 +1429,12 @@ angular.module('madisonApp.dashboardControllers')
 
                 //Save intro text after a 3 second timeout
                 var introTextTimeout    = null;
-                $scope.updateIntroText  = function ( newValue) {
+                $scope.updateIntroText  = function (newValue) {
                     if(introTextTimeout) {
                         $timeout.cancel(introTextTimeout);
                     }
                     introTextTimeout    = $timeout(function () {
-                        $scope.saveIntroText(newValue );
+                        $scope.saveIntroText(newValue);
                     }, 3000);
                 };
 
@@ -1562,44 +1564,54 @@ angular.module('madisonApp.dashboardControllers')
                     username    : opngv.username,
                     password    : opngv.password
                 }
-                }).success(function ( data) {
+                }).success(function (data) {
                     $scope.short_url    = data.shorturl;
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error(data);
                     growl.error('There was an error generating your short url.');
                 });
         };
         $scope.setSelectOptions = function () {
-            $scope.categoryOptions  = {
-                placeholder         : "Agrega categorías del documento",
+
+            $scope.categoryOptions    = {
+                placeholder         : 'Agrega categorías del documento',
                 multiple            : true,
                 simple_tags         : true,
                 tokenSeparators     : [","],
                 tags                : function () {
-                    return $scope.suggestedCategories;
-                },
-                results             : function () {
-                    return $scope.categories;
+                  return $scope.suggestedCategories;
                 },
                 initSelection       : function (element, callback) {
-
+                  // Remove initial 0 on $scope.categories
                   $scope.categories.splice(0, 1);
 
-                    setTimeout(function(){
+                  // Get doc categories (There is a bug using multiple select with async data)
+                  $http.get(_baseUrl + '/api/docs/' + $scope.doc_id + '/categories').success(function (data) {
+
+                      // Construct $scope.categories
+                      angular.forEach(data, function (category) {
+                          $scope.categories.push(category.name + ' - ' + category.kind);
+                      });
+
                       var returned    = [];
 
+                      // Make sure $scope.categories only contains unique values
                       $scope.categories = $.unique( $scope.categories );
 
-                      angular.forEach($scope.categories, function (category, index) {
+                      // Generate initSelection
+                      angular.forEach($scope.categories, function (category, index) {
                           returned.push(angular.copy({
                               id      : index,
                               text    : category
                           }));
                       });
 
+                      // Return initSelection
                       callback(returned);
-                    }, 2000);
 
+                  }).error(function (data) {
+                      console.error("Unable to get categories for document %o: %o", $scope.doc, data);
+                  });
                 }
             };
 
@@ -1616,7 +1628,7 @@ angular.module('madisonApp.dashboardControllers')
                     results     : function (data, page) {
                         var returned    = [];
 
-                        angular.forEach(data, function ( status) {
+                        angular.forEach(data, function (status) {
                             returned.push({
                                 id      : status.id,
                                 text    : status.label
@@ -1656,7 +1668,7 @@ angular.module('madisonApp.dashboardControllers')
                     results     : function (data, page) {
                         var returned    = [];
 
-                        angular.forEach(data, function ( group) {
+                        angular.forEach(data, function (group) {
                             returned.push({
                                 id      : group.id,
                                 text    : group.name
@@ -1693,7 +1705,7 @@ angular.module('madisonApp.dashboardControllers')
                     data        : function () {
                         return;
                     },
-                    results     : function ( data) {
+                    results     : function (data) {
                         var returned = [];
 
                         if(!data.success) {
@@ -1731,35 +1743,31 @@ angular.module('madisonApp.dashboardControllers')
             };
             /*jslint unparam: false*/
         };
-        $scope.statusChange     = function ( status) {
+        $scope.statusChange     = function (status) {
             $scope.status   = status;
         };
-        $scope.sponsorChange    = function (sponsor ) {
+        $scope.sponsorChange    = function (sponsor ) {
             $scope.sponsor  = sponsor;
         };
-        $scope.groupChange    = function (group ) {
+        $scope.groupChange    = function (group) {
             $scope.group  = group;
         };
         $scope.categoriesChange = function (categories) {
             $scope.categories   = categories;
         };
-        $scope.getDoc           = function ( id) {
+        $scope.getDoc           = function (id) {
             return $http.get(_baseUrl + '/api/docs/' + id)
                 .success(function (data) {
                     $scope.doc  = data;
-
-                    angular.forEach(data.categories, function (category) {
-                        $scope.categories.push(angular.copy(category.name + ' - ' + category.kind));
-                    });
             });
         };
         $scope.saveTitle        = function () {
             return $http.post(_baseUrl +  '/api/docs/' + $scope.doc.id + '/title', {
                 'title' : $scope.doc.title
             })
-                .success(function ( data) {
+                .success(function (data) {
                     console.log("Title saved successfully: %o", data);
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Error saving title for document:", data);
                 });
         };
@@ -1777,9 +1785,9 @@ angular.module('madisonApp.dashboardControllers')
             return $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/content', {
                 'content'   : $scope.doc.content.content
             })
-                .success(function ( data) {
+                .success(function (data) {
                     console.log("Content saved successfully: %o", data);
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Error saving content for document:", data);
                 });
         };
@@ -1804,7 +1812,7 @@ angular.module('madisonApp.dashboardControllers')
                     });
             }
         };
-        $scope.deleteDate       = function ( date) {
+        $scope.deleteDate       = function (date) {
             $http['delete'](_baseUrl + '/api/docs/' + $scope.doc.id + '/dates/' + date.id)
                 .success(function () {
                     var index   = $scope.dates.indexOf(date);
@@ -1823,7 +1831,7 @@ angular.module('madisonApp.dashboardControllers')
                 .success(function (data) {
                     date.$changed   = false;
                     console.log("Date saved successfully: %o", data);
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Unable to save date: %o (%o)", date, data);
                 });
         };
@@ -1847,7 +1855,7 @@ angular.module('madisonApp.dashboardControllers')
         };
         $scope.getVerifiedUsers = function () {
             return $http.get(_baseUrl + '/api/user/verify')
-                .success(function ( data) {
+                .success(function (data) {
                     angular.forEach(data, function (verified) {
                         $scope.verifiedUsers.push(angular.copy(verified.user));
                     });
@@ -1858,18 +1866,18 @@ angular.module('madisonApp.dashboardControllers')
         $scope.getDocCategories = function () {
             return $http.get(_baseUrl + '/api/docs/' + $scope.doc.id + '/categories')
                 .success(function (data) {
-                    angular.forEach(data, function ( category) {
+                    angular.forEach(data, function ( category) {
                         $scope.categories.push(category.name + ' - ' + category.kind);
                     });
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Unable to get categories for document %o: %o", $scope.doc, data);
                 });
         };
         $scope.getIntroText     = function () {
             return $http.get(_baseUrl + '/api/docs/' + $scope.doc.id + '/introtext')
-                .success(function ( data) {
+                .success(function (data) {
                     $scope.introtext    = data.meta_value;
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Unable to get Intro Text for document %o: %o", $scope.doc, data);
                 });
         };
@@ -1911,7 +1919,7 @@ angular.module('madisonApp.dashboardControllers')
                             text    : data.name
                         };
                     }
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Error getting document group: %o", data);
                 });
         };
@@ -1926,27 +1934,27 @@ angular.module('madisonApp.dashboardControllers')
                             text    : data.label
                         };
                     }
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Error getting document status: %o", data);
                 });
         };
         $scope.getAllStatuses   = function () {
             $http.get(_baseUrl + '/api/docs/statuses')
-                .success(function ( data) {
-                    angular.forEach(data, function ( status) {
+                .success(function (data) {
+                    angular.forEach(data, function (status) {
                         $scope.suggestedStatuses.push(status.label);
                     });
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Unable to get document statuses: %o", data);
                 });
         };
         $scope.getAllGroups   = function () {
             $http.get(_baseUrl + '/api/docs/groups')
-                .success(function ( data) {
-                    angular.forEach(data, function ( status) {
+                .success(function (data) {
+                    angular.forEach(data, function (status) {
                         $scope.suggestedGroups.push(status.label);
                     });
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Unable to get document groups: %o", data);
                 });
         };
@@ -1965,7 +1973,7 @@ angular.module('madisonApp.dashboardControllers')
             return $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/status', {
                 status  : $scope.status
             })
-                .success(function ( data) {
+                .success(function (data) {
                     console.log("Status saved successfully: %o", data);
                 }).error(function (data) {
                     console.error("Error saving status: %o", data);
@@ -1975,7 +1983,7 @@ angular.module('madisonApp.dashboardControllers')
             return $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/group', {
                 group  : $scope.group
             })
-                .success(function ( data) {
+                .success(function (data) {
                     console.log("Group saved successfully: %o", data);
                 }).error(function (data) {
                     console.error("Error saving group: %o", data);
@@ -1987,7 +1995,7 @@ angular.module('madisonApp.dashboardControllers')
             })
                 .success(function (data) {
                     console.log("Sponsor saved successfully: %o", data);
-                }).error(function ( data) {
+                }).error(function (data) {
                     console.error("Error saving sponsor: %o", data);
                 });
         };
@@ -1996,7 +2004,14 @@ angular.module('madisonApp.dashboardControllers')
                 'categories'    : $scope.categories
             })
                 .success(function (data) {
-                    console.log("Categories saved successfully: %o", data);
+                    if(typeof data.status !== 'undefined' && data.status == 'error'){
+                      angular.forEach(data.messages, function (message) {
+                        growl.error(message.text);
+                      });
+                      console.log("Error saving categories for document: %o", data);
+                    }else{
+                      console.log("Categories saved successfully: %o", data);
+                    }
                 }).error(function (data) {
                     console.error("Error saving categories for document %o: %o \n %o", $scope.doc, $scope.categories, data);
                 });
@@ -2006,7 +2021,7 @@ angular.module('madisonApp.dashboardControllers')
             return $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/introtext', {
                 'intro-text'    : introtext
             })
-                .success(function ( data) {
+                .success(function (data) {
                     console.log("Intro Text saved successfully: %o", data);
                 }).error(function (data) {
                     console.error("Error saving intro text for document %o: %o", $scope.doc, $scope.introtext);
@@ -2711,6 +2726,7 @@ window.console = window.console || {};
 window.console.log = window.console.log || function () {};
 
 function googleTranslateElementInit() {
-  	new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
+
 //# sourceMappingURL=app.js.map

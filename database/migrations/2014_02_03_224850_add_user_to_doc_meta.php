@@ -26,7 +26,7 @@ class AddUserToDocMeta extends Migration
     public function down()
     {
         Schema::table('doc_meta', function ($table) {
-            $table->dropForeign('user_id_foreign');
+            $table->dropForeign('doc_meta_user_id_foreign');
 
             $table->dropColumn('user_id');
         });

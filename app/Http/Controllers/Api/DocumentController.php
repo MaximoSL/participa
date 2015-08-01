@@ -167,24 +167,24 @@ class DocumentController extends AbstractApiController
         $categoryIds = [];
 
         foreach ($categories as $category) {
-            $category['text'] = str_replace(
-                [
-                    ' - category',
-                    ' - layout',
-                    ' - institution',
-                ],
-                '',
-                $category['text']
-            );
+            $category['text'] = str_replace(' - ', '|', $category['text']);
+            $category['text'] = explode('|', $category['text']);
 
-            $toAdd = Category::where('name', $category['text'])->first();
+            if (empty($category['text'][1])) {
+                $category['text'][1] = 'category';
+                // $response['status'] = 'error';
+                // $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.therewaserror').', '.trans('messages.categorynotfound'))), 'severity' => 'error'];
+
+                // return response()->json($response);
+            }
+
+            $toAdd = Category::where('name', $category['text'][0])->where('kind', $category['text'][1])->first();
 
             if (!isset($toAdd)) {
                 $toAdd = new Category();
+                $toAdd->name = $category['text'][0];
+                $toAdd->save();
             }
-
-            $toAdd->name = $category['text'];
-            $toAdd->save();
 
             array_push($categoryIds, $toAdd->id);
         }

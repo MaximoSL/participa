@@ -11,7 +11,7 @@ class MakeAnnotationsSearchIdNullable extends DualMigration
 
     public function downMySQL()
     {
-        DB::statement('ALTER TABLE `annotations` CHANGE COLUMN `search_id` VARCHAR(255) IS NOT NULL');
+        DB::statement('ALTER TABLE `annotations` CHANGE COLUMN `search_id` `search_id` VARCHAR(255) NOT NULL');
     }
 
     public function upSQLite()
