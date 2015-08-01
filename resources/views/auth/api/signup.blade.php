@@ -2,6 +2,7 @@
 	<div class="col-md-10 col-md-offset-1">
 		<form class="" action="{{ route('api.auth.signup') }}" method="post" id="signup">
 			{!! csrf_field() !!}
+      <div class="errors"></div>
 			<!-- First Name -->
 			<div class="form-group">
 				<label for="fname">{{ trans('messages.fname') }}</label>

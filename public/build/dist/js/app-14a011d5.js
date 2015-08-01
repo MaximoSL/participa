@@ -1071,39 +1071,6 @@ angular.module('madisonApp.controllers')
       var annotator;
       var popup;
 
-      function attach_handlers() {
-        $('html').on('click.popup', function () {
-          $('.popup').remove();
-
-          $('html').off('click.popup');
-        });
-      }
-
-      function ajaxify_form(inForm, callback) {
-        var form = $(inForm);
-        form.submit(function (e) {
-          e.preventDefault();
-
-          $.post(form.attr('action'), form.serialize(), function (response) {
-
-            if (response.errors && Object.keys(response.errors).length) {
-              var error_html = $('<ul></ul>');
-
-              /*jslint unparam: true*/
-              angular.forEach(response.errors, function (value, key) {
-                error_html.append('<li>' + value + '</li>');
-              });
-              /*jslint unparam: false*/
-
-              form.find('.errors').html(error_html);
-            } else {
-              callback(response);
-            }
-          });
-
-        });
-      }
-
       $('.affix-elm').each(function(i, elm) {
         elm = $(elm);
         var elmtop = 0;
@@ -1153,57 +1120,7 @@ angular.module('madisonApp.controllers')
               event.preventDefault();
             }
 
-            popup = $('<div class="popup unauthed-popup"><p>Ingresa para comentar.</p>' +
-              '<input type="button" id="login" value="Ingresar" class="btn btn-primary"/>' +
-              '<input type="button" id="signup" value="Registrarse" class="btn btn-primary" /></div>');
-
-            popup.on('click.popup', function (event) {
-              event.stopPropagation();
-            });
-
-            $('#login', popup).click(function (event) {
-              event.stopPropagation();
-              event.preventDefault();
-
-              $.get(_baseUrl + '/api/auth/login', {}, function (data) {
-                data = $(data);
-
-                ajaxify_form(data.find('form'), function () {
-                  $('html').trigger('click.popup');
-
-                  location.reload(false);
-                });
-
-                popup.html(data);
-              });
-            });
-
-            $('#signup', popup).click(function (event) {
-              event.stopPropagation();
-              event.preventDefault();
-
-              $.get(_baseUrl + '/api/auth/signup', {}, function (data) {
-                data = $(data);
-
-                ajaxify_form(data.find('form'), function (result) {
-                  $('html').trigger('click.popup');
-                  alert(result.message);
-                });
-
-                popup.html(data);
-              });
-            });
-
-            $('body').append(popup);
-
-            var position = {
-              'top': event.pageY - popup.height(),
-              'left': event.clientX
-            };
-            popup.css(position).css('position', 'absolute');
-
-            this.ignoreMouseup = false;
-            setTimeout(attach_handlers, 50);
+            createLoginPopup(event);
           }
 
         };
@@ -2281,7 +2198,7 @@ angular.module( 'madisonApp.services' )
         return annotationService;
     }]);
 angular.module('madisonApp.services')
-    .factory('createLoginPopup', ['$document', '$timeout', function ($document, $timeout) {
+    .factory('createLoginPopup', ['$document', '$timeout', 'growl', function ($document, $timeout, growl) {
         var body            = $document.find('body');
         var html            = $document.find('html');
         var attach_handlers = function () {
@@ -2301,6 +2218,9 @@ angular.module('madisonApp.services')
 
                         /*jslint unparam:true*/
                         angular.forEach(response.errors, function (value, key) {
+                            //** If growl notifications are prefered
+                            // growl.error(value[0]);
+                            //** If growl notifications are prefered
                             error_html.append('<li>' + value + '</li>');
                         });
                         /*jslint unparam:false*/
@@ -2314,7 +2234,6 @@ angular.module('madisonApp.services')
         };
 
         return function LoginPopup(event) {
-            console.log(event);
             var popup   = $('<div class="popup unauthed-popup"><p>Por favor regístrate.</p>' +
                 '<input type="button" id="login" value="Ingresar" class="btn btn-primary"/>' +
                 '<input type="button" id="signup" value="Registrarse" class="btn btn-primary" /></div>');

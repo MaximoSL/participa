@@ -1,5 +1,5 @@
 angular.module('madisonApp.services')
-    .factory('createLoginPopup', ['$document', '$timeout', function ($document, $timeout) {
+    .factory('createLoginPopup', ['$document', '$timeout', 'growl', function ($document, $timeout, growl) {
         var body            = $document.find('body');
         var html            = $document.find('html');
         var attach_handlers = function () {
@@ -19,6 +19,9 @@ angular.module('madisonApp.services')
 
                         /*jslint unparam:true*/
                         angular.forEach(response.errors, function (value, key) {
+                            //** If growl notifications are prefered
+                            // growl.error(value[0]);
+                            //** If growl notifications are prefered
                             error_html.append('<li>' + value + '</li>');
                         });
                         /*jslint unparam:false*/
@@ -32,7 +35,6 @@ angular.module('madisonApp.services')
         };
 
         return function LoginPopup(event) {
-            console.log(event);
             var popup   = $('<div class="popup unauthed-popup"><p>Por favor regístrate.</p>' +
                 '<input type="button" id="login" value="Ingresar" class="btn btn-primary"/>' +
                 '<input type="button" id="signup" value="Registrarse" class="btn btn-primary" /></div>');
