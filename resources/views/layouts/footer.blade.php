@@ -53,6 +53,8 @@
             <br>
             México, D.F. C.P. 01020
           </p>
+          <p>gobmx@funcionpublica.gob.mx</p>
+          <a href="/atencion">Atención Ciudadana</a>
         </div>
       </div>
       <div class='row'>
