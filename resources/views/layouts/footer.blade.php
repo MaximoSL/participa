@@ -34,6 +34,9 @@
             <li>
               <a href='http://www.gob.mx/en/index'>English</a>
             </li>
+            <li>
+              <a href='http://www.gob.mx/temas'>Temas</a>
+            </li>
           </ul>
         </div>
         <div class='col-sm-4'>
@@ -50,6 +53,8 @@
             <br>
             México, D.F. C.P. 01020
           </p>
+          <p>gobmx@funcionpublica.gob.mx</p>
+          <a href="/atencion">Atención Ciudadana</a>
         </div>
       </div>
       <div class='row'>
