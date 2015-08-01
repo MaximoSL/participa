@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="navbarMainCollapse">
       <ul class="nav navbar-nav navbar-right">
         <li><a target="_self" href="http://www.gob.mx/tramites">{{ trans('messages.services') }}</a></li>
-        <li><a target="_self" href="http://www.gob.mx/presidencia">{{ trans('messages.government') }}</a></li>
+        <li><a target="_self" href="http://www.gob.mx/gobierno">{{ trans('messages.government') }}</a></li>
         <li><a target="_self" href="http://www.gob.mx/participa">Participa</a></li>
         <li>
           <a href="http://www.gob.mx/busqueda">
