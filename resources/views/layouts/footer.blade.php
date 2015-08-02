@@ -6,13 +6,13 @@
           <h5>Enlaces</h5>
           <ul>
             <li>
-              <a href='http://www.gob.mx/accesibilidad'>Accesibilidad</a>
+              <a target="_self" href='http://www.gob.mx/accesibilidad'>Accesibilidad</a>
             </li>
             <li>
-              <a href='http://www.gob.mx/privacidad'>Política de privacidad</a>
+              <a target="_self" href='http://www.gob.mx/privacidad'>Política de privacidad</a>
             </li>
             <li>
-              <a href='http://www.gob.mx/terminos'>Términos y Condiciones</a>
+              <a target="_self" href='http://www.gob.mx/terminos'>Términos y Condiciones</a>
             </li>
             <li>
               <a href='http://www.ordenjuridico.gob.mx' target='_blank'>Marco Jurídico</a>
@@ -32,17 +32,17 @@
               </a>
             </li>
             <li>
-              <a href='http://www.gob.mx/en/index'>English</a>
+              <a target="_self" href='http://www.gob.mx/en/index'>English</a>
             </li>
             <li>
-              <a href='http://www.gob.mx/temas'>Temas</a>
+              <a target="_self" href='http://www.gob.mx/temas'>Temas</a>
             </li>
           </ul>
         </div>
         <div class='col-sm-4'>
           <h5>¿Qué es gob.mx?</h5>
           <p>Es el portal único de trámites, información y participación ciudadana.</p>
-          <a href='http://www.gob.mx/que-es-gobmx'>Leer más</a>
+          <a target="_self" href='http://www.gob.mx/que-es-gobmx'>Leer más</a>
         </div>
         <div class='col-sm-4'>
           <h5>Contacto</h5>
@@ -54,7 +54,7 @@
             México, D.F. C.P. 01020
           </p>
           <p>gobmx@funcionpublica.gob.mx</p>
-          <a href="/atencion">Atención Ciudadana</a>
+          <a target="_self" href="/atencion">Atención Ciudadana</a>
         </div>
       </div>
       <div class='row'>
@@ -69,7 +69,7 @@
             </div>
             <div ng-show="successMessage" class="message-subscribe">
               Agradecemos tu registro dentro de gob.mx. De esta manera estarás informado sobre las principales acciones y decisiones del Gobierno de la República. <br><br>
-              Gracias por tu interés y colaboración. Juntos construimos <a href="/">gob.mx</a>
+              Gracias por tu interés y colaboración. Juntos construimos <a target="_self" href="/">gob.mx</a>
             </div>
           </form>
         </div>
