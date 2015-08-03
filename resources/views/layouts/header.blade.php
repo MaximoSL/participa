@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://www.gob.mx">
+      <a target="_self" class="navbar-brand" href="http://www.gob.mx">
         <img src="{{ asset_url('svg/gob-mx-logo.svg') }}" width="75" height="23" alt="gob.mx">
       </a>
     </div>
