@@ -51,11 +51,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             'lname' => 'required',
         ],
         'create' => [
-            'email'    => 'required|unique:users',
+            'email'    => 'required|email|unique:users',
             'password' => 'required',
         ],
         'social-signup' => [
-            'email'        => 'required|unique:users',
+            'email'        => 'required|email|unique:users',
             'oauth_vendor' => 'required',
             'oauth_id'     => 'required',
             'oauth_update' => 'required',
@@ -66,7 +66,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             'oauth_update' => 'required',
         ],
         'update' => [
-            'email'    => 'required|unique:users',
+            'email'    => 'required|email|unique:users',
             'password' => 'required',
         ],
         'verify' => [
