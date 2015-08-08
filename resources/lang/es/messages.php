@@ -109,6 +109,8 @@ return [
     'createdoc'                 => 'Crear Documento',
     'createddoc'                => 'Documento creado exitosamente',
     'saveddoc'                  => 'Documento guardado exitosamente',
+    'closedcommentsdoc'         => 'Documento cerrado a nuevos comentarios',
+    'closeddoc'                 => 'Documento cerrado',
     'title'                     => 'Título',
     'slug'                      => 'Slug',
     'character'                 => 'Carácter',

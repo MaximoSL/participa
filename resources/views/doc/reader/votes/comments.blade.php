@@ -1,15 +1,38 @@
 <div id="participate-comment-message" class="participate-vote-message message-box"></div>
+@if($doc->is_opened())
+  <div ng-init="documentopened=true"></div>
+@elseif($doc->is_closed_for_comments())
+  <div ng-init="documentclosedcomments=true"></div>
+@elseif($doc->is_closed())
+  <div ng-init="documentclosed=true"></div>
+@endif
 @if($loggedUser)
   @if($doc->canUserEdit($loggedUser))
     <div ng-init="caneditdocument=true"></div>
   @endif
   <div id="participate-comment" class="participate-comment">
-  	@include('doc.reader.votes.comment')
+    @if($doc->is_opened())
+      @include('doc.reader.votes.comment')
+    @else
+      @if($doc->is_closed_for_comments())
+        <p>{{ trans('messages.closedcommentsdoc') }}</p>
+      @else
+        <p>{{ trans('messages.closeddoc') }}</p>
+      @endif
+    @endif
   </div>
 @else
-<div id="participate-comment" class="participate-comment">
-	<p>{{ trans('messages.please') }} <a href="{{ route('auth.login') }}">{{ trans('messages.login') }}</a> {{ trans('messages.tocomment') }}.</p>
-</div>
+  <div id="participate-comment" class="participate-comment">
+    @if($doc->is_opened())
+      <p>{{ trans('messages.please') }} <a href="{{ route('auth.login') }}">{{ trans('messages.login') }}</a> {{ trans('messages.tocomment') }}.</p>
+    @else
+      @if($doc->is_closed_for_comments())
+        <p>{{ trans('messages.closedcommentsdoc') }}</p>
+      @else
+        <p>{{ trans('messages.closeddoc') }}</p>
+      @endif
+    @endif
+  </div>
 @endif
 <div id="participate-activity" class="participate-activity">
 	<h3>@{{ layoutTexts.header }}</h3>

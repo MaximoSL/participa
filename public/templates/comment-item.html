@@ -70,7 +70,7 @@
 
   <div class="activity-replies row" collapse="comment.commentsCollapsed">
     <div class="subcomment-field col-md-12">
-      <form name="add-subcomment-form" ng-submit="subcommentSubmit(comment, comment.subcomment)">
+      <form name="add-subcomment-form" ng-show="documentopened" ng-submit="subcommentSubmit(comment, comment.subcomment)">
         <div class="form-group">
           <input ng-model="comment.subcomment.text" type="text" class="form-control centered" placeholder="{{ layoutTexts.subCommentPlaceholder }}" required />
         </div>
@@ -97,7 +97,7 @@
 
 <div class="activity-replies row" collapse="comment.commentsCollapsed">
   <div class="subcomment-field col-md-12">
-    <form name="add-subcomment-form" ng-submit="subcommentSubmit(comment, subcomment)">
+    <form name="add-subcomment-form" ng-show="documentopened" ng-submit="subcommentSubmit(comment, subcomment)">
       <div class="form-group">
         <input ng-model="subcomment.text" type="text" class="form-control centered" placeholder="{{ layoutTexts.subCommentPlaceholder }}" required />
       </div>

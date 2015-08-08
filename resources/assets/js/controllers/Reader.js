@@ -160,7 +160,7 @@ angular.module('madisonApp.controllers')
       }
 
       annotator = $('#doc_content').annotator({
-        //readOnly: user.id == ''
+        readOnly: !$scope.doc.is_opened
       });
 
       annotator.annotator('addPlugin', 'Unsupported');

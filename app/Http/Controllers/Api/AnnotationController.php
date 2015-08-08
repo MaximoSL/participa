@@ -75,6 +75,15 @@ class AnnotationController extends AbstractApiController
      */
     public function postIndex($doc)
     {
+        $document = Doc::findOrFail($doc);
+
+        if (!$document->is_opened()) {
+            $response['status'] = 'error';
+            $response['message'] = trans('messages.closeddoc');
+
+            return response()->json($response);
+        }
+
         $body = Input::all();
         $body['doc_id'] = $doc;
         $is_edit = false;
@@ -270,6 +279,14 @@ class AnnotationController extends AbstractApiController
         }
 
         $annotation = Annotation::find($annotation);
+
+        if ($annotation->doc->is_closed()) {
+            $annotation = $annotation->toAnnotatorArray();
+            $annotation['document_closed'] = 1;
+
+            return response()->json($annotation);
+        }
+
         $annotation->saveUserAction(Auth::user()->id, Annotation::ACTION_LIKE);
 
         //Load fields for notification
@@ -289,6 +306,14 @@ class AnnotationController extends AbstractApiController
         }
 
         $annotation = Annotation::find($annotation);
+
+        if ($annotation->doc->is_closed()) {
+            $annotation = $annotation->toAnnotatorArray();
+            $annotation['document_closed'] = 1;
+
+            return response()->json($annotation);
+        }
+
         $annotation->saveUserAction(Auth::user()->id, Annotation::ACTION_DISLIKE);
 
         //Load fields for notification
@@ -308,6 +333,14 @@ class AnnotationController extends AbstractApiController
         }
 
         $annotation = Annotation::find($annotation);
+
+        if ($annotation->doc->is_closed()) {
+            $annotation = $annotation->toAnnotatorArray();
+            $annotation['document_closed'] = 1;
+
+            return response()->json($annotation);
+        }
+
         $annotation->saveUserAction(Auth::user()->id, Annotation::ACTION_FLAG);
 
         return response()->json($annotation->toAnnotatorArray());
@@ -315,6 +348,15 @@ class AnnotationController extends AbstractApiController
 
     public function postComments($docId, $annotationId)
     {
+        $doc = Doc::findOrFail($docId);
+
+        if (!$doc->is_opened()) {
+            $response['status'] = 'error';
+            $response['message'] = trans('messages.closeddoc');
+
+            return response()->json($response);
+        }
+
         $comment = Input::get('comment');
 
         $annotation = Annotation::where('doc_id', '=', $docId)
