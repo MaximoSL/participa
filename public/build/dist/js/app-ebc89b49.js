@@ -103,6 +103,11 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       }
     };
 
+    errorNotification = function (message) {
+      Annotator.showNotification(message.replace(/<\/?[^>]+(>|$)/g, ""),Annotator.Notification.ERROR);
+      feedbackMessage( message, 'error', '#participate-activity-message' );
+    }
+
     this.annotator.editor.addField({
       load: function (field, annotation) {
         this.addEditFields(field, annotation);
@@ -211,7 +216,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
     });
 
     //If the user is logged in, allow them to comment
-    if (user.id !== '') {
+    if (user.id !== '' && doc.is_opened) {
       var annotationComments = $('<div class="annotation-comments"></div>');
       var commentText = $('<input type="text" class="form-control" />');
       var commentSubmit = $('<button type="button" class="btn btn-primary" >Enviar</button>');
@@ -291,7 +296,13 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
     //POST request to add user's comment
     $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/comments', {
       comment: comment
-    }, function () {
+    }, function (data) {
+
+      if(data.status === 'error') {
+        message = '<b>Lo sentimos</b>, Este documento se encuentra cerrado';
+        return errorNotification(message);
+      }
+
       annotation.comments.push(comment);
 
       return this.annotator.publish('commentCreated', comment);
@@ -302,6 +313,11 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       element = $(element);
       element.children('.action-count').text(data.likes);
       element.siblings('.glyphicon').removeClass('selected');
+
+      if(typeof data.document_closed !== 'undefined'){
+        message = '<b>Lo sentimos</b>, Este documento se encuentra cerrado';
+        return errorNotification(message);
+      }
 
       if (data.action) {
         element.addClass('selected');
@@ -325,6 +341,11 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       element.children('.action-count').text(data.dislikes);
       element.siblings('.glyphicon').removeClass('selected');
 
+      if(typeof data.document_closed !== 'undefined'){
+        message = '<b>Lo sentimos</b>, Este documento se encuentra cerrado';
+        return errorNotification(message);
+      }
+
       if (data.action) {
         element.addClass('selected');
       } else {
@@ -346,6 +367,11 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       element = $(element);
       element.children('.action-count').text(data.flags);
       element.siblings('.glyphicon').removeClass('selected');
+
+      if(typeof data.document_closed !== 'undefined'){
+        message = '<b>Lo sentimos</b>, Este documento se encuentra cerrado';
+        return errorNotification(message);
+      }
 
       if (data.action) {
         element.addClass('selected');
@@ -482,6 +508,10 @@ angular.module( 'madisonApp.controllers' )
                         activity.likes      = data.likes;
                         activity.dislikes   = data.dislikes;
                         activity.flags      = data.flags;
+
+                        if(typeof data.document_closed !== 'undefined'){
+                          growl.error('Éste documento se encuentra cerrado');
+                        }
                     }).error( function ( data ) {
                         console.error( data );
                     });
@@ -517,6 +547,12 @@ angular.module( 'madisonApp.controllers' )
                     'comment'   : subcomment
                 })
                 .success( function ( data ) {
+
+                    if(data.status === 'error') {
+                      growl.error('Éste documento se encuentra cerrado');
+                      return;
+                    }
+
                     activity.comments.push( data );
                     subcomment.text = '';
                     subcomment.user = '';
@@ -708,9 +744,15 @@ angular.module( 'madisonApp.controllers' )
                 'comment': comment
             })
                 .success( function ( data ) {
+
                     data[0].label   = 'comment';
                     $scope.comments.push( data[0] );
                     $scope.comment.text = '';
+
+                    if(typeof data.document_closed !== 'undefined'){
+                      growl.error('Éste documento se encuentra cerrado');
+                      return;
+                    }
 
                     feedbackMessage( $scope.layoutTexts.commentfeedbackMessage, 'success', '#participate-comment-message' );
                 })
@@ -731,6 +773,10 @@ angular.module( 'madisonApp.controllers' )
                         activity.dislikes   = data.dislikes;
                         activity.flags      = data.flags;
                         activity.deleted_at = data.deleted_at;
+
+                        if(typeof data.document_closed !== 'undefined'){
+                          growl.error('Éste documento se encuentra cerrado');
+                        }
                     }).error( function ( data ) {
                         console.error( data );
                     });
@@ -1128,7 +1174,7 @@ angular.module('madisonApp.controllers')
       }
 
       annotator = $('#doc_content').annotator({
-        //readOnly: user.id == ''
+        readOnly: !$scope.doc.is_opened
       });
 
       annotator.annotator('addPlugin', 'Unsupported');

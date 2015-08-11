@@ -161,9 +161,15 @@ angular.module( 'madisonApp.controllers' )
                 'comment': comment
             })
                 .success( function ( data ) {
+
                     data[0].label   = 'comment';
                     $scope.comments.push( data[0] );
                     $scope.comment.text = '';
+
+                    if(typeof data.document_closed !== 'undefined'){
+                      growl.error('Éste documento se encuentra cerrado');
+                      return;
+                    }
 
                     feedbackMessage( $scope.layoutTexts.commentfeedbackMessage, 'success', '#participate-comment-message' );
                 })

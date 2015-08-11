@@ -41,9 +41,11 @@ class CommentController extends AbstractApiController
         $doc = Doc::findOrFail($doc);
 
         if (!$doc->is_opened()) {
-            $return = Comment::loadComments($newComment->doc_id, $newComment->id, $user);
+            $response['status'] = 'error';
+            $response['document_closed'] = 1;
+            $response['message'] = trans('messages.closeddoc');
 
-            return response()->json($return);
+            return response()->json($response);
         }
 
         $user = Auth::user();
