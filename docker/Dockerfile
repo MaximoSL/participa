@@ -43,4 +43,4 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 EXPOSE 80 443
 
-CMD [ "bash", "-c", "/var/www/participa/start.sh" ]
+CMD [ "bash", "-c", "/var/www/participa/start.sh;bash" ]
