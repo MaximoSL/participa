@@ -3,13 +3,13 @@
 namespace MXAbierto\Participa\Migrations;
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Db;
+use Illuminate\Support\Facades\DB;
 
 abstract class DualMigration extends Migration implements DualMigrationInterface
 {
     public function up()
     {
-        $connection = Db::connection()->getDriverName();
+        $connection = DB::connection()->getDriverName();
 
         switch ($connection) {
       case 'mysql':
@@ -27,7 +27,7 @@ abstract class DualMigration extends Migration implements DualMigrationInterface
 
     public function down()
     {
-        $connection = Db::connection()->getDriverName();
+        $connection = DB::connection()->getDriverName();
 
         switch ($connection) {
       case 'mysql':
