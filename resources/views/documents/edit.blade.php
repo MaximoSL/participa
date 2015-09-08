@@ -6,7 +6,7 @@
     <div class="col-md-12">
       <ol class="breadcrumb">
         <li><a href="{{ route('home') }}" target="_self"><i class="icon icon-home"></i> {{ trans('messages.home')}}</a></li>
-        <li><a href="{{ route('docs') }}" target="_self">{{ trans('messages.document') }}s</a></li>
+        <li><a href="{{ route('documents') }}" target="_self">{{ trans('messages.document') }}s</a></li>
         <li class="active">{{ $doc->title }}</li>
       </ol>
 
@@ -14,7 +14,7 @@
 
       <tabset>
         <tab heading="Document Content">
-          <form action="{{ route('saveDocumentEdits', $doc->id) }}" method="post" id="doc_content_form" style="padding: 0 50px; border: 1px dotted lightgray;">
+          <form action="{{ route('saveDocumentEdits', $doc->id) }}" method="post" enctype="multipart/form-data" id="doc_content_form" style="padding: 0 50px; border: 1px dotted lightgray;">
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="put">
             <input type="hidden" name="content_id" value="{{ $contentItem->id }}" ng-model="doc.content.id"/>
@@ -26,6 +26,12 @@
                   <div class="form-group">
                     <textarea class="form-control" id="wmd-input" name="content" rows="20" ng-model="doc.content.content">{{{ $contentItem->content }}}</textarea>
                   </div>
+                  <hr>
+                  <div class="form-group">
+                    <label for="doc_content_file">{{ trans('messages.file') }}</label>
+                    <input type="file" name="doc_content_file" id="doc_content_file">
+                    <p class="help-block">{{ trans('messages.doccontentfilereplace') }}</p>
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
@@ -36,6 +42,7 @@
               <input class="btn btn-primary" type="submit" value="{{ trans('messages.save').' '.trans('messages.document') }}" id="submit">
             </div>
             <div id="save_message" class="alert hidden"></div>
+            <br><br>
           </form>
         </tab>
         <tab heading="Document Information">
