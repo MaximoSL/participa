@@ -78,5 +78,8 @@
 				loadChartbeat : function() { oldonload(); loadChartbeat(); };
 			})();
 		</script>
+		<!-- Begin DAx cs.js import -->
+		<script type="text/javascript" src="http://b.scorecardresearch.com/c2/17183199/ct.js"></script>
+		<!-- End DAx cs.js import -->
 	</body>
 </html>
