@@ -115,6 +115,11 @@ class DocumentsController extends AbstractController
                 case 'md':
                     $content = file_get_contents($file);
                     break;
+
+                case 'csv':
+                    $content = json_encode(array_map('str_getcsv', file($file->getRealPath())));
+                    $content = $this->Utf8_ansi($content);
+                    break;
             }
         }
 
