@@ -12,7 +12,19 @@
   @endif
   <div id="participate-comment" class="participate-comment">
     @if($doc->is_opened())
-      @include('doc.reader.cofemer.comment')
+      @include('doc.reader.votes.comment')
+    @else
+      @if($doc->is_closed_for_comments())
+        <p>{{ trans('messages.closedcommentsdoc') }}</p>
+      @else
+        <p>{{ trans('messages.closeddoc') }}</p>
+      @endif
+    @endif
+  </div>
+@else
+  <div id="participate-comment" class="participate-comment">
+    @if($doc->is_opened())
+      <p>{{ trans('messages.please') }} <a href="{{ route('auth.login') }}" target="_self">{{ trans('messages.login') }}</a> {{ trans('messages.tocomment') }}.</p>
     @else
       @if($doc->is_closed_for_comments())
         <p>{{ trans('messages.closedcommentsdoc') }}</p>

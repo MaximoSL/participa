@@ -24,7 +24,7 @@
 @else
   <div id="participate-comment" class="participate-comment">
     @if($doc->is_opened())
-      <p>{{ trans('messages.please') }} <a href="{{ route('auth.login') }}">{{ trans('messages.login') }}</a> {{ trans('messages.tocomment') }}.</p>
+      <p>{{ trans('messages.please') }} <a href="{{ route('auth.login') }}" target="_self">{{ trans('messages.login') }}</a> {{ trans('messages.tocomment') }}.</p>
     @else
       @if($doc->is_closed_for_comments())
         <p>{{ trans('messages.closedcommentsdoc') }}</p>
