@@ -42,7 +42,7 @@ class DocumentPresenter extends BasePresenter
             $proposed_content_column = 5;
 
             $doc_content = $this->wrappedObject->content->content;
-            if (strpos($doc_content,'CSV_SOURCE::') !== false) {
+            if (strpos($doc_content, 'CSV_SOURCE::') !== false) {
                 $doc_content = Storage::get(str_replace('CSV_SOURCE::', '', $doc_content));
             }
 
@@ -53,7 +53,7 @@ class DocumentPresenter extends BasePresenter
             $chapter = '';
             $current_code = '';
             $proposed_code = '';
-            foreach($content_lines as $key => $value) {
+            foreach ($content_lines as $key => $value) {
                 if ($skip) {
                     $skip = false;
                     continue;
@@ -68,18 +68,17 @@ class DocumentPresenter extends BasePresenter
                 $title = $chapter.'. '.$proposed_code;
 
                 $snippets[] = [
-                    'title' => $title,
-                    'chapter' => $chapter,
-                    'current_code' => $current_code,
-                    'proposed_code' => $proposed_code,
-                    'current_content' => $current_content,
+                    'title'            => $title,
+                    'chapter'          => $chapter,
+                    'current_code'     => $current_code,
+                    'proposed_code'    => $proposed_code,
+                    'current_content'  => $current_content,
                     'proposed_content' => $proposed_content,
                 ];
-
             }
 
             $html = '';
-            foreach($snippets as $snippet) {
+            foreach ($snippets as $snippet) {
                 $html .= '<div class="show_diff_inline">
                     <div class="text1">
                         '.$snippet['current_content'].'
