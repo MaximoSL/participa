@@ -95,6 +95,11 @@ class DocController extends AbstractController
                 return view('doc.reader.votes.index', $data);
             }
 
+            //Render the votes view and return
+            if (in_array('leyes', $doc_layouts)) {
+                return view('doc.reader.leyes.index', $data);
+            }
+
             //Render view and return
             return view('doc.reader.index', $data);
         } catch (Exception $e) {
