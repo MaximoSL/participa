@@ -82,8 +82,7 @@ class DocController extends AbstractController
                 'showAnnotationThanks' => $showAnnotationThanks,
             ];
 
-            $doc_layouts = $doc->categories()->where('kind', 'layout')->lists('name', 'id')->all();
-            $doc_layouts = array_map('strtolower', $doc_layouts);
+            $doc_layouts = $doc->layouts_list;
 
             //Render the cofemer view and return
             if (in_array('cofemer', $doc_layouts)) {

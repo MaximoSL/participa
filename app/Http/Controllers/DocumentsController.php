@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use MXAbierto\Participa\Models\Doc;
 use MXAbierto\Participa\Models\DocContent;
 use MXAbierto\Participa\Models\MadisonEvent;
 use MXAbierto\Participa\Models\Role;
+use MXAbierto\Participa\Services\CSVParser;
 
 class DocumentsController extends AbstractController
 {
@@ -118,13 +118,7 @@ class DocumentsController extends AbstractController
                     break;
 
                 case 'csv':
-                    $content = json_encode(array_map('str_getcsv', file($file->getRealPath())));
-                    $content = $this->Utf8_ansi($content);
-                    if (strlen($content) > 65535) {
-                        $filename = uniqid('doc_'.$documentId.'_', true).'.'.$file->getClientOriginalExtension();
-                        Storage::put('documents/csv/'.$filename, $content);
-                        $content = 'CSV_SOURCE::documents/csv/'.$filename;
-                    }
+                    $content = CSVParser::processCSVFileContent($file, 'doc_'.$documentId.'_');
                     break;
             }
         }
