@@ -82,6 +82,7 @@ class StringDiff
 
         return $headdiff.$lcs.$taildiff;
     }
+
     /**
      * @param string $a
      * @param string $b
@@ -152,6 +153,7 @@ class StringDiff
 
         return implode($arr);
     }
+
     /**
      * find the longest_common_subarray between $achars and $bchars
      * requirement: a subarray must have at least a third of the
@@ -215,6 +217,7 @@ class StringDiff
         //		print_r($longest_common_substring);
         return $commonarrays[$longestIdx];
     }
+
     /**
      * uses idmap to find all contiguous elements in array achars
      * that have a corresponding contiguous section in the mapped array
@@ -247,6 +250,7 @@ class StringDiff
 
         return $commonarrays;
     }
+
     /**
      * provides a mapping from each position in array a
      * to all positions in array b where the same character

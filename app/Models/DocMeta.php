@@ -20,6 +20,7 @@ class DocMeta extends Model
     protected $table = 'doc_meta';
 
     //Document this meta is describing
+
     public function doc()
     {
         return $this->belongsTo('MXAbierto\Participa\Models\Doc');
