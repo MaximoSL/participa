@@ -4,7 +4,6 @@ namespace MXAbierto\Participa\Presenters;
 
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use McCool\LaravelAutoPresenter\BasePresenter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -35,7 +34,6 @@ class DocumentPresenter extends BasePresenter
         $doc_layouts = $this->wrappedObject->layouts_list;
 
         if (in_array('leyes', $doc_layouts)) {
-
             $csv_parser = new CSVParser();
 
             $snippets = $csv_parser->parseCSVContentForLawLayout($this->wrappedObject->content->content);
