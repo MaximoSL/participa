@@ -41,18 +41,6 @@
             <div class="doc-extract" ng-if="introtext">
               <div class="markdown" data-ng-bind-html="introtext"></div>
             </div>
-            <div class="doc-actions">
-              <br>
-              <p>{{ trans('messages.supportdoctext') }}</p>
-              <a id="doc-support" href="#" class="btn btn-primary" ng-click="support(true, $event)" ng-class="{'btn-success': supported}">
-                <span class="glyphicon glyphicon-ok"></span>
-                {{ trans('messages.supportdoc') }}
-              </a>
-              <a id="doc-oppose" href="#" class="btn btn-default" ng-click="support(false, $event)" ng-class="{'btn-danger': opposed}">
-                <span class="glyphicon glyphicon-remove"></span>
-                {{ trans('messages.opposedoc') }}
-              </a>
-            </div>
           </div>
         </div>
       </div>
@@ -68,7 +56,30 @@
           <div class="tab-content">
             <div id="tab-activity" ng-class="{'active':secondtab == false}" class="tab-pane">
               <div id="content" class="@if($loggedUser) logged_in @endif" tourtip="@{{ step_messages.step_2 }}" tourtip-step="2" tourtip-next-label="Siguiente">
-                <div id="doc_content" class="doc-content-main" tourtip="@{{ step_messages.step_4 }}" tourtip-step="4" tourtip-next-label="Finalizar">
+
+                <div class="row">
+                  <ul class="col-sm-12 nav nav-pills" role="tablist">
+                    <li ng-class="{'active':inlinediff == true}" class="pull-right"><a href="#tab-inline-diff" target="_self" role="tab" data-toggle="tab">{{ trans('messages.leyes-layout-inline-diff') }}</a></li>
+                    <li ng-class="{'active':inlinediff == false}" class="pull-right"><a href="#tab-side-diff" target="_self" role="tab" data-toggle="tab">{{ trans('messages.leyes-layout-side-diff') }}</a></li>
+                  </ul>
+                </div>
+
+                {{-- <div class="tab-content">
+
+                  <div id="tab-side-diff" ng-class="{'active':inlinediff == false}" class="tab-pane">
+                    <div id="doc_content" class="doc-content-main">
+                      {!! $doc->formatted_content !!}
+                    </div>
+                  </div>
+
+                  <div id="tab-inline-diff" ng-class="{'active':inlinediff == true}" class="tab-pane">
+                    <div id="doc_content" class="doc-content-main">
+                      {!! $doc->formatted_content !!}
+                    </div>
+                  </div>
+                </div> --}}
+
+                <div id="doc_content" class="doc-content-main">
                   {!! $doc->formatted_content !!}
                 </div>
               </div>

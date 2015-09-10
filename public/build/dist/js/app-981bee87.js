@@ -835,6 +835,7 @@ angular.module('madisonApp.controllers')
     // Otherwise, the hash is #subcomment/#comment and the discussion tab should be active
     var annotationHash = $location.hash().match(/^annsubcomment_([0-9]+)$/);
     $scope.secondtab = false;
+    $scope.inlinediff = false;
 
     if (!annotationHash && ($location.hash())) {
       $scope.secondtab = true;
@@ -887,6 +888,7 @@ angular.module( 'madisonApp.controllers' )
             container.addClass( 'col-md-9' );
         }
     }]);
+
 angular.module('madisonApp.controllers')
   .controller('EmailSubscribeController', ['$scope', '$http', function ($scope, $http) {
     $scope.email = '';

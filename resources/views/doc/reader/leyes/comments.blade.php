@@ -12,7 +12,7 @@
   @endif
   <div id="participate-comment" class="participate-comment">
     @if($doc->is_opened())
-      @include('doc.reader.comment')
+      @include('doc.reader.leyes.comment')
     @else
       @if($doc->is_closed_for_comments())
         <p>{{ trans('messages.closedcommentsdoc') }}</p>

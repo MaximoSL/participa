@@ -266,4 +266,6 @@ return [
     'cofemer-contact-info'      => 'messages.cofemer-contact-info',
     'cofemer-note-to-users'     => 'messages.cofemer-note-to-users',
     'cofemer-layout-header'     => 'messages.cofemer-layout-header',
+    'leyes-layout-inline-diff'  => 'Inline',
+    'leyes-layout-side-diff'    => 'Side by side',
 ];
