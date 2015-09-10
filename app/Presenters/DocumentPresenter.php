@@ -50,10 +50,10 @@ class DocumentPresenter extends BasePresenter
                 </div>
                 <hr class="hidden-xs red">
             ';
-            foreach ($snippets as $snippet) {
+            foreach ($snippets as $key => $snippet) {
                 $html .= '
                     <div class="row">
-                        <div class="show_diff_inline">
+                        <div class="show_diff_inline" id="diff_inline_snippet_'.$key.'">
                             <div class="col-sm-12 title">
                                 '.$snippet['title'].'
                             </div>

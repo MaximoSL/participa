@@ -51,6 +51,9 @@ elixir(function(mix) {
         'bower_components/pagedown/Markdown.Sanitizer.js',
         'bower_components/pagedown/Markdown.Editor.js',
         'bower_components/annotator/annotator-full.min.js',
+
+        // Plugins
+        'resources/assets/js/plugins/diff_match_patch_uncompressed.js',
       ], 'public/dist/js/libs.js', './')
       .scripts([
         // Custom JS
