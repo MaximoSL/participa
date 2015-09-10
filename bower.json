@@ -30,6 +30,7 @@
     "pagedown": "~1.1.0",
     "showdown": "~0.5.4",
     "zeroclipboard": "~2.2.0",
-    "select2-bootstrap-css": "~1.4.6"
+    "select2-bootstrap-css": "~1.4.6",
+    "bower-mergely": "~3.3.10"
   }
 }
