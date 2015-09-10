@@ -3,7 +3,7 @@ FROM debian:jessie
 RUN \
   # Install dependencies
   apt-get update && \
-  apt-get -y install \
+  apt-get -y --fix-missing install \
     nginx \
     php5-fpm \
     php5-cli \
