@@ -9077,10 +9077,10 @@ ul.format {
   margin-top: 20px;
   margin-bottom: 20px; }
 
-.show_diff_inline .title {
+.diff_layout .title {
   margin-bottom: 10px; }
 
-.show_diff_inline .text1, .show_diff_inline .text2 {
+.diff_layout .text1, .diff_layout .text2 {
   border: solid 1px #DCE0E0; }
 
 .fa-spin {

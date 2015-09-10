@@ -40,20 +40,22 @@ class DocumentPresenter extends BasePresenter
 
             $html = '';
             $html .= '
-                <div class="row hidden-xs">
-                    <div class="col-sm-6">
-                    <h5>Descripción vigente</h5>
+                <div class="hidden-xs side-diff-visible">
+                    <div class="row">
+                        <div class="col-sm-6">
+                        <h5>Descripción vigente</h5>
+                        </div>
+                        <div class="col-sm-6">
+                        <h5>Descripción propuesta</h5>
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                    <h5>Descripción propuesta</h5>
-                    </div>
+                    <hr class="hidden-xs red">
                 </div>
-                <hr class="hidden-xs red">
             ';
             foreach ($snippets as $key => $snippet) {
                 $html .= '
                     <div class="row">
-                        <div class="show_diff_inline" id="diff_inline_snippet_'.$key.'">
+                        <div class="diff_layout" id="diff_layout_snippet_'.$key.'">
                             <div class="col-sm-12 title">
                                 '.$snippet['title'].'
                             </div>
@@ -63,7 +65,8 @@ class DocumentPresenter extends BasePresenter
                             <div class="col-sm-6 text2">
                                 '.$snippet['proposed_content'].'
                             </div>
-                            <div class="col-sm-12 diff_result"></div>
+                            <div class="col-sm-12 diff_result inline_diff_result" style="display:none;"></div>
+                            <div class="col-sm-12 diff_result side_diff_result" style="display:none;"></div>
                         </div>
                     </div>
                     <br><br>

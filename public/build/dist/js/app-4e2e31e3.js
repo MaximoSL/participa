@@ -2419,32 +2419,61 @@ angular.module('madisonApp.services')
 
 $(document).ready(function () {
 
-  var dmp = new diff_match_patch();
-  dmp.Diff_Timeout = 1;
-  dmp.Diff_EditCost = 5;
+  var diff_generated = false;
 
-  function getInlineDiff() {
-    $('.show_diff_inline').each(function(){
-      $element = $(this);
+  function getDiff(enabled) {
 
-      var text1 = $element.find('.text1').html();
-      var text2 = $element.find('.text2').html();
-      var d = dmp.diff_main(text1, text2);
+    if(diff_generated !== true) {
 
-      dmp.diff_cleanupEfficiency(d);
+      var dmp = new diff_match_patch();
+      dmp.Diff_Timeout = 1;
+      dmp.Diff_EditCost = 5;
 
-      var ds = dmp.diff_prettyHtml(d);
-      ds = ds.replace(/<span>&para;/g, '<span>');
-      ds = ds.replace('<br>', '');
+      $('.diff_layout').each(function(){
 
-      // $element.find('.diff_result').html(ds + '<BR>Time: ' + (ms_end - ms_start) / 1000 + 's');
-      $element.find('.diff_result').html(ds);
-      $element.find('.text1').hide();
-      $element.find('.text2').hide();
+        var $element = $(this);
+        var $text1 = $element.find('.text1');
+        var $text2 = $element.find('.text2');
+        var $inline_diff_result = $element.find('.inline_diff_result');
+
+        var text1 = $text1.html();
+        var text2 = $text2.html();
+        var d = dmp.diff_main(text1, text2);
+
+        dmp.diff_cleanupEfficiency(d);
+
+        var ds = dmp.diff_prettyHtml(d);
+        ds = ds.replace(/<span>&para;/g, '<span>');
+        ds = ds.replace('<br>', '');
+
+        $inline_diff_result.html(ds);
+        //$text1.hide();
+        //$text2.hide();
+
+        diff_generated = true;
+      });
+
+    }
+
+    $('.diff_result').hide();
+
+    $('.diff_layout').each(function(){
+      var $diff_result_enabled = $(this).find('.'+enabled);
+      $diff_result_enabled.show();
     });
   }
 
-  getInlineDiff();
+  function getInlineDiff() {
+    $('.side-diff-visible').hide();
+    getDiff('inline_diff_result');
+  }
+
+  function getSideDiff() {
+    $('.side-diff-visible').show();
+    getDiff('side_diff_result');
+  }
+
+  getSideDiff();
 
 });
 
