@@ -16,18 +16,31 @@ $(document).ready(function () {
         var $text1 = $element.find('.text1');
         var $text2 = $element.find('.text2');
         var $inline_diff_result = $element.find('.inline_diff_result');
+        var $side_diff_result = $element.find('.side_diff_result');
 
         var text1 = $text1.html();
         var text2 = $text2.html();
-        var d = dmp.diff_main(text1, text2);
 
-        dmp.diff_cleanupEfficiency(d);
-
-        var ds = dmp.diff_prettyHtml(d);
-        ds = ds.replace(/<span>&para;/g, '<span>');
-        ds = ds.replace('<br>', '');
-
+        // Inline Diff
+        var ds = diffString(text1, text2);
+        // var d = dmp.diff_main(text1, text2);
+        // dmp.diff_cleanupEfficiency(d);
+        // var ds = dmp.diff_prettyHtml(d);
+        // ds = ds.replace(/<span>&para;/g, '<span>');
+        // ds = ds.replace('<br>', '');
         $inline_diff_result.html(ds);
+
+        // Side diff
+        // $side_diff_result.mergely({
+        //   cmsettings: { readOnly: true, lineNumbers: false },
+        //   lhs: function(setValue) {
+        //     setValue(text1);
+        //   },
+        //   rhs: function(setValue) {
+        //     setValue(text2);
+        //   }
+        // });
+
         //$text1.hide();
         //$text2.hide();
 
@@ -54,6 +67,17 @@ $(document).ready(function () {
     getDiff('side_diff_result');
   }
 
-  getSideDiff();
+  getInlineDiff();
+
+  // $('#diff_layout_snippet_0 .side_diff_result').mergely({
+  //   cmsettings: { readOnly: true, lineNumbers: false, lineWrapping: true },
+  //   editor_width: '200px',
+  //   lhs: function(setValue) {
+  //     setValue('hola como estas');
+  //   },
+  //   rhs: function(setValue) {
+  //     setValue('adios como estas');
+  //   }
+  // });
 
 });

@@ -7,4 +7,12 @@
     .text1, .text2 {
         border: solid 1px $border-color;
     }
+
+    ins {
+        background: #E6FFE6;
+    }
+
+    del {
+        background: #FFE6E6;
+    }
 }
