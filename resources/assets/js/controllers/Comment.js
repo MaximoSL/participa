@@ -153,6 +153,9 @@ angular.module( 'madisonApp.controllers' )
                 return false;
         };
         $scope.commentSubmit    = function () {
+            // Add comscore analytics
+            udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '&ns_comment=' + $scope.comment );
+
             var comment     = angular.copy( $scope.comment );
             comment.user    = $scope.user;
             comment.doc     = $scope.doc;
