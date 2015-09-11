@@ -2442,26 +2442,19 @@ $(document).ready(function () {
 
         // Inline Diff
         var ds = diffString(text1, text2);
-        // var d = dmp.diff_main(text1, text2);
-        // dmp.diff_cleanupEfficiency(d);
-        // var ds = dmp.diff_prettyHtml(d);
-        // ds = ds.replace(/<span>&para;/g, '<span>');
-        // ds = ds.replace('<br>', '');
         $inline_diff_result.html(ds);
 
-        // Side diff
-        // $side_diff_result.mergely({
-        //   cmsettings: { readOnly: true, lineNumbers: false },
-        //   lhs: function(setValue) {
-        //     setValue(text1);
-        //   },
-        //   rhs: function(setValue) {
-        //     setValue(text2);
-        //   }
-        // });
+        // Side by Side Diff
+        $side_diff_result_text_1 = $element.find('.side_diff_result.side_text_1');
+        $side_diff_result_text_2 = $element.find('.side_diff_result.side_text_2');
+        $side_diff_result_text_1.html(ds);
+        $side_diff_result_text_2.html(ds);
+        $side_diff_result_text_1.find('ins').remove();
+        $side_diff_result_text_2.find('del').remove();
 
-        //$text1.hide();
-        //$text2.hide();
+        // Hide original texts
+        $text1.hide();
+        $text2.hide();
 
         diff_generated = true;
       });
@@ -2486,18 +2479,17 @@ $(document).ready(function () {
     getDiff('side_diff_result');
   }
 
-  getInlineDiff();
+  $('#inline-diff-layout-toggle').click(function(e){
+    e.preventDefault();
+    getInlineDiff();
+  });
 
-  // $('#diff_layout_snippet_0 .side_diff_result').mergely({
-  //   cmsettings: { readOnly: true, lineNumbers: false, lineWrapping: true },
-  //   editor_width: '200px',
-  //   lhs: function(setValue) {
-  //     setValue('hola como estas');
-  //   },
-  //   rhs: function(setValue) {
-  //     setValue('adios como estas');
-  //   }
-  // });
+  $('#side-diff-layout-toggle').click(function(e){
+    e.preventDefault();
+    getSideDiff();
+  });
+
+  getSideDiff();
 
 });
 

@@ -66,7 +66,8 @@ class DocumentPresenter extends BasePresenter
                                 '.$snippet['proposed_content'].'
                             </div>
                             <div class="col-sm-12 diff_result inline_diff_result" style="display:none;"></div>
-                            <div class="col-sm-12 diff_result side_diff_result" style="display:none;"></div>
+                            <div class="col-sm-6 diff_result side_diff_result side_text_1" style="display:none;"></div>
+                            <div class="col-sm-6 diff_result side_diff_result side_text_2" style="display:none;"></div>
                         </div>
                     </div>
                     <br><br>

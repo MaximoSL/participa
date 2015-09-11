@@ -4,17 +4,30 @@
         margin-bottom: 10px;
     }
 
-    .text1, .text2 {
+    .text1, .text2, .side_diff_result.side_text_1, .side_diff_result.side_text_2{
         border: solid 1px $border-color;
     }
 
+    .side_diff_result.side_text_1, .side_diff_result.side_text_2 {
+
+    }
+
     ins {
-        background-color: #dff0d8;
-        color: #3c763d;
+        background-color: $state-success-bg;
+        color: $state-success-text;
     }
 
     del {
-        background-color: #f2dede;
-        color: #545454;
+        background-color: $state-danger-bg;
+        color: $state-danger-text;
+    }
+
+    ins, del {
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+
+    ins + ins, del + del {
+        margin-left: -3px;
     }
 }

@@ -59,8 +59,8 @@
 
                 <div class="row">
                   <ul class="col-sm-12 nav nav-pills" role="tablist">
-                    <li ng-class="{'active':inlinediff == true}" class="pull-right"><a href="#tab-inline-diff" target="_self" role="tab" data-toggle="tab">{{ trans('messages.leyes-layout-inline-diff') }}</a></li>
-                    <li ng-class="{'active':inlinediff == false}" class="pull-right"><a href="#tab-side-diff" target="_self" role="tab" data-toggle="tab">{{ trans('messages.leyes-layout-side-diff') }}</a></li>
+                    <li ng-class="{'active':inlinediff == true}" ng-click="inlinediff = true" class="pull-right" id="inline-diff-layout-toggle"><a href="#" target="_self">{{ trans('messages.leyes-layout-inline-diff') }}</a></li>
+                    <li ng-class="{'active':inlinediff == false}" ng-click="inlinediff = false"  class="pull-right" id="side-diff-layout-toggle"><a href="#" target="_self">{{ trans('messages.leyes-layout-side-diff') }}</a></li>
                   </ul>
                 </div>
 
