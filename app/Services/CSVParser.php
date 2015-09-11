@@ -79,7 +79,7 @@ class CSVParser
         $content = json_encode(array_map('str_getcsv', file($file->getRealPath())));
         $content = Utilities::Utf8_ansi($content);
         if (strlen($content) > 65535) {
-            $filename = uniqid($filename_prefix, true).'.'.$file->getClientOriginalExtension();
+            $filename = uniqid($filename_prefix, true).'.txt';
             Storage::put('documents/csv/'.$filename, $content);
             $content = 'CSV_SOURCE::documents/csv/'.$filename;
         }
