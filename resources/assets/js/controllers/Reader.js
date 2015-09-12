@@ -70,6 +70,10 @@ angular.module('madisonApp.controllers')
       if ($scope.user.id === '') {
         createLoginPopup($event);
       } else {
+        // Add comscore analytics
+        var vote  = ( supported ) ? 'up_vote' : 'down_vote';
+        udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '&ns_vote=' + vote );
+
         $http.post(_baseUrl + '/api/users/support/' + $scope.doc.id, {
           'support': supported
         })

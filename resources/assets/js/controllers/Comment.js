@@ -153,6 +153,9 @@ angular.module( 'madisonApp.controllers' )
                 return false;
         };
         $scope.commentSubmit    = function () {
+            // Add comscore analytics
+            udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '&ns_comment=' + $scope.comment );
+
             var comment     = angular.copy( $scope.comment );
             comment.user    = $scope.user;
             comment.doc     = $scope.doc;
@@ -184,6 +187,12 @@ angular.module( 'madisonApp.controllers' )
         };
         $scope.addAction        = function ( activity, action, $event ) {
             if ( $scope.user.id !== '' ) {
+                if ( action == 'likes' || action == 'dislikes' ) {
+                    // Add comscore analytics
+                    var vote  = ( action == 'likes' ) ? 'up_vote' : 'down_vote';
+                    udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '.comment_vote.' + activity.id + '&ns_vote=' + vote );
+                }
+
                 $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
                     .success( function ( data ) {
                         activity.likes  = data.likes;
