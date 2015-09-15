@@ -1,3 +1,4 @@
+@include('layouts.comscore')
 <div class="main-banner">
   <div class="container">
     <h1 class="hidden-sm hidden-xs"><strong>gob<span class="red">.</span>mx/{{ config('app.base_name') }}</strong></h1>

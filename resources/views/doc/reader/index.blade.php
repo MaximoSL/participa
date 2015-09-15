@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
+@include('layouts.comscoredoc')
   <div class="modal fade" id="annotationThanks" tabindex="-1" role="dialog" aria-labelledby="annotationThanks" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
