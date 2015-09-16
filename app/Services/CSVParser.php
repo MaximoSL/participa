@@ -115,11 +115,11 @@ class CSVParser
 
             $title = $chapter.$proposed_code;
 
-            if(!empty($current_code) && !empty($proposed_code)) {
+            if (!empty($current_code) && !empty($proposed_code)) {
                 $title = [
                     $current_code,
                     $proposed_code,
-                    $chapter
+                    $chapter,
                 ];
             }
 

@@ -59,10 +59,10 @@ class DocumentPresenter extends BasePresenter
                             <div class="col-sm-12 title">
                                 <div class="row">';
 
-                         $html .= '<div class="col-sm-12 side-diff-visible hidden-xs">';
+                $html .= '<div class="col-sm-12 side-diff-visible hidden-xs">';
 
-                        if (is_array($snippet['title'])) {
-                            $html .= '
+                if (is_array($snippet['title'])) {
+                    $html .= '
                                     '.$snippet['title'][2].'
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -73,43 +73,43 @@ class DocumentPresenter extends BasePresenter
                                         </div>
                                     </div>
                             ';
-                        } else {
-                            $html .= $snippet['title'];
-                        }
+                } else {
+                    $html .= $snippet['title'];
+                }
 
-                        $html .= '
+                $html .= '
                                 </div>
                         ';
 
-                        $html .= '<div class="col-sm-12 inline-diff-visible hidden-xs">';
+                $html .= '<div class="col-sm-12 inline-diff-visible hidden-xs">';
 
-                        if (is_array($snippet['title'])) {
-                            $html .= '
+                if (is_array($snippet['title'])) {
+                    $html .= '
                                     '.$snippet['title'][2].'
                                     <p><b>Código vigente: </b> '.$snippet['title'][0].'</p>
                                     <p><b>Código propuesto: </b> '.$snippet['title'][1].'</p>
                             ';
-                        } else {
-                            $html .= $snippet['title'];
-                        }
+                } else {
+                    $html .= $snippet['title'];
+                }
 
-                        $html .= '</div>';
+                $html .= '</div>';
 
-                        $html .= '<div class="col-sm-12 visible-xs">';
+                $html .= '<div class="col-sm-12 visible-xs">';
 
-                        if (is_array($snippet['title'])) {
-                            $html .= '
+                if (is_array($snippet['title'])) {
+                    $html .= '
                                     '.$snippet['title'][2].'
                                     <p><b>Código vigente: </b> '.$snippet['title'][0].'</p>
                                     <p><b>Código propuesto: </b> '.$snippet['title'][1].'</p>
                             ';
-                        } else {
-                            $html .= $snippet['title'];
-                        }
+                } else {
+                    $html .= $snippet['title'];
+                }
 
-                        $html .= '</div>';
+                $html .= '</div>';
 
-                    $html .= '</div>
+                $html .= '</div>
                         </div>
                             <div class="col-sm-6 text1">
                                 '.$snippet['current_content'].'
