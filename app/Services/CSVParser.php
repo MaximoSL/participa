@@ -14,15 +14,15 @@ class CSVParser
      */
     protected $config;
 
-    protected $chapter_column = 1;
+    protected $chapter_column = -1;
 
-    protected $current_code_column = 2;
+    protected $current_code_column = 0;
 
-    protected $current_content_column = 3;
+    protected $current_content_column = 1;
 
-    protected $proposed_code_column = 4;
+    protected $proposed_code_column = 2;
 
-    protected $proposed_content_column = 5;
+    protected $proposed_content_column = 3;
 
     public function setChapterColumn($value)
     {
@@ -102,18 +102,26 @@ class CSVParser
         $proposed_code = '';
 
         foreach ($content_rows as $key => $row) {
-            if ($skip) {
+            if ($skip || empty($row[$this->current_code_column])) {
                 $skip = false;
                 continue;
             }
 
-            $chapter = (empty($row[$this->chapter_column])) ? $chapter : $row[$this->chapter_column];
+            $chapter = (empty($row[$this->chapter_column])) ? $chapter : $row[$this->chapter_column].'. ';
             $current_code = (empty($row[$this->current_code_column])) ? $current_code : $row[$this->current_code_column];
             $proposed_code = (empty($row[$this->proposed_code_column])) ? $proposed_code : $row[$this->proposed_code_column];
             $current_content = (empty($row[$this->current_content_column])) ? '' : $row[$this->current_content_column];
             $proposed_content = (empty($row[$this->proposed_content_column])) ? '' : $row[$this->proposed_content_column];
 
-            $title = $chapter.'. '.$proposed_code;
+            $title = $chapter.$proposed_code;
+
+            if(!empty($current_code) && !empty($proposed_code)) {
+                $title = [
+                    $current_code,
+                    $proposed_code,
+                    $chapter
+                ];
+            }
 
             $snippets[] = [
                 'title'            => $title,

@@ -43,10 +43,10 @@ class DocumentPresenter extends BasePresenter
                 <div class="hidden-xs side-diff-visible">
                     <div class="row">
                         <div class="col-sm-6">
-                        <h5>Descripción vigente</h5>
+                        <h5>Código vigente</h5>
                         </div>
                         <div class="col-sm-6">
-                        <h5>Descripción propuesta</h5>
+                        <h5>Código propuesto</h5>
                         </div>
                     </div>
                     <hr class="hidden-xs red">
@@ -57,8 +57,60 @@ class DocumentPresenter extends BasePresenter
                     <div class="row">
                         <div class="diff_layout" id="diff_layout_snippet_'.$key.'">
                             <div class="col-sm-12 title">
-                                '.$snippet['title'].'
-                            </div>
+                                <div class="row">';
+
+                         $html .= '<div class="col-sm-12 side-diff-visible hidden-xs">';
+
+                        if (is_array($snippet['title'])) {
+                            $html .= '
+                                    '.$snippet['title'][2].'
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            '.$snippet['title'][0].'
+                                        </div>
+                                        <div class="col-sm-6">
+                                            '.$snippet['title'][1].'
+                                        </div>
+                                    </div>
+                            ';
+                        } else {
+                            $html .= $snippet['title'];
+                        }
+
+                        $html .= '
+                                </div>
+                        ';
+
+                        $html .= '<div class="col-sm-12 inline-diff-visible hidden-xs">';
+
+                        if (is_array($snippet['title'])) {
+                            $html .= '
+                                    '.$snippet['title'][2].'
+                                    <p><b>Código vigente: </b> '.$snippet['title'][0].'</p>
+                                    <p><b>Código propuesto: </b> '.$snippet['title'][1].'</p>
+                            ';
+                        } else {
+                            $html .= $snippet['title'];
+                        }
+
+                        $html .= '</div>';
+
+                        $html .= '<div class="col-sm-12 visible-xs">';
+
+                        if (is_array($snippet['title'])) {
+                            $html .= '
+                                    '.$snippet['title'][2].'
+                                    <p><b>Código vigente: </b> '.$snippet['title'][0].'</p>
+                                    <p><b>Código propuesto: </b> '.$snippet['title'][1].'</p>
+                            ';
+                        } else {
+                            $html .= $snippet['title'];
+                        }
+
+                        $html .= '</div>';
+
+                    $html .= '</div>
+                        </div>
                             <div class="col-sm-6 text1">
                                 '.$snippet['current_content'].'
                             </div>
@@ -70,6 +122,7 @@ class DocumentPresenter extends BasePresenter
                             <div class="col-sm-6 diff_result side_diff_result side_text_2" style="display:none;"></div>
                         </div>
                     </div>
+                    <hr class="inline-diff-visible">
                     <br><br>
                 ';
             }

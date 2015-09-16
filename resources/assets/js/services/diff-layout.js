@@ -52,11 +52,13 @@ $(document).ready(function () {
 
   function getInlineDiff() {
     $('.side-diff-visible').hide();
+    $('.inline-diff-visible').show();
     getDiff('inline_diff_result');
   }
 
   function getSideDiff() {
     $('.side-diff-visible').show();
+    $('.inline-diff-visible').hide();
     getDiff('side_diff_result');
   }
 
