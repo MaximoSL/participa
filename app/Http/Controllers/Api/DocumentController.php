@@ -43,6 +43,8 @@ class DocumentController extends AbstractApiController
         $perPage = Input::get('per_page', 20);
         $orderBy = Input::get('order', 'updated_at');
 
+        $perPage = (intval($perPage) > 0) ? intval($perPage) : 20;
+
         $availableFilters = ['docCategories', 'docInstitutions', 'statuses', 'dates'];
 
         $docs = Doc::with($availableFilters);
