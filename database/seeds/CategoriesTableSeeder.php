@@ -35,6 +35,12 @@ class CategoriesTableSeeder extends Seeder
                 'updated_at' => new DateTime(),
             ],
             [
+                'name'       => 'Leyes',
+                'kind'       => 'layout',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
                 'name'       => 'Institution 1',
                 'kind'       => 'institution',
                 'created_at' => new DateTime(),

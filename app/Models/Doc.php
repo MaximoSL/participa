@@ -176,6 +176,11 @@ class Doc extends Model implements HasPresenter
         return route('docs.doc', $this->slug);
     }
 
+    public function getLayoutsListAttribute()
+    {
+        return array_map('strtolower', $this->docLayouts()->lists('name', 'id')->all());
+    }
+
     public static function createEmptyDocument(array $params)
     {
         $defaults = [

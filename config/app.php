@@ -171,6 +171,8 @@ return [
          'Roumen\Sitemap\SitemapServiceProvider',
          'GrahamCampbell\Markdown\MarkdownServiceProvider',
          'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
+         'GrahamCampbell\Security\SecurityServiceProvider',
+         'GrahamCampbell\Binput\BinputServiceProvider',
 
         /*
          * Application Service Providers...
@@ -228,7 +230,8 @@ return [
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View'      => 'Illuminate\Support\Facades\View',
 
-        'Bugsnag'   => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
+        'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
+        'Binput'  => 'GrahamCampbell\Binput\Facades\Binput',
 
     ],
 

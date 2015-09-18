@@ -28,6 +28,7 @@ return [
     'sponsor'                   => 'Sponsor',
     'dependency'                => 'Dependency',
     'status'                    => 'Status',
+    'file'                      => 'File',
     'date'                      => 'Date',
     'posted'                    => 'Date Posted',
     'updated'                   => 'Last Updated',
@@ -119,6 +120,7 @@ return [
     'docslug'                   => 'Document Slug',
     'doccontent'                => 'Document Content',
     'docintrotext'              => 'Document Intro Text',
+    'doccontentfilereplace'     => 'Replace existing content with TXT or CSV file content',
     'sponsorasindividual'       => 'Your account is able to sponsor documents as an individual.',
     'indiesponsorpending'       => 'Your request to become an Independent Sponsor is \'pending\'',
     'role'                      => 'Role',
@@ -264,4 +266,6 @@ return [
     'cofemer-contact-info'      => 'messages.cofemer-contact-info',
     'cofemer-note-to-users'     => 'messages.cofemer-note-to-users',
     'cofemer-layout-header'     => 'messages.cofemer-layout-header',
+    'leyes-layout-inline-diff'  => 'Inline',
+    'leyes-layout-side-diff'    => 'Side by side',
 ];

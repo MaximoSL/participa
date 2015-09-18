@@ -15,7 +15,8 @@
         "zizaco/entrust": "dev-laravel-5",
         "bugsnag/bugsnag-laravel": "1.*",
         "laravel/socialite": "^2.0",
-        "fideloper/proxy": "~3.0"
+        "fideloper/proxy": "~3.0",
+        "graham-campbell/binput": "~3.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

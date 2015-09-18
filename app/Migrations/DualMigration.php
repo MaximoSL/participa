@@ -44,7 +44,10 @@ abstract class DualMigration extends Migration implements DualMigrationInterface
     }
 
     abstract public function upMySQL();
+
     abstract public function downMySQL();
+
     abstract public function upSQLite();
+
     abstract public function downSQLite();
 }

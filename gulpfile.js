@@ -11,6 +11,8 @@ elixir(function(mix) {
         'bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css',
         //'bower_components/jquery/jquery-ui-smoothness.css',
         'bower_components/annotator/annotator.min.css',
+        // 'bower_components/bower-mergely/lib/codemirror.css',
+        // 'bower_components/bower-mergely/lib/mergely.css',
         'public/dist/css/app.css'
       ], 'public/dist/css/app.css', './')
       .scripts([
@@ -51,6 +53,9 @@ elixir(function(mix) {
         'bower_components/pagedown/Markdown.Sanitizer.js',
         'bower_components/pagedown/Markdown.Editor.js',
         'bower_components/annotator/annotator-full.min.js',
+
+        // Plugins
+        'resources/assets/js/plugins/jsdiff.js',
       ], 'public/dist/js/libs.js', './')
       .scripts([
         // Custom JS

@@ -26,6 +26,7 @@ class Notification extends Model
     *
     * @param string $event
     */
+
     public static function getActiveNotifications($event)
     {
         return static::where('event', '=', $event)->get();
@@ -36,6 +37,7 @@ class Notification extends Model
     *
     *	@return array
     */
+
     public static function getValidNotifications()
     {
         return MadisonEvent::validAdminNotifications();
@@ -47,6 +49,7 @@ class Notification extends Model
     *	@param void
     *	@return array
     */
+
     public static function getUserNotifications()
     {
         return MadisonEvent::validUserNotifications();

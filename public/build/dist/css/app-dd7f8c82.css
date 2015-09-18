@@ -7232,7 +7232,7 @@ ul.format {
   .well {
     padding: 50px; } }
 
-.nav-tabs > li > a {
+.nav-tabs > li > a, .nav-pills > li > a {
   background-color: #f6f6f6;
   margin-right: 0px;
   border: 1px solid #d5d5d5;
@@ -7240,6 +7240,9 @@ ul.format {
   text-decoration: none;
   color: #545454;
   font-size: 16px; }
+
+.tab-content .nav-pills {
+  margin-top: 20px; }
 
 .alert {
   border-width: 2px;
@@ -9072,6 +9075,27 @@ ul.format {
 .home-docs.container .secondary-nav {
   margin-top: 20px;
   margin-bottom: 20px; }
+
+.diff_layout .title {
+  margin-bottom: 10px; }
+
+.diff_layout .text1, .diff_layout .text2, .diff_layout .side_diff_result.side_text_1, .diff_layout .side_diff_result.side_text_2 {
+  border: solid 1px #DCE0E0; }
+
+.diff_layout ins {
+  background-color: #dff0d8;
+  color: #3c763d; }
+
+.diff_layout del {
+  background-color: #f2dede;
+  color: #a94442; }
+
+.diff_layout ins, .diff_layout del {
+  margin-left: 3px;
+  margin-right: 3px; }
+
+.diff_layout ins + ins, .diff_layout del + del {
+  margin-left: -3px; }
 
 .fa-spin {
   -webkit-animation: fa-spin 0.7s infinite linear;

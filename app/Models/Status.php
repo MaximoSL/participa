@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     //Document this meta is describing
+
     public function docs()
     {
         return $this->belongsToMany('MXAbierto\Participa\Models\Doc');

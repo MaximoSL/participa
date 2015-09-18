@@ -30,6 +30,7 @@ class MadisonEvent
     *	@param void
     *	@return array
     */
+
     public static function validAdminNotifications()
     {
         return [
@@ -51,6 +52,7 @@ class MadisonEvent
     *	@param void
     *	@return array
     */
+
     public static function validUserNotifications()
     {
         return [

@@ -2,10 +2,12 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use GrahamCampbell\Binput\Binput;
+use GrahamCampbell\Binput\Facades\Binput as BinputFacade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -13,6 +15,7 @@ use MXAbierto\Participa\Models\Doc;
 use MXAbierto\Participa\Models\DocContent;
 use MXAbierto\Participa\Models\MadisonEvent;
 use MXAbierto\Participa\Models\Role;
+use MXAbierto\Participa\Services\CSVParser;
 
 class DocumentsController extends AbstractController
 {
@@ -51,7 +54,7 @@ class DocumentsController extends AbstractController
             'title' => 'required',
         ]);
 
-        $input = $request->all();
+        $input = BinputFacade::all();
 
         try {
             $docOptions = [
@@ -77,10 +80,50 @@ class DocumentsController extends AbstractController
         }
     }
 
-    public function saveDocumentEdits($documentId)
+    public function saveDocumentEdits($documentId, Binput $request)
     {
-        $content = Input::get('content');
-        $contentId = Input::get('content_id');
+        $content = $request->get('content');
+        $contentId = $request->get('content_id');
+
+        if ($request->file('doc_content_file')) {
+            $allowed_file_mime_types = [
+                'text/plain',
+                'text/html',
+            ];
+
+            $allowed_file_extensions = [
+                'txt',
+                'md',
+                'csv',
+            ];
+
+            $file = $request->file('doc_content_file');
+
+            if (!in_array($file->getMimeType(), $allowed_file_mime_types) ||
+                !in_array($file->getClientOriginalExtension(), $allowed_file_extensions)) {
+                $error = [
+                    'doc_content_file'  => trans('validation.mimes', [
+                            'attribute' => trans('messages.file'),
+                            'values'    => implode(', ', $allowed_file_extensions),
+                        ]),
+                    ];
+
+                return redirect()->route('documents.edit', $documentId)->withErrors($error);
+            }
+
+            switch ($file->getClientOriginalExtension()) {
+                case 'txt':
+                case 'md':
+                    $content = file_get_contents($file);
+                    break;
+
+                case 'csv':
+                    $content = CSVParser::processCSVFileContent($file, 'doc_'.$documentId.'_');
+                    break;
+            }
+        }
+
+        $content = BinputFacade::clean($content);
 
         if (empty($content)) {
             return redirect()->route('documents')->with('error', ucfirst(strtolower(trans('messages.needtoinclude').' '.trans('messages.content').' '.trans('messages.to').' '.trans('messages.save'))));

@@ -82,8 +82,7 @@ class DocController extends AbstractController
                 'showAnnotationThanks' => $showAnnotationThanks,
             ];
 
-            $doc_layouts = $doc->categories()->where('kind', 'layout')->lists('name', 'id')->all();
-            $doc_layouts = array_map('strtolower', $doc_layouts);
+            $doc_layouts = $doc->layouts_list;
 
             //Render the cofemer view and return
             if (in_array('cofemer', $doc_layouts)) {
@@ -93,6 +92,11 @@ class DocController extends AbstractController
             //Render the votes view and return
             if (in_array('votos', $doc_layouts)) {
                 return view('doc.reader.votes.index', $data);
+            }
+
+            //Render the votes view and return
+            if (in_array('leyes', $doc_layouts)) {
+                return view('doc.reader.leyes.index', $data);
             }
 
             //Render view and return

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Date extends Model
 {
     //Document this meta is describing
+
     public function docs()
     {
         return $this->belongsTo('MXAbierto\Participa\Models\Doc');
