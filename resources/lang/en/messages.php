@@ -149,6 +149,7 @@ return [
     'sponsoredby'               => 'Sponsored by',
     'introduction'              => 'Introduction',
     'bill'                      => 'Bill',
+    'project'                   => 'Project',
     'discussion'                => 'Discussion',
     'tableofcontents'           => 'Table of Contents',
     'readpolicy'                => 'Read the policy document.',

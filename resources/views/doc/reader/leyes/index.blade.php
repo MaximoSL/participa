@@ -48,7 +48,7 @@
       <div class="row">
         <div class="col-md-8">
           <ul class="nav nav-tabs" role="tablist" tourtip="@{{ step_messages.step_3 }}" tourtip-step="3" tourtip-next-label="Siguiente">
-            <li ng-class="{'active':secondtab == false}"><a href="#tab-activity" target="_self" role="tab" data-toggle="tab">{{ trans('messages.bill') }}</a></li>
+            <li ng-class="{'active':secondtab == false}"><a href="#tab-activity" target="_self" role="tab" data-toggle="tab">{{ trans('messages.project') }}</a></li>
             <li ng-class="{'active':secondtab == true}"><a href="#tab-discussion" target="_self" role="tab" data-toggle="tab">{{ trans('messages.discussion') }}</a></li>
             <a href="{{ route('docs.feed', $doc->slug) }}" class="rss-link" target="_self"><img src="{{ asset_url('img/rss-fade.png') }}" class="rss-icon" alt="RSS Icon"></a>
           </ul>
@@ -104,18 +104,6 @@
                 <li>{{ trans('messages.anncommsuppopp') }}</li>
               </ol>
               <img src="{{ asset_url('img/como-comentar.gif') }}" class="how-to-annotate-img img-responsive" />
-            </div>
-
-            <div class="sidebar-unit" ng-controller="DocumentTocController" ng-show="headings.length > 0">
-              <h4>{{ trans('messages.tableofcontents') }}</h4>
-              <hr class="red">
-              <div id="toc-container">
-                <ul class="list-unstyled doc-headings-list">
-                  <li ng-repeat="heading in headings">
-                    <a class="toc-heading toc-@{{ heading.tag | lowercase }}" href="#@{{ heading.link }}">@{{ heading.title }}</a>
-                  </li>
-                </ul>
-              </div>
             </div>
 
             <div class="sidebar-unit">
