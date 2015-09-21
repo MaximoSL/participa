@@ -149,6 +149,7 @@ return [
     'sponsoredby'               => 'Promovida por',
     'introduction'              => 'Introducción',
     'bill'                      => 'Petición',
+    'project'                   => 'Proyecto',
     'discussion'                => 'Foro',
     'tableofcontents'           => 'Contenido',
     'readpolicy'                => 'Lee el documento de la propuesta.',
