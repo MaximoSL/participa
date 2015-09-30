@@ -18,9 +18,6 @@
               <a href='http://www.ordenjuridico.gob.mx' target='_blank'>Marco Jurídico</a>
             </li>
             <li>
-              <a href='http://reformas.gob.mx' target='_blank'>Reformas</a>
-            </li>
-            <li>
               <a href='http://portaltransparencia.gob.mx' target='_blank'>Portal de Obligaciones de Transparencia</a>
             </li>
             <li>
@@ -31,19 +28,24 @@
                 INAI
               </a>
             </li>
-            <li>
-              <a target="_self" href='http://www.gob.mx/en/index'>English</a>
-            </li>
-            <li>
-              <a target="_self" href='http://www.gob.mx/temas'>Temas</a>
-            </li>
           </ul>
         </div>
         <div class='col-sm-4'>
           <h5>¿Qué es gob.mx?</h5>
           <p>Es el portal único de trámites, información y participación ciudadana.</p>
           <a target="_self" href='http://www.gob.mx/que-es-gobmx'>Leer más</a>
-        </div>
+	  <ul>
+	    <li>	  
+	      <a target="_self" href='http://www.gob.mx/en/index'>English</a>
+            </li>
+            <li>
+              <a target="_self" href='http://www.gob.mx/temas'>Temas</a>
+            </li>
+            <li>
+              <a target="_self" href='http://reformas.gob.mx/'>Reformas</a>
+            </li>
+          </ul>
+	</div>
         <div class='col-sm-4'>
           <h5>Contacto</h5>
           <p>
@@ -54,7 +56,8 @@
             México, D.F. C.P. 01020
           </p>
           <p>gobmx@funcionpublica.gob.mx</p>
-          <a target="_self" href="http://www.gob.mx/atencion">Atención Ciudadana</a>
+          <p><a target="_self" href="http://www.gob.mx/atencion">Atención Ciudadana</a></p>
+	  <p><a target="_self" href="http://www.gob.mx/tramites/ficha/SFP54">Quejas y denuncias</a></p>
         </div>
       </div>
       <div class='row'>
@@ -81,18 +84,6 @@
             </li>
             <li>
               <a class='social-icon twitter' href='https://twitter.com/PresidenciaMX'></a>
-            </li>
-            <li>
-              <a class='social-icon instagram' href='https://instagram.com/PresidenciaMX/'></a>
-            </li>
-            <li>
-              <a class='social-icon youtube' href='https://www.youtube.com/gobiernorepublicamx'></a>
-            </li>
-            <li>
-              <a class='social-icon flickr' href='https://www.flickr.com/photos/presidenciamx'></a>
-            </li>
-            <li>
-              <a class='social-icon feed' href='http://www.presidencia.gob.mx/feed/'></a>
             </li>
           </ul>
         </div>
