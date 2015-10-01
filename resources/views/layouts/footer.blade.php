@@ -57,7 +57,7 @@
           </p>
           <p>gobmx@funcionpublica.gob.mx</p>
           <p><a target="_self" href="http://www.gob.mx/atencion">Atención Ciudadana</a></p>
-	  <p><a target="_self" href="http://www.gob.mx/tramites/ficha/SFP54">Quejas y denuncias</a></p>
+	  <p><a target="_self" href="http://www.gob.mx/tramites/ficha/presentacion-de-quejas-y-denuncias-en-la-sfp/SFP54">Quejas y denuncias</a></p>
         </div>
       </div>
       <div class='row'>
