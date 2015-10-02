@@ -38,6 +38,7 @@ class RemindersController extends AbstractController
         $this->validate($request, ['email' => 'required|email']);
 
         $response = Password::sendResetLink($request->only('email'), function (Message $message) {
+            $message->from(trans('messages.emailfrom'), trans('messages.emailfromname'));
             $message->subject(trans('messages.resetemailtitle'));
         });
 
