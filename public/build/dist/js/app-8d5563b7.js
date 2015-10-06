@@ -366,6 +366,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
   },
   addFlag: function (annotation, element) {
     $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/flags', function (data) {
+      udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + doc.slug + '.annotation_vote.' + annotation.id + '&action=flag' );
       element = $(element);
       element.children('.action-count').text(data.flags);
       element.siblings('.glyphicon').removeClass('selected');
@@ -775,11 +776,11 @@ angular.module( 'madisonApp.controllers' )
                 if ( action == 'likes' || action == 'dislikes' ) {
                     // Add comscore analytics
                     var vote  = ( action == 'likes' ) ? 'up_vote' : 'down_vote';
-                    udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '.comment_vote.' + activity.id + '&ns_vote=' + vote );
                 }
 
                 $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
                     .success( function ( data ) {
+                        udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '.comment.' + activity.id + '&action=' + action );
                         activity.likes  = data.likes;
                         activity.dislikes   = data.dislikes;
                         activity.flags      = data.flags;
