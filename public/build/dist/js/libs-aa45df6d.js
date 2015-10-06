@@ -20608,7 +20608,7 @@ this['DIFF_INSERT'] = DIFF_INSERT;
 this['DIFF_EQUAL'] = DIFF_EQUAL;
 
 /**
- * @license AngularJS v1.2.29
+ * @license AngularJS v1.2.28
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -20677,7 +20677,7 @@ function minErr(module) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.2.29/' +
+    message = message + '\nhttp://errors.angularjs.org/1.2.28/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i-2) + '=' +
@@ -21091,8 +21091,6 @@ noop.$inject = [];
        return (transformationFn || angular.identity)(value);
      };
    ```
-  * @param {*} value to be returned.
-  * @returns {*} the value passed in.
  */
 function identity($) {return $;}
 identity.$inject = [];
@@ -22598,11 +22596,11 @@ function setupModuleLoader(window) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.2.29',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.2.28',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 2,
-  dot: 29,
-  codeName: 'ultimate-deprecation'
+  dot: 28,
+  codeName: 'finnish-disembarkation'
 };
 
 
@@ -25034,11 +25032,6 @@ function Browser(window, document, $log, $sniffer) {
     }
   }
 
-  function getHash(url) {
-    var index = url.indexOf('#');
-    return index === -1 ? '' : url.substr(index + 1);
-  }
-
   /**
    * @private
    * Note: this method is used only by scenario runner
@@ -25150,10 +25143,8 @@ function Browser(window, document, $log, $sniffer) {
         }
         if (replace) {
           location.replace(url);
-        } else if (!sameBase) {
-          location.href = url;
         } else {
-          location.hash = getHash(url);
+          location.href = url;
         }
       }
       return self;
@@ -26864,13 +26855,6 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           }
           break;
         case 3: /* Text Node */
-          if (msie === 11) {
-            // Workaround for #11781
-            while (node.parentNode && node.nextSibling && node.nextSibling.nodeType === 3 /* Text Node */) {
-              node.nodeValue = node.nodeValue + node.nextSibling.nodeValue;
-              node.parentNode.removeChild(node.nextSibling);
-            }
-          }
           addTextInterpolateDirective(directives, node.nodeValue);
           break;
         case 8: /* Comment */
@@ -29915,10 +29899,6 @@ function stripHash(url) {
   return index == -1 ? url : url.substr(0, index);
 }
 
-function trimEmptyHash(url) {
-  return url.replace(/(#.+)|#$/, '$1');
-}
-
 
 function stripFile(url) {
   return url.substr(0, stripHash(url).lastIndexOf('/') + 1);
@@ -30575,11 +30555,10 @@ function $LocationProvider(){
     // update browser
     var changeCounter = 0;
     $rootScope.$watch(function $locationWatch() {
-      var oldUrl = trimEmptyHash($browser.url());
-      var newUrl = trimEmptyHash($location.absUrl());
+      var oldUrl = $browser.url();
       var currentReplace = $location.$$replace;
 
-      if (!changeCounter || oldUrl != newUrl) {
+      if (!changeCounter || oldUrl != $location.absUrl()) {
         changeCounter++;
         $rootScope.$evalAsync(function() {
           if ($rootScope.$broadcast('$locationChangeStart', $location.absUrl(), oldUrl).
@@ -30800,26 +30779,7 @@ function ensureSafeMemberName(name, fullExpression) {
       || name === "__proto__") {
     throw $parseMinErr('isecfld',
         'Attempting to access a disallowed field in Angular expressions! '
-        + 'Expression: {0}', fullExpression);
-  }
-  return name;
-}
-
-function getStringValue(name, fullExpression) {
-  // From the JavaScript docs:
-  // Property names must be strings. This means that non-string objects cannot be used
-  // as keys in an object. Any non-string object, including a number, is typecasted
-  // into a string via the toString method.
-  //
-  // So, to ensure that we are checking the same `name` that JavaScript would use,
-  // we cast it to a string, if possible.
-  // Doing `name + ''` can cause a repl error if the result to `toString` is not a string,
-  // this is, this will handle objects that misbehave.
-  name = name + '';
-  if (!isString(name)) {
-    throw $parseMinErr('iseccst',
-        'Cannot convert object to primitive value! '
-        + 'Expression: {0}', fullExpression);
+        +'Expression: {0}', fullExpression);
   }
   return name;
 }
@@ -31498,7 +31458,7 @@ Parser.prototype = {
 
     return extend(function(self, locals) {
       var o = obj(self, locals),
-          i = getStringValue(indexFn(self, locals), parser.text),
+          i = indexFn(self, locals),
           v, p;
 
       ensureSafeMemberName(i, parser.text);
@@ -31515,7 +31475,7 @@ Parser.prototype = {
       return v;
     }, {
       assign: function(self, value, locals) {
-        var key = ensureSafeMemberName(getStringValue(indexFn(self, locals), parser.text), parser.text);
+        var key = ensureSafeMemberName(indexFn(self, locals), parser.text);
         // prevent overwriting of Function.constructor which would break ensureSafeObject check
         var o = ensureSafeObject(obj(self, locals), parser.text);
         if (!o) obj.assign(self, o = {});
@@ -36197,12 +36157,37 @@ function limitToFilter(){
       limit = int(limit);
     }
 
-    //NaN check on limit
-    if (limit) {
-      return limit > 0 ? input.slice(0, limit) : input.slice(limit);
-    } else {
-      return isString(input) ? "" : [];
+    if (isString(input)) {
+      //NaN check on limit
+      if (limit) {
+        return limit >= 0 ? input.slice(0, limit) : input.slice(limit, input.length);
+      } else {
+        return "";
+      }
     }
+
+    var out = [],
+      i, n;
+
+    // if abs(limit) exceeds maximum length, trim it
+    if (limit > input.length)
+      limit = input.length;
+    else if (limit < -input.length)
+      limit = -input.length;
+
+    if (limit > 0) {
+      i = 0;
+      n = limit;
+    } else {
+      i = input.length + limit;
+      n = input.length;
+    }
+
+    for (; i<n; i++) {
+      out.push(input[i]);
+    }
+
+    return out;
   };
 }
 
@@ -40475,7 +40460,7 @@ var ngIfDirective = ['$animate', function($animate) {
        <select ng-model="template" ng-options="t.name for t in templates">
         <option value="">(blank)</option>
        </select>
-       url of the template: <code>{{template.url}}</code>
+       url of the template: <tt>{{template.url}}</tt>
        <hr/>
        <div class="slide-animate-container">
          <div class="slide-animate" ng-include="template.url"></div>
@@ -42777,7 +42762,7 @@ var styleDirective = valueFn({
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}.ng-hide-add-active,.ng-hide-remove{display:block!important;}</style>');
 /**
- * @license AngularJS v1.2.29
+ * @license AngularJS v1.2.28
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -43074,11 +43059,9 @@ angular.module('ngAnimate', ['ng'])
         //so that all the animated elements within the animation frame
         //will be properly updated and drawn on screen. This is
         //required to perform multi-class CSS based animations with
-        //Firefox. DO NOT REMOVE THIS LINE. DO NOT OPTIMIZE THIS LINE.
-        //THE MINIFIER WILL REMOVE IT OTHERWISE WHICH WILL RESULT IN AN
-        //UNPREDICTABLE BUG THAT IS VERY HARD TO TRACK DOWN AND WILL
-        //TAKE YEARS AWAY FROM YOUR LIFE!
-        fn(bod.offsetWidth);
+        //Firefox. DO NOT REMOVE THIS LINE.
+        var a = bod.offsetWidth + 1;
+        fn();
       });
     };
   }])
@@ -52595,7 +52578,7 @@ angular.module("template/typeahead/typeahead-popup.html", []).run(["$templateCac
 }]);
 
 /**
- * @license AngularJS v1.2.29
+ * @license AngularJS v1.2.28
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -56499,7 +56482,7 @@ angular.module('angular-growl').service('growlMessages', [
   }
 ]);
 /**
- * @license AngularJS v1.2.29
+ * @license AngularJS v1.2.28
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -57147,7 +57130,7 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 })(window, window.angular);
 
 /**
- * @license AngularJS v1.2.29
+ * @license AngularJS v1.2.28
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -57775,7 +57758,7 @@ angular.module('ngResource', ['ng']).
 })(window, window.angular);
 
 /**
- * @license AngularJS v1.2.29
+ * @license AngularJS v1.2.28
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -61391,8 +61374,8 @@ reset:function(){b.reset.call(this);this._doReset()},update:function(a){this._ap
 m(c,d,g,i,b[f+(3*a+5)%16],4,h[a]),i=m(i,c,d,g,b[f+(3*a+8)%16],11,h[a+1]),g=m(g,i,c,d,b[f+(3*a+11)%16],16,h[a+2]),d=m(d,g,i,c,b[f+(3*a+14)%16],23,h[a+3])):(c=n(c,d,g,i,b[f+3*a%16],6,h[a]),i=n(i,c,d,g,b[f+(3*a+7)%16],10,h[a+1]),g=n(g,i,c,d,b[f+(3*a+14)%16],15,h[a+2]),d=n(d,g,i,c,b[f+(3*a+5)%16],21,h[a+3]));e[0]=e[0]+c|0;e[1]=e[1]+d|0;e[2]=e[2]+g|0;e[3]=e[3]+i|0},_doFinalize:function(){var b=this._data,f=b.words,a=8*this._nDataBytes,e=8*b.sigBytes;f[e>>>5]|=128<<24-e%32;f[(e+64>>>9<<4)+14]=(a<<8|a>>>
 24)&16711935|(a<<24|a>>>8)&4278255360;b.sigBytes=4*(f.length+1);this._process();b=this._hash.words;for(f=0;4>f;f++)a=b[f],b[f]=(a<<8|a>>>24)&16711935|(a<<24|a>>>8)&4278255360}});j.MD5=k._createHelper(p);j.HmacMD5=k._createHmacHelper(p)})(Math);
 
-(function(){var d=window,e=document,f="text/javascript",g="text/css",h="stylesheet",k="script",l="link",m="head",n="complete",p="UTF-8",q=".";function r(b){var a=e.getElementsByTagName(m)[0];a||(a=e.body.parentNode.appendChild(e.createElement(m)));a.appendChild(b)}function _loadJs(b){var a=e.createElement(k);a.type=f;a.charset=p;a.src=b;r(a)}function _loadCss(b){var a=e.createElement(l);a.type=g;a.rel=h;a.charset=p;a.href=b;r(a)}function _isNS(b){b=b.split(q);for(var a=d,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}
-function _setupNS(b){b=b.split(q);for(var a=d,c=0;c<b.length;++c)a.hasOwnProperty?a.hasOwnProperty(b[c])?a=a[b[c]]:a=a[b[c]]={}:a=a[b[c]]||(a[b[c]]={});return a}d.addEventListener&&"undefined"==typeof e.readyState&&d.addEventListener("DOMContentLoaded",function(){e.readyState=n},!1);
+(function(){var d=window,e=document,f="text/javascript",g="text/css",h="stylesheet",k="script",l="link",m="head",n="complete",p="UTF-8",q=".";function r(b){var a=e.getElementsByTagName(m)[0];a||(a=e.body.parentNode.appendChild(e.createElement(m)));a.appendChild(b)}function _loadJs(b){var a=e.createElement(k);a.type=f;a.charset=p;a.src=b;r(a)}function _loadCss(b){var a=e.createElement(l);a.type=g;a.rel=h;a.charset=p;a.href=b;r(a)}function _isNS(b){b=b.split(q);for(var a=d,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}function _setupNS(b){b=b.split(q);for(var a=d,c=0;c<b.length;++c)a=a[b[c]]||(a[b[c]]={});return a}
+d.addEventListener&&"undefined"==typeof e.readyState&&d.addEventListener("DOMContentLoaded",function(){e.readyState=n},!1);
 if (_isNS('google.translate.Element')){return}(function(){var c=_setupNS('google.translate._const');c._cl='en';c._cuc='googleTranslateElementInit';c._cac='';c._cam='';var h='translate.googleapis.com';var s=(true?'https':window.location.protocol=='https:'?'https':'http')+'://';var b=s+h;c._pah=h;c._pas=s;c._pbi=b+'/translate_static/img/te_bk.gif';c._pci=b+'/translate_static/img/te_ctrl3.gif';c._pli=b+'/translate_static/img/loading.gif';c._plla=h+'/translate_a/l';c._pmi=b+'/translate_static/img/mini_google.png';c._ps=b+'/translate_static/css/translateelement.css';c._puh='translate.google.com';_loadCss(c._ps);_loadJs(b+'/translate_static/js/element/main.js');})();})();
 /*
  * Copyright 2013 Ivan Pusic

@@ -797,6 +797,9 @@ angular.module( 'madisonApp.controllers' )
             activity.commentsCollapsed = !activity.commentsCollapsed;
         };
         $scope.subcommentSubmit = function ( activity, subcomment ) {
+            // Add comscore analytics
+            udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + $scope.doc.slug + '&subcomment_text=' + subcomment.text + '&subcomment_parent_id=' + subcomment.parent_id );
+
             if ( $scope.user.id === '' ) {
                 var focused = document.activeElement;
 
