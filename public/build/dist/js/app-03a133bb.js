@@ -740,7 +740,7 @@ angular.module( 'madisonApp.controllers' )
         };
         $scope.commentSubmit    = function () {
             // Add comscore analytics
-            udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '&ns_comment=' + $scope.comment );
+            udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + $scope.doc.slug + '&ns_comment=' + $scope.comment );
 
             var comment     = angular.copy( $scope.comment );
             comment.user    = $scope.user;
@@ -780,7 +780,7 @@ angular.module( 'madisonApp.controllers' )
 
                 $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
                     .success( function ( data ) {
-                        udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '.comment.' + activity.id + '&action=' + action );
+                        udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + $scope.doc.slug + '.comment.' + activity.id + '&action=' + action );
                         activity.likes  = data.likes;
                         activity.dislikes   = data.dislikes;
                         activity.flags      = data.flags;
@@ -1103,7 +1103,7 @@ angular.module('madisonApp.controllers')
       } else {
         // Add comscore analytics
         var vote  = ( supported ) ? 'up_vote' : 'down_vote';
-        udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '&ns_vote=' + vote );
+        udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + $scope.doc.slug + '&ns_vote=' + vote );
 
         $http.post(_baseUrl + '/api/users/support/' + $scope.doc.id, {
           'support': supported
