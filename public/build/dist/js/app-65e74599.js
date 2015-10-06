@@ -310,6 +310,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
   },
   addLike: function (annotation, element) {
     $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/likes', function (data) {
+      udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + doc.slug + '.annotation_vote.' + annotation.id + '&action=like' );
       element = $(element);
       element.children('.action-count').text(data.likes);
       element.siblings('.glyphicon').removeClass('selected');
@@ -337,6 +338,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
   },
   addDislike: function (annotation, element) {
     $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/dislikes', function (data) {
+      udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + doc.slug + '.annotation_vote.' + annotation.id + '&action=dislike' );
       element = $(element);
       element.children('.action-count').text(data.dislikes);
       element.siblings('.glyphicon').removeClass('selected');
