@@ -776,11 +776,11 @@ angular.module( 'madisonApp.controllers' )
                 if ( action == 'likes' || action == 'dislikes' ) {
                     // Add comscore analytics
                     var vote  = ( action == 'likes' ) ? 'up_vote' : 'down_vote';
-                    udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '.comment_vote.' + activity.id + '&ns_vote=' + vote );
                 }
 
                 $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/' + activity.label + 's/' + activity.id + '/' + action )
                     .success( function ( data ) {
+                        udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '.comment.' + activity.id + '&action=' + action );
                         activity.likes  = data.likes;
                         activity.dislikes   = data.dislikes;
                         activity.flags      = data.flags;
