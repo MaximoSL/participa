@@ -366,6 +366,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
   },
   addFlag: function (annotation, element) {
     $.post(_baseUrl + '/api/docs/' + doc.id + '/annotations/' + annotation.id + '/flags', function (data) {
+      udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + doc.slug + '.annotation_vote.' + annotation.id + '&action=flag' );
       element = $(element);
       element.children('.action-count').text(data.flags);
       element.siblings('.glyphicon').removeClass('selected');
