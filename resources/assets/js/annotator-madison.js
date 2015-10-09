@@ -304,6 +304,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       }
 
       annotation.comments.push(comment);
+      udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + doc.slug + '.annotation.' + annotation.id + '&action=comment&comment_text=' + comment.text );
 
       return this.annotator.publish('commentCreated', comment);
     }.bind(this));
