@@ -116,6 +116,8 @@ angular.module( 'madisonApp.controllers' )
                         activity.dislikes   = data.dislikes;
                         activity.flags      = data.flags;
 
+                        udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.documento.' + $scope.doc.slug + '.annotation.' + activity.id + '&action=' + action );
+
                         if(typeof data.document_closed !== 'undefined'){
                           growl.error('Éste documento se encuentra cerrado');
                         }
