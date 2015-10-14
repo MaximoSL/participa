@@ -154,7 +154,7 @@ angular.module( 'madisonApp.controllers' )
         };
         $scope.commentSubmit    = function () {
             // Add comscore analytics
-            udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + $scope.doc.slug + '&ns_comment=' + $scope.comment );
+            udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + $scope.doc.slug + '&comment_text=' + $scope.comment.text );
 
             var comment     = angular.copy( $scope.comment );
             comment.user    = $scope.user;
