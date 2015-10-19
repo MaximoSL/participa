@@ -66,7 +66,7 @@
             <label for="email" style='font-weight: 300;'>Mantente informado. Suscríbete.</label>
             <div class='form-group-icon'>
               <input class="form-control" id="email" placeholder="Ingresa tu correo electrónico" type="email" ng-model="user"/>
-              <button class='blue-right btn' id='subscribe' type='button' ng-click="subscribeEmail()" aria-label="Suscribir">
+              <button class='blue-right btn' id='subscribeBtn' type='button' ng-click="subscribeEmail()" aria-label="Suscribir">
                 <i class='icon-caret-right'></i>
               </button>
             </div>
