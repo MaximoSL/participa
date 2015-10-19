@@ -1,6 +1,10 @@
 <div class="btn-group">
   <button type="button" class="btn btn-gray dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Menú <span class="caret"></span>
+    @if($loggedUser)
+      <i class="icon icon-user"></i> &nbsp; {{ $loggedUser->name }} <span class="caret"></span>
+    @else
+      Menú <span class="caret"></span>
+    @endif
   </button>
   <ul class="dropdown-menu dropdown-menu-right">
     <li class="link-about">
