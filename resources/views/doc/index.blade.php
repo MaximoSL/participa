@@ -17,7 +17,7 @@
 			<div>
 				<div class="home-docs-filters row">
 					<div class="col-sm-6">
-						<input tourtip="@{{ step_messages.step_1 }}" tourtip-step="1" tourtip-next-label="Siguiente" id="doc-text-filter" type="text" ng-model="docSearch" class="form-control" placeholder="{{ trans('messages.filter') }}">
+						<input tourtip="@{{ step_messages.step_1 }}" tourtip-step="1" tourtip-next-label="Siguiente" id="doc-text-filter" type="text" ng-model="docSearch" class="form-control" placeholder="{{ trans('messages.filter') }}" aria-label="{{ trans('messages.filter') }}">
 					</div>
 					<div class="col-sm-4 home-select2-container">
 						<select id="doc-category-filter" ui-select2="select2Config" ng-model="select2">

@@ -19,7 +19,7 @@
 				<div class="home-docs-filters row">
           <div class="col-sm-6">
 						<form ng-submit="search()">
-							<input id="doc-text-filter" type="text" ng-model="docSearch" class="form-control" placeholder="{{ trans('messages.filter') }}">
+							<input id="doc-text-filter" type="text" ng-model="docSearch" class="form-control" placeholder="{{ trans('messages.filter') }}" aria-label="{{ trans('messages.filter') }}">
 						</form>
 					</div>
 					<div class="col-sm-3 home-select2-container">
