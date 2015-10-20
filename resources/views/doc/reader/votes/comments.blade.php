@@ -34,7 +34,7 @@
     @endif
   </div>
 @endif
-<div id="participate-activity" class="participate-activity">
+<div id="participate-activity-comments" class="participate-activity">
 	<h3>@{{ layoutTexts.header }}</h3>
   <p>@{{ layoutTexts.callToAction }}</p>
 	<div class="activity-thread">

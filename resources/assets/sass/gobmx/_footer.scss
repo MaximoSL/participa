@@ -57,7 +57,7 @@
 		}
 
 		h5 { font-weight: 300; margin-bottom: 20px; }
-		a { color: $brand-primary; font-size: $font-size-small;
+		a { color: $brand-primary; font-size: $font-size-small; display:inline-block;
 			&:hover { text-decoration: none; }
 		}
 		p { margin-bottom: 15px;}

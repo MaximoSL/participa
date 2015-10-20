@@ -34,7 +34,7 @@
     @endif
   </div>
 @endif
-<div id="participate-activity" class="participate-activity">
+<div id="participate-activity-comments" class="participate-activity">
 	<h3>{{ trans('messages.comments') }}</h3>
 	<div class="activity-thread">
     <div id="@{{ 'comment_' + comment.id }}" class="activity-item" ng-repeat="comment in comments | orderBy:activityOrder:true track by $id(comment)" ng-class="comment.label">

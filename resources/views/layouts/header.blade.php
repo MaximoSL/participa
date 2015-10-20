@@ -18,7 +18,7 @@
         <li><a target="_self" href="http://www.gob.mx/participa">Participa</a></li>
         <li>
           <a href="http://www.gob.mx/busqueda">
-            <i class="icon-search"></i>
+            <i class="icon-search" title="Búsqueda"></i>
           </a>
         </li>
       </ul>
