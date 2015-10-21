@@ -35,7 +35,7 @@
           <p>Es el portal único de trámites, información y participación ciudadana.</p>
           <a target="_self" href='http://www.gob.mx/que-es-gobmx'>Leer más</a>
 	  <ul>
-	    <li>	  
+	    <li>
 	      <a target="_self" href='http://www.gob.mx/en/index'>English</a>
             </li>
             <li>
@@ -63,10 +63,10 @@
       <div class='row'>
         <div class='col-sm-4' ng-controller="EmailSubscribeController">
           <form role="form" id="subscribe" novalidate>
-            <label style='font-weight: 300;'>Mantente informado. Suscríbete.</label>
+            <label for="email" style='font-weight: 300;'>Mantente informado. Suscríbete.</label>
             <div class='form-group-icon'>
-              <input class="form-control" id="email" placeholder="Ingresa tu correo electrónico" type="email" ng-model="user"/>
-              <button class='blue-right btn' id='subscribe' type='button' ng-click="subscribeEmail()">
+              <input class="form-control" id="subscriptionEmail" placeholder="Ingresa tu correo electrónico" type="email" ng-model="user" aria-label="Ingresa tu correo electrónico"/>
+              <button class='blue-right btn' id='subscribeBtn' type='button' ng-click="subscribeEmail()" aria-label="Suscribir">
                 <i class='icon-caret-right'></i>
               </button>
             </div>
@@ -80,10 +80,10 @@
           <h5>Síguenos en</h5>
           <ul class='list-inline'>
             <li>
-              <a class='social-icon facebook' href='https://www.facebook.com/PresidenciaMX'></a>
+              <a class='social-icon facebook' href='https://www.facebook.com/PresidenciaMX'>Facebook</a>
             </li>
             <li>
-              <a class='social-icon twitter' href='https://twitter.com/PresidenciaMX'></a>
+              <a class='social-icon twitter' href='https://twitter.com/PresidenciaMX'>Twitter</a>
             </li>
           </ul>
         </div>

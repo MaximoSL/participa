@@ -99,7 +99,7 @@
               <li>{{ trans('messages.signupnaddvoice') }}</li>
               <li>{{ trans('messages.anncommsuppopp') }}</li>
             </ol>
-            <img src="{{ asset_url('img/como-comentar.gif') }}" class="how-to-annotate-img img-responsive" />
+            <img src="{{ asset_url('img/como-comentar.gif') }}" class="how-to-annotate-img img-responsive" alt="{{ trans('messages.howtoparticipate') }}" />
           </div>
 
           <div class="sidebar-unit" ng-controller="DocumentTocController" ng-show="headings.length > 0">

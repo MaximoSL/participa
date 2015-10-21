@@ -1,5 +1,5 @@
 <div id="participate-activity-message" class="participate-activity-message message-box"></div>
-<div id="participate-activity" class="participate-activity">
+<div id="participate-activity-annotations" class="participate-activity">
 	<div class="activity-thread">
 		<div ng-hide="annotations.length">
 			{{ trans('messages.noannotations') }}

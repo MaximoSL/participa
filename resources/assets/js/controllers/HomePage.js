@@ -44,6 +44,10 @@ angular.module('madisonApp.controllers')
         placeholder: "Fecha",
         allowClear: true
       });
+
+      $('.select2-focusser').each(function(){
+        $(this).attr('aria-label', $(this).attr('id'));
+      });
     });
 
     $scope.docs      = [];

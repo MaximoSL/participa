@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="madisonApp" ng-controller="AppController" lang="en">
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="madisonApp" ng-controller="AppController" lang="es">
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
