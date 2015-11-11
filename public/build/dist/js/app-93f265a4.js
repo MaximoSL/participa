@@ -2597,8 +2597,6 @@ angular.module( 'madisonApp.directives' )
                     post: function ( scope, element, attrs ) {
                         var commentLink = element.find( '.comment-link' ).first();
                         var linkPath    = _currentPath + '#' + attrs.activityItemLink;
-                        console.log(window.location);
-                        console.log(commentLink);
                         $( commentLink ).attr( 'data-clipboard-text', linkPath );
 
                         var client      = new ZeroClipboard( commentLink );
