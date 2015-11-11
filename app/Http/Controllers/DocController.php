@@ -161,6 +161,10 @@ class DocController extends AbstractController
     {
         $doc = Doc::where('slug', $slug)->with('comments', 'annotations')->first();
 
+        if (!$doc) {
+            abort('404');
+        }
+
         $feed = Feed::make();
 
         $feed->title = $doc->title;
