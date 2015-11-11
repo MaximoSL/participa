@@ -2,8 +2,8 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\Doc;
 use MXAbierto\Participa\Models\UserMeta;
 use Roumen\Feed\Facades\Feed;
@@ -30,7 +30,7 @@ class DocController extends AbstractController
      */
     public function index()
     {
-        $perPage = Input::get('per_page', 20);
+        $perPage = Binput::get('per_page', 20);
 
         $docs = Doc::paginate($perPage);
 
@@ -131,7 +131,7 @@ class DocController extends AbstractController
      */
     public function getSearch()
     {
-        $q = Input::get('q');
+        $q = Binput::get('q');
 
         $results = Doc::search(urldecode($q));
 

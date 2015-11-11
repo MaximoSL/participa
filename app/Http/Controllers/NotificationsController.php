@@ -2,8 +2,8 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\User;
 
 class NotificationsController extends AbstractController
@@ -87,7 +87,7 @@ class NotificationsController extends AbstractController
         $user = Auth::user();
 
         //Grab notification array
-        $notifications = Input::get('notifications');
+        $notifications = Binput::get('notifications');
 
         //Retrieve valid notification events
         $validNotifications = Notification::getUserNotifications();

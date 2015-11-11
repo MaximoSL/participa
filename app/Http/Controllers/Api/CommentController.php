@@ -3,8 +3,8 @@
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
 use Exception;
+use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use MXAbierto\Participa\Models\Comment;
 use MXAbierto\Participa\Models\Doc;
@@ -49,7 +49,7 @@ class CommentController extends AbstractApiController
         }
 
         $user = Auth::user();
-        $comment = Input::get('comment');
+        $comment = Binput::get('comment');
 
         $comment['private'] = (!empty($comment['private']) && $comment['private'] !== 'false') ? 1 : 0;
 
@@ -165,7 +165,7 @@ class CommentController extends AbstractApiController
 
     public function postComments($docId, $commentId)
     {
-        $comment = Input::get('comment');
+        $comment = Binput::get('comment');
 
         $parent = Comment::where('doc_id', '=', $docId)
                                 ->where('id', '=', $commentId)

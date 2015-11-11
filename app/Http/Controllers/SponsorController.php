@@ -2,6 +2,8 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use GrahamCampbell\Binput\Facades\Binput;
+
 class SponsorController extends AbstractController
 {
     /**
@@ -23,13 +25,13 @@ class SponsorController extends AbstractController
   public function postRequest()
   {
       //Grab input
-    $address1 = Input::get('address1');
-      $address2 = Input::get('address2');
-      $city = Input::get('city');
-      $state = Input::get('state');
-      $postal = Input::get('postal');
-      $phone = Input::get('phone');
-      $all_input = Input::all();
+    $address1 = Binput::get('address1');
+      $address2 = Binput::get('address2');
+      $city = Binput::get('city');
+      $state = Binput::get('state');
+      $postal = Binput::get('postal');
+      $phone = Binput::get('phone');
+      $all_input = Binput::all();
 
     //Validate input
     $rules = [
