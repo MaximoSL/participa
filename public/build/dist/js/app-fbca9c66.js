@@ -275,7 +275,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
   addNoteLink: function (field, annotation) {
     //Add link to annotation
     var noteLink = $('<div class="annotation-link"></div>');
-    var linkPath = window.location.origin + window.location.pathname + '#' + annotation.link;
+    var linkPath = _currentPath + '#' + annotation.link;
     var annotationLink = $('<a></a>').attr('href', window.location.pathname + '#' + annotation.link).text('Copiar Enlace de Anotación').addClass('annotation-permalink');
     annotationLink.attr('data-clipboard-text', linkPath);
 
@@ -304,6 +304,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
       }
 
       annotation.comments.push(comment);
+      udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + doc.slug + '.annotation.' + annotation.id + '&action=comment&comment_text=' + comment.text );
 
       return this.annotator.publish('commentCreated', comment);
     }.bind(this));
@@ -511,6 +512,8 @@ angular.module( 'madisonApp.controllers' )
                         activity.likes      = data.likes;
                         activity.dislikes   = data.dislikes;
                         activity.flags      = data.flags;
+
+                        udm_( 'http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&ns_type=hidden&ns_ui_type=clickin&name=consulta.documento.' + $scope.doc.slug + '.annotation.' + activity.id + '&action=' + action );
 
                         if(typeof data.document_closed !== 'undefined'){
                           growl.error('Éste documento se encuentra cerrado');
@@ -963,6 +966,10 @@ angular.module('madisonApp.controllers')
       $('#home-select2-order').select2({
         placeholder: "Fecha",
         allowClear: true
+      });
+
+      $('.select2-focusser').each(function(){
+        $(this).attr('aria-label', $(this).attr('id'));
       });
     });
 
@@ -2525,7 +2532,7 @@ angular.module( 'madisonApp.directives' )
                 return {
                     post: function ( scope, element, attrs ) {
                         var commentLink = element.find( '.subcomment-link' ).first();
-                        var linkPath    = window.location.origin + window.location.pathname + '#annsubcomment_' + attrs.subCommentId;
+                        var linkPath    = _currentPath + '#annsubcomment_' + attrs.subCommentId;
                         $( commentLink ).attr( 'data-clipboard-text', linkPath );
 
                         var client      = new ZeroClipboard( commentLink );
@@ -2554,7 +2561,7 @@ angular.module( 'madisonApp.directives' )
                 return {
                     post    : function ( scope, element, attrs ) {
                         var commentLink = element.find( '.comment-link' ).first();
-                        var linkPath    = window.location.origin + window.location.pathname + '#' + attrs.activityItemLink;
+                        var linkPath    = _currentPath + '#' + attrs.activityItemLink;
                         $( commentLink ).attr( 'data-clipboard-text', linkPath );
 
                         var client      = new ZeroClipboard( commentLink );
@@ -2589,13 +2596,15 @@ angular.module( 'madisonApp.directives' )
                 return {
                     post: function ( scope, element, attrs ) {
                         var commentLink = element.find( '.comment-link' ).first();
-                        var linkPath    = window.location.origin + window.location.pathname + '#' + attrs.activityItemLink;
+                        var linkPath    = _currentPath + '#' + attrs.activityItemLink;
+                        console.log(window.location);
+                        console.log(commentLink);
                         $( commentLink ).attr( 'data-clipboard-text', linkPath );
 
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.success( "Link copied to clipboard." );
+                                growl.success( "Link copied to clipboard 2." );
                             });
                         });
 
@@ -2684,7 +2693,7 @@ angular.module( 'madisonApp.directives' )
                 return {
                     post    : function ( scope, element, attrs ) {
                         var commentLink = element;
-                        var linkPath    = window.location.origin + window.location.pathname + '#subcomment_' + attrs.subCommentId;
+                        var linkPath    = _currentPath + '#subcomment_' + attrs.subCommentId;
                         $( commentLink ).attr( 'data-clipboard-text', linkPath );
 
                         var client      = new ZeroClipboard( commentLink );

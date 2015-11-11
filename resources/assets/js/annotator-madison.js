@@ -275,7 +275,7 @@ $.extend(Annotator.Plugin.Madison.prototype, new Annotator.Plugin(), {
   addNoteLink: function (field, annotation) {
     //Add link to annotation
     var noteLink = $('<div class="annotation-link"></div>');
-    var linkPath = window.location.origin + window.location.pathname + '#' + annotation.link;
+    var linkPath = _currentPath + '#' + annotation.link;
     var annotationLink = $('<a></a>').attr('href', window.location.pathname + '#' + annotation.link).text('Copiar Enlace de Anotación').addClass('annotation-permalink');
     annotationLink.attr('data-clipboard-text', linkPath);
 

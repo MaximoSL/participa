@@ -8,13 +8,15 @@ angular.module( 'madisonApp.directives' )
                 return {
                     post: function ( scope, element, attrs ) {
                         var commentLink = element.find( '.comment-link' ).first();
-                        var linkPath    = window.location.origin + window.location.pathname + '#' + attrs.activityItemLink;
+                        var linkPath    = _currentPath + '#' + attrs.activityItemLink;
+                        console.log(window.location);
+                        console.log(commentLink);
                         $( commentLink ).attr( 'data-clipboard-text', linkPath );
 
                         var client      = new ZeroClipboard( commentLink );
                         client.on( 'aftercopy', function ( event ) {
                             scope.$apply( function () {
-                                growl.success( "Link copied to clipboard." );
+                                growl.success( "Link copied to clipboard 2." );
                             });
                         });
 
