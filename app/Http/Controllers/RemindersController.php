@@ -2,11 +2,11 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use MXAbierto\Participa\Models\User;
@@ -138,8 +138,8 @@ class RemindersController extends AbstractController
     {
         // 3 error cases - user already confirmed, email does not exist, password not correct
         // (prevents people from brute-forcing email addresses to see who is registered)
-        $email = Input::get('email');
-        $password = Input::get('password');
+        $email = Binput::get('email');
+        $password = Binput::get('password');
         $user = User::where('email', $email)->first();
 
         if (!isset($user)) {

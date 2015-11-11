@@ -2,9 +2,9 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\DocMeta;
 use MXAbierto\Participa\Models\User;
 use MXAbierto\Participa\Models\UserMeta;
@@ -71,8 +71,8 @@ class UserController extends AbstractApiController
     {
         $this->beforeFilter('admin');
 
-        $request = Input::get('request');
-        $status = Input::get('status');
+        $request = Binput::get('request');
+        $status = Binput::get('status');
 
         $user = User::find($request['user_id']);
 
@@ -128,8 +128,8 @@ class UserController extends AbstractApiController
     {
         $this->beforeFilter('admin');
 
-        $request = Input::get('request');
-        $status = Input::get('status');
+        $request = Binput::get('request');
+        $status = Binput::get('status');
 
         $accepted = ['pending', 'verified', 'denied'];
 
@@ -162,7 +162,7 @@ class UserController extends AbstractApiController
 
     public function postAdmin()
     {
-        $admin = Input::get('admin');
+        $admin = Binput::get('admin');
 
         $user = User::find($admin['id']);
 
@@ -207,7 +207,7 @@ class UserController extends AbstractApiController
      */
     public function postSupport($doc)
     {
-        $input = Input::get();
+        $input = Binput::get();
 
         $supported = (bool) $input['support'];
 
@@ -254,8 +254,8 @@ class UserController extends AbstractApiController
             return response()->json($this->growlMessage('No estás autorizado a cambiar el email del usuario', 'error'));
         }
 
-        $user->email = Input::get('email');
-        $user->password = Input::get('password');
+        $user->email = Binput::get('email');
+        $user->password = Binput::get('password');
 
         if (!$user->save()) {
             $errors = $user->getErrors();

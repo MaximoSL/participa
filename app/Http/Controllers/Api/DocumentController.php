@@ -2,8 +2,8 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
+use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\Category;
 use MXAbierto\Participa\Models\Date;
 use MXAbierto\Participa\Models\Doc;
@@ -40,8 +40,8 @@ class DocumentController extends AbstractApiController
 
     public function getDocs()
     {
-        $perPage = Input::get('per_page', 20);
-        $orderBy = Input::get('order', 'updated_at');
+        $perPage = Binput::get('per_page', 20);
+        $orderBy = Binput::get('order', 'updated_at');
 
         $perPage = (intval($perPage) > 0) ? intval($perPage) : 20;
 
@@ -49,14 +49,14 @@ class DocumentController extends AbstractApiController
 
         $docs = Doc::with($availableFilters);
 
-        if (Input::has('q')) {
-            $search = Input::get('q');
+        if (Binput::has('q')) {
+            $search = Binput::get('q');
 
             $docs->where('title', 'LIKE', '%'.$search.'%');
         }
 
-        if (Input::has('filter')) {
-            $filter = explode(':', Input::get('filter'));
+        if (Binput::has('filter')) {
+            $filter = explode(':', Binput::get('filter'));
 
             if (in_array($filter[0], $availableFilters)) {
                 $docs->whereHas($filter[0], function ($query) use ($filter) {
@@ -92,7 +92,7 @@ class DocumentController extends AbstractApiController
     public function postTitle($id)
     {
         $doc = Doc::find($id);
-        $doc->title = Input::get('title');
+        $doc->title = Binput::get('title');
         $doc->save();
 
         $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.title').' '.trans('messages.ofmale').' '.trans('messages.document').' '.trans('messages.saved'))), 'severity' => 'info'];
@@ -106,8 +106,8 @@ class DocumentController extends AbstractApiController
         // Compare current and new slug
         $old_slug = $doc->slug;
         // If the new slug is different, save it
-        if ($old_slug != Input::get('slug')) {
-            $doc->slug = Input::get('slug');
+        if ($old_slug != Binput::get('slug')) {
+            $doc->slug = Binput::get('slug');
             $doc->save();
             $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.docslug').' '.trans('messages.saved'))), 'severity' => 'info'];
         } else {
@@ -123,7 +123,7 @@ class DocumentController extends AbstractApiController
     {
         $doc = Doc::find($id);
         $doc_content = DocContent::firstOrCreate(['doc_id' => $doc->id]);
-        $doc_content->content = Input::get('content');
+        $doc_content->content = Binput::get('content');
         $doc_content->save();
         $doc->content([$doc_content]);
         $doc->save();
@@ -169,7 +169,7 @@ class DocumentController extends AbstractApiController
     {
         $doc = Doc::find($doc);
 
-        $categories = Input::get('categories');
+        $categories = Binput::get('categories');
         $categoryIds = [];
 
         foreach ($categories as $category) {
@@ -221,7 +221,7 @@ class DocumentController extends AbstractApiController
             $introText->meta_key = 'intro-text';
         }
 
-        $text = Input::get('intro-text');
+        $text = Binput::get('intro-text');
         $introText->meta_value = $text;
 
         $introText->save();
@@ -257,7 +257,7 @@ class DocumentController extends AbstractApiController
 
     public function postSponsor($doc)
     {
-        $sponsor = Input::get('sponsor');
+        $sponsor = Binput::get('sponsor');
 
         $doc = Doc::find($doc);
         $response = null;
@@ -303,7 +303,7 @@ class DocumentController extends AbstractApiController
     {
         $toAdd = null;
 
-        $group = Input::get('group');
+        $group = Binput::get('group');
 
         $user = Auth::user();
 
@@ -351,7 +351,7 @@ class DocumentController extends AbstractApiController
     {
         $toAdd = null;
 
-        $status = Input::get('status');
+        $status = Binput::get('status');
 
         $doc = Doc::find($doc);
 
@@ -389,7 +389,7 @@ class DocumentController extends AbstractApiController
     {
         $doc = Doc::find($doc);
 
-        $date = Input::get('date');
+        $date = Binput::get('date');
 
         $datetime = \DateTime::createFromFormat('d/m/y H:i', $date['date']);
 
@@ -419,7 +419,7 @@ class DocumentController extends AbstractApiController
 
     public function putDate($date)
     {
-        $input = Input::get('date');
+        $input = Binput::get('date');
         $date = Date::find($date);
 
         if (!isset($date)) {

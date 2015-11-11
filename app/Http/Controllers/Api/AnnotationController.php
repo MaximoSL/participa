@@ -3,9 +3,9 @@
 namespace MXAbierto\Participa\Http\Controllers\Api;
 
 use Exception;
+use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use MXAbierto\Participa\Models\Annotation;
 use MXAbierto\Participa\Models\AnnotationComment;
@@ -84,7 +84,7 @@ class AnnotationController extends AbstractApiController
             return response()->json($response);
         }
 
-        $body = Input::all();
+        $body = Binput::all();
         $body['doc_id'] = $doc;
         $is_edit = false;
 
@@ -204,7 +204,7 @@ class AnnotationController extends AbstractApiController
             App::abort(404, trans('messages.notreceivedannotationid'));
         }
 
-        $body = Input::all();
+        $body = Binput::all();
 
         $annotation = Annotation::createFromAnnotatorArray($body);
 
@@ -357,7 +357,7 @@ class AnnotationController extends AbstractApiController
             return response()->json($response);
         }
 
-        $comment = Input::get('comment');
+        $comment = Binput::get('comment');
 
         $annotation = Annotation::where('doc_id', '=', $docId)
                                 ->where('id', '=', $annotationId)

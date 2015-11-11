@@ -2,6 +2,7 @@
 
 namespace MXAbierto\Participa\Http\Controllers\Admin;
 
+use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Support\Facades\Auth;
 use MXAbierto\Participa\Http\Controllers\AbstractController;
 use MXAbierto\Participa\Models\Notification;
@@ -31,7 +32,7 @@ class NotificationsController extends AbstractController
 
     public function postNotifications()
     {
-        $notifications = Input::get('notifications');
+        $notifications = Binput::get('notifications');
 
         if (!is_array($notifications)) {
             return Redirect::route('dashboard.notifications');

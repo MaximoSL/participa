@@ -2,8 +2,8 @@
 
 namespace MXAbierto\Participa\Http\Controllers;
 
+use GrahamCampbell\Binput\Facades\Binput;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use MXAbierto\Participa\Models\MadisonEvent;
 use MXAbierto\Participa\Models\UserMeta;
 
@@ -44,21 +44,21 @@ class AccountController extends AbstractController
     {
         $user = Auth::user();
 
-        if (strlen(Input::get('password_1')) > 0 || strlen(Input::get('password_2')) > 0) {
-            if (Input::get('password_1') !== Input::get('password_2')) {
+        if (strlen(Binput::get('password_1')) > 0 || strlen(Binput::get('password_2')) > 0) {
+            if (Binput::get('password_1') !== Binput::get('password_2')) {
                 return redirect()->route('user.account')->with('error', 'Las contraseñas que has ingresado no coinciden.');
             } else {
-                $user->password = Input::get('password_1');
+                $user->password = Binput::get('password_1');
             }
         }
 
-        $verify = Input::get('verify');
+        $verify = Binput::get('verify');
 
-        $user->email = Input::get('email');
-        $user->fname = Input::get('fname');
-        $user->lname = Input::get('lname');
-        $user->url = Input::get('url');
-        $user->phone = Input::get('phone');
+        $user->email = Binput::get('email');
+        $user->fname = Binput::get('fname');
+        $user->lname = Binput::get('lname');
+        $user->url = Binput::get('url');
+        $user->phone = Binput::get('phone');
 
         $user->verify = $verify;
 
