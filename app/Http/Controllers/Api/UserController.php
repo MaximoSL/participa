@@ -207,7 +207,7 @@ class UserController extends AbstractApiController
      */
     public function postSupport($doc)
     {
-        $input = Binput::get();
+        $input = Binput::all();
 
         $supported = (bool) $input['support'];
 
