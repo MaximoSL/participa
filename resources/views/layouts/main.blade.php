@@ -38,6 +38,7 @@
 			var _sf_startpt=(new Date()).getTime();
       var _basePath = '{{ config('app.base_name') }}';
 			var _baseUrl = '{{ route('home') }}';
+      var _currentPath = '{{{ Request::url() }}}';
 		</script>
 	</head>
 	<body>

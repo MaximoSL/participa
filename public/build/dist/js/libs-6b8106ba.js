@@ -54249,7 +54249,7 @@ angular.module('ui.filters').filter('unique', function () {
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.12.1 - 2015-07-28T03:50:59.076Z
+ * Version: 0.12.0 - 2015-05-28T07:44:11.360Z
  * License: MIT
  */
 
@@ -55269,7 +55269,7 @@ uis.directive('uiSelect',
             }
 
             // Hide the dropdown so there is no flicker until $timeout is done executing.
-            dropdown[0].style.opacity = 0;
+            dropdown[0].style.visibility = 'hidden';
 
             // Delay positioning the dropdown until all choices have been added so its height is correct.
             $timeout(function(){
@@ -55284,7 +55284,7 @@ uis.directive('uiSelect',
               }
 
               // Display the dropdown once it has been positioned.
-              dropdown[0].style.opacity = 1;
+              dropdown[0].style.visibility = '';
             });
           } else {
               if (dropdown === null) {
@@ -61431,8 +61431,6 @@ factory('ipCookie', ['$document',
                 options.expires.setMinutes(options.expires.getMinutes() + expiresFor);
               } else if (options.expirationUnit === 'seconds') {
                 options.expires.setSeconds(options.expires.getSeconds() + expiresFor);
-              } else if (options.expirationUnit === 'milliseconds') {
-                options.expires.setMilliseconds(options.expires.getMilliseconds() + expiresFor);
               } else {
                 options.expires.setDate(options.expires.getDate() + expiresFor);
               }
