@@ -314,8 +314,9 @@ class DocumentController extends AbstractApiController
         } else {
             $toAdd = Group::where('name', $group['text'])->first();
 
-            if(!$toAdd) {
+            if (!$toAdd) {
                 $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.invalidgroup'))), 'severity' => 'error'];
+
                 return response()->json($response);
             }
 
