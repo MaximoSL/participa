@@ -52,6 +52,7 @@
 				</div>
         <div class="docs-list list-unstyled">
 					<p ng-show="updating">Cargando...</p>
+          <p ng-show="!updating && !docs.length" class="ng-hide">No se encontraron resultados, cambia tus criterios de búsqueda y vuelve a intentar</p>
 					<div ng-repeat="doc in docs | toArray" ng-show="!updating">
 						<div doc-list-item></div>
 					</div>
