@@ -1867,7 +1867,7 @@ angular.module('madisonApp.dashboardControllers')
         };
         $scope.createDate       = function (newDate) {
             if ($scope.newdate.label !== '') {
-                $scope.newdate.date = $filter('date')(newDate, 'short');
+                $scope.newdate.date = $filter('date')(newDate, 'yyyy-MM-ddTHH:mm:ssZ');
 
                 $http.post(_baseUrl + '/api/docs/' + $scope.doc.id + '/dates', {
                     date    : $scope.newdate
@@ -1897,7 +1897,7 @@ angular.module('madisonApp.dashboardControllers')
         };
         $scope.saveDate         = function (date) {
             var sendDate    = angular.copy(date);
-            sendDate.date   = $filter('date')(sendDate.date, 'short');
+            sendDate.date   = $filter('date')(sendDate.date, 'yyyy-MM-ddTHH:mm:ssZ');
 
             return $http.put(_baseUrl + '/api/dates/' + date.id, {
                 date    : sendDate

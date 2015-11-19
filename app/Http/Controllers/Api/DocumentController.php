@@ -391,7 +391,7 @@ class DocumentController extends AbstractApiController
 
         $date = Binput::get('date');
 
-        $datetime = \DateTime::createFromFormat('d/m/y H:i', $date['date']);
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, $date['date']);
 
         $returned = new Date();
         $returned->label = $date['label'];
@@ -426,7 +426,8 @@ class DocumentController extends AbstractApiController
             throw new Exception(ucfirst(strtolower(trans('messages.unable').' '.trans('messages.toupdate').' '.trans('messages.thefeminine').' '.trans('messages.date').'. '.trans('messages.the').' '.trans('messages.dateid').' $date '.trans('messages.notfound'))));
         }
 
-        $newDate = date('Y-m-d H:i:s', strtotime((string) $input['date']));
+        $newDate = \DateTime::createFromFormat(\DateTime::ISO8601, $input['date']);
+        $newDate = $newDate->format('Y-m-d H:i:s');
 
         $date->label = $input['label'];
         $date->date = $newDate;

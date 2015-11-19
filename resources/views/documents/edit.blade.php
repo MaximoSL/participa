@@ -122,7 +122,7 @@
                   <div class="form-group">
                     <div class="new-date">
                       <input name="newdate-label" class="form-control" ng-model="newdate.label" type="text" placeholder="Date Label" />
-                      <datetimepicker ng-model="newdate.date" on-set-time="createDate"></datetimepicker>
+                      <datetimepicker ng-model="newdate.date" data-on-set-time="createDate(newDate)"></datetimepicker>
                     </div>
                   </div>
                 </form>
@@ -133,7 +133,7 @@
         <tab heading="Embed Document">
           <div class="mt">
             <p>{{ trans('messages.pastetoembed') }}</p>
-            <textarea class="form-control" rows="5" cols="80"/>{{ $doc->getEmbedCode() }}</textarea>
+            <textarea class="form-control" rows="5" cols="80">{{ $doc->getEmbedCode() }}</textarea>
           </div>
         </tab>
       </tabset>
