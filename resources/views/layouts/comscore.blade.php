@@ -10,5 +10,5 @@
 	}
 	udm_('http://b.scorecardresearch.com/b?c1=2&c2=17183199&ns_site=gobmx&name=consulta.portada');
 </script>
-<noscript><p><img src="http://b.scorecardresearch.com/p?c1=2&amp;c2=17183199&amp;ns_site=gobmx&amp;name=consulta.portada" height="1" width="1" alt="*"></p></noscript> 
+<noscript><p><img src="http://b.scorecardresearch.com/p?c1=2&amp;c2=17183199&amp;ns_site=gobmx&amp;name=consulta.portada" height="1" width="1" alt="*"></p></noscript>
 <!-- End Digital Analytix Tag 1.1302.13 -->
