@@ -1913,7 +1913,7 @@ angular.module('madisonApp.dashboardControllers')
             return $http.get(_baseUrl + '/api/docs/' + $scope.doc.id + '/dates')
                 .success(function (data) {
                     angular.forEach(data, function (date, index) {
-                        date.date       = Date.parse(date.date);
+                        date.date       = Date.parse(date.date.replace(' ', 'T'));
                         date.$changed   = false;
                         $scope.dates.push(angular.copy(date));
 
@@ -2745,6 +2745,13 @@ angular.module( 'madisonApp.filters' )
     });
 angular.module( 'madisonApp.filters' )
     .filter( 'parseDate', function () {
+        return function ( date ) {
+            return Date.parse( date );
+        };
+    });
+
+angular.module( 'madisonApp.filters' )
+    .filter( 'parseDateIso', function () {
         return function ( date ) {
             return Date.parse(date.replace(' ', 'T'));
         };

@@ -35,7 +35,7 @@
               <small>@{{ 'UPDATED' | translate }}: @{{ doc.updated_at | date: 'longDate' }}, @{{ doc.updated_at | date: 'HH:mm:ss' }}</small>
             </li>
             <li ng-repeat="date in doc.dates">
-              <small>@{{ date.label }}: @{{ date.date | parseDate | date: 'longDate' }}, @{{ date.date | parseDate | date: 'HH:mm:ss' }}</small>
+              <small>@{{ date.label }}: @{{ date.date | parseDateIso | date: 'longDate' }}, @{{ date.date | parseDateIso | date: 'HH:mm:ss' }}</small>
             </li>
           </ul>
           <div class="doc-extract" ng-if="introtext">
