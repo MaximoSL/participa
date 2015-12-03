@@ -456,14 +456,14 @@ class DocumentController extends AbstractApiController
 
         foreach ($sponsors as $sponsor) {
             switch (true) {
-                case ($sponsor instanceof User):
+                case $sponsor instanceof User:
                     $userSponsor = $sponsor->toArray();
                     $userSponsor['sponsorType'] = 'user';
 
                     $retval['sponsors'][] = $userSponsor;
 
                     break;
-                case ($sponsor instanceof Group):
+                case $sponsor instanceof Group:
 
                     $groupSponsor = $sponsor->toArray();
                     $groupSponsor['sponsorType'] = 'group';
