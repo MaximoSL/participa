@@ -605,7 +605,7 @@ angular.module( 'madisonApp.controllers' )
             $scope.getDocComments( docId );
             $scope.user                 = user;
             $scope.doc                  = doc;
-            $scope.disableAuthor        = ( typeof disableAuthor !== 'undefined' );
+            $scope.disableAuthor        = ( typeof disableAuthor !== 'undefined' && disableAuthor == true );
             $scope.disableCommentAction = ( typeof disableCommentAction !== 'undefined' );
             $scope.getLayoutTexts();
         };
