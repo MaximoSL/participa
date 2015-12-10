@@ -7513,6 +7513,9 @@ ul.format {
   .home .multimedia {
     margin-top: 40px; }
 
+.home-docs .docs-list p.ng-hide {
+  display: none; }
+
 .flag-banner {
   position: relative;
   background-image: url(../images/background_gob.jpg);
