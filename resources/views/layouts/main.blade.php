@@ -34,6 +34,7 @@
 		@include('layouts.socials')
 		@include('layouts.assets')
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="http://framework-gb.cdn.gob.mx/favicon.ico">
 		<script type="text/javascript">
 			var _sf_startpt=(new Date()).getTime();
       var _basePath = '{{ config('app.base_name') }}';
