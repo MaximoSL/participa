@@ -80,10 +80,10 @@
           <h5>Síguenos en</h5>
           <ul class='list-inline'>
             <li>
-              <a class='social-icon facebook' href='https://www.facebook.com/PresidenciaMX'>Facebook</a>
+              <a class='social-icon facebook' href='https://www.facebook.com/gobmx'>Facebook</a>
             </li>
             <li>
-              <a class='social-icon twitter' href='https://twitter.com/PresidenciaMX'>Twitter</a>
+              <a class='social-icon twitter' href='https://twitter.com/gobmx'>Twitter</a>
             </li>
           </ul>
         </div>
