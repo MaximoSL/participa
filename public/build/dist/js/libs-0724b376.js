@@ -10351,7 +10351,7 @@ return jQuery;
 }));
 
 /*!
- * Bootstrap v3.3.5 (http://getbootstrap.com)
+ * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under the MIT license
  */
@@ -10363,13 +10363,13 @@ if (typeof jQuery === 'undefined') {
 +function ($) {
   'use strict';
   var version = $.fn.jquery.split(' ')[0].split('.')
-  if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1)) {
-    throw new Error('Bootstrap\'s JavaScript requires jQuery version 1.9.1 or higher')
+  if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1) || (version[0] > 2)) {
+    throw new Error('Bootstrap\'s JavaScript requires jQuery version 1.9.1 or higher, but lower than version 3')
   }
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: transition.js v3.3.5
+ * Bootstrap: transition.js v3.3.6
  * http://getbootstrap.com/javascript/#transitions
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -10429,7 +10429,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: alert.js v3.3.5
+ * Bootstrap: alert.js v3.3.6
  * http://getbootstrap.com/javascript/#alerts
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -10448,7 +10448,7 @@ if (typeof jQuery === 'undefined') {
     $(el).on('click', dismiss, this.close)
   }
 
-  Alert.VERSION = '3.3.5'
+  Alert.VERSION = '3.3.6'
 
   Alert.TRANSITION_DURATION = 150
 
@@ -10524,7 +10524,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: button.js v3.3.5
+ * Bootstrap: button.js v3.3.6
  * http://getbootstrap.com/javascript/#buttons
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -10544,7 +10544,7 @@ if (typeof jQuery === 'undefined') {
     this.isLoading = false
   }
 
-  Button.VERSION  = '3.3.5'
+  Button.VERSION  = '3.3.6'
 
   Button.DEFAULTS = {
     loadingText: 'loading...'
@@ -10645,7 +10645,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: carousel.js v3.3.5
+ * Bootstrap: carousel.js v3.3.6
  * http://getbootstrap.com/javascript/#carousel
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -10676,7 +10676,7 @@ if (typeof jQuery === 'undefined') {
       .on('mouseleave.bs.carousel', $.proxy(this.cycle, this))
   }
 
-  Carousel.VERSION  = '3.3.5'
+  Carousel.VERSION  = '3.3.6'
 
   Carousel.TRANSITION_DURATION = 600
 
@@ -10883,7 +10883,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: collapse.js v3.3.5
+ * Bootstrap: collapse.js v3.3.6
  * http://getbootstrap.com/javascript/#collapse
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -10913,7 +10913,7 @@ if (typeof jQuery === 'undefined') {
     if (this.options.toggle) this.toggle()
   }
 
-  Collapse.VERSION  = '3.3.5'
+  Collapse.VERSION  = '3.3.6'
 
   Collapse.TRANSITION_DURATION = 350
 
@@ -11095,7 +11095,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: dropdown.js v3.3.5
+ * Bootstrap: dropdown.js v3.3.6
  * http://getbootstrap.com/javascript/#dropdowns
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -11115,7 +11115,7 @@ if (typeof jQuery === 'undefined') {
     $(element).on('click.bs.dropdown', this.toggle)
   }
 
-  Dropdown.VERSION = '3.3.5'
+  Dropdown.VERSION = '3.3.6'
 
   function getParent($this) {
     var selector = $this.attr('data-target')
@@ -11147,7 +11147,7 @@ if (typeof jQuery === 'undefined') {
       if (e.isDefaultPrevented()) return
 
       $this.attr('aria-expanded', 'false')
-      $parent.removeClass('open').trigger('hidden.bs.dropdown', relatedTarget)
+      $parent.removeClass('open').trigger($.Event('hidden.bs.dropdown', relatedTarget))
     })
   }
 
@@ -11181,7 +11181,7 @@ if (typeof jQuery === 'undefined') {
 
       $parent
         .toggleClass('open')
-        .trigger('shown.bs.dropdown', relatedTarget)
+        .trigger($.Event('shown.bs.dropdown', relatedTarget))
     }
 
     return false
@@ -11261,7 +11261,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: modal.js v3.3.5
+ * Bootstrap: modal.js v3.3.6
  * http://getbootstrap.com/javascript/#modals
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -11295,7 +11295,7 @@ if (typeof jQuery === 'undefined') {
     }
   }
 
-  Modal.VERSION  = '3.3.5'
+  Modal.VERSION  = '3.3.6'
 
   Modal.TRANSITION_DURATION = 300
   Modal.BACKDROP_TRANSITION_DURATION = 150
@@ -11599,7 +11599,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: tooltip.js v3.3.5
+ * Bootstrap: tooltip.js v3.3.6
  * http://getbootstrap.com/javascript/#tooltip
  * Inspired by the original jQuery.tipsy by Jason Frame
  * ========================================================================
@@ -11626,7 +11626,7 @@ if (typeof jQuery === 'undefined') {
     this.init('tooltip', element, options)
   }
 
-  Tooltip.VERSION  = '3.3.5'
+  Tooltip.VERSION  = '3.3.6'
 
   Tooltip.TRANSITION_DURATION = 150
 
@@ -12114,7 +12114,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: popover.js v3.3.5
+ * Bootstrap: popover.js v3.3.6
  * http://getbootstrap.com/javascript/#popovers
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -12134,7 +12134,7 @@ if (typeof jQuery === 'undefined') {
 
   if (!$.fn.tooltip) throw new Error('Popover requires tooltip.js')
 
-  Popover.VERSION  = '3.3.5'
+  Popover.VERSION  = '3.3.6'
 
   Popover.DEFAULTS = $.extend({}, $.fn.tooltip.Constructor.DEFAULTS, {
     placement: 'right',
@@ -12223,7 +12223,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: scrollspy.js v3.3.5
+ * Bootstrap: scrollspy.js v3.3.6
  * http://getbootstrap.com/javascript/#scrollspy
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -12252,7 +12252,7 @@ if (typeof jQuery === 'undefined') {
     this.process()
   }
 
-  ScrollSpy.VERSION  = '3.3.5'
+  ScrollSpy.VERSION  = '3.3.6'
 
   ScrollSpy.DEFAULTS = {
     offset: 10
@@ -12396,7 +12396,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: tab.js v3.3.5
+ * Bootstrap: tab.js v3.3.6
  * http://getbootstrap.com/javascript/#tabs
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -12416,7 +12416,7 @@ if (typeof jQuery === 'undefined') {
     // jscs:enable requireDollarBeforejQueryAssignment
   }
 
-  Tab.VERSION = '3.3.5'
+  Tab.VERSION = '3.3.6'
 
   Tab.TRANSITION_DURATION = 150
 
@@ -12552,7 +12552,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: affix.js v3.3.5
+ * Bootstrap: affix.js v3.3.6
  * http://getbootstrap.com/javascript/#affix
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -12581,7 +12581,7 @@ if (typeof jQuery === 'undefined') {
     this.checkPosition()
   }
 
-  Affix.VERSION  = '3.3.5'
+  Affix.VERSION  = '3.3.6'
 
   Affix.RESET    = 'affix affix-top affix-bottom'
 
@@ -20608,7 +20608,7 @@ this['DIFF_INSERT'] = DIFF_INSERT;
 this['DIFF_EQUAL'] = DIFF_EQUAL;
 
 /**
- * @license AngularJS v1.2.28
+ * @license AngularJS v1.2.29
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -20677,7 +20677,7 @@ function minErr(module) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.2.28/' +
+    message = message + '\nhttp://errors.angularjs.org/1.2.29/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i-2) + '=' +
@@ -21091,6 +21091,8 @@ noop.$inject = [];
        return (transformationFn || angular.identity)(value);
      };
    ```
+  * @param {*} value to be returned.
+  * @returns {*} the value passed in.
  */
 function identity($) {return $;}
 identity.$inject = [];
@@ -22596,11 +22598,11 @@ function setupModuleLoader(window) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.2.28',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.2.29',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 2,
-  dot: 28,
-  codeName: 'finnish-disembarkation'
+  dot: 29,
+  codeName: 'ultimate-deprecation'
 };
 
 
@@ -25032,6 +25034,11 @@ function Browser(window, document, $log, $sniffer) {
     }
   }
 
+  function getHash(url) {
+    var index = url.indexOf('#');
+    return index === -1 ? '' : url.substr(index + 1);
+  }
+
   /**
    * @private
    * Note: this method is used only by scenario runner
@@ -25143,8 +25150,10 @@ function Browser(window, document, $log, $sniffer) {
         }
         if (replace) {
           location.replace(url);
-        } else {
+        } else if (!sameBase) {
           location.href = url;
+        } else {
+          location.hash = getHash(url);
         }
       }
       return self;
@@ -26855,6 +26864,13 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           }
           break;
         case 3: /* Text Node */
+          if (msie === 11) {
+            // Workaround for #11781
+            while (node.parentNode && node.nextSibling && node.nextSibling.nodeType === 3 /* Text Node */) {
+              node.nodeValue = node.nodeValue + node.nextSibling.nodeValue;
+              node.parentNode.removeChild(node.nextSibling);
+            }
+          }
           addTextInterpolateDirective(directives, node.nodeValue);
           break;
         case 8: /* Comment */
@@ -29899,6 +29915,10 @@ function stripHash(url) {
   return index == -1 ? url : url.substr(0, index);
 }
 
+function trimEmptyHash(url) {
+  return url.replace(/(#.+)|#$/, '$1');
+}
+
 
 function stripFile(url) {
   return url.substr(0, stripHash(url).lastIndexOf('/') + 1);
@@ -30555,10 +30575,11 @@ function $LocationProvider(){
     // update browser
     var changeCounter = 0;
     $rootScope.$watch(function $locationWatch() {
-      var oldUrl = $browser.url();
+      var oldUrl = trimEmptyHash($browser.url());
+      var newUrl = trimEmptyHash($location.absUrl());
       var currentReplace = $location.$$replace;
 
-      if (!changeCounter || oldUrl != $location.absUrl()) {
+      if (!changeCounter || oldUrl != newUrl) {
         changeCounter++;
         $rootScope.$evalAsync(function() {
           if ($rootScope.$broadcast('$locationChangeStart', $location.absUrl(), oldUrl).
@@ -30779,7 +30800,26 @@ function ensureSafeMemberName(name, fullExpression) {
       || name === "__proto__") {
     throw $parseMinErr('isecfld',
         'Attempting to access a disallowed field in Angular expressions! '
-        +'Expression: {0}', fullExpression);
+        + 'Expression: {0}', fullExpression);
+  }
+  return name;
+}
+
+function getStringValue(name, fullExpression) {
+  // From the JavaScript docs:
+  // Property names must be strings. This means that non-string objects cannot be used
+  // as keys in an object. Any non-string object, including a number, is typecasted
+  // into a string via the toString method.
+  //
+  // So, to ensure that we are checking the same `name` that JavaScript would use,
+  // we cast it to a string, if possible.
+  // Doing `name + ''` can cause a repl error if the result to `toString` is not a string,
+  // this is, this will handle objects that misbehave.
+  name = name + '';
+  if (!isString(name)) {
+    throw $parseMinErr('iseccst',
+        'Cannot convert object to primitive value! '
+        + 'Expression: {0}', fullExpression);
   }
   return name;
 }
@@ -31458,7 +31498,7 @@ Parser.prototype = {
 
     return extend(function(self, locals) {
       var o = obj(self, locals),
-          i = indexFn(self, locals),
+          i = getStringValue(indexFn(self, locals), parser.text),
           v, p;
 
       ensureSafeMemberName(i, parser.text);
@@ -31475,7 +31515,7 @@ Parser.prototype = {
       return v;
     }, {
       assign: function(self, value, locals) {
-        var key = ensureSafeMemberName(indexFn(self, locals), parser.text);
+        var key = ensureSafeMemberName(getStringValue(indexFn(self, locals), parser.text), parser.text);
         // prevent overwriting of Function.constructor which would break ensureSafeObject check
         var o = ensureSafeObject(obj(self, locals), parser.text);
         if (!o) obj.assign(self, o = {});
@@ -36157,37 +36197,12 @@ function limitToFilter(){
       limit = int(limit);
     }
 
-    if (isString(input)) {
-      //NaN check on limit
-      if (limit) {
-        return limit >= 0 ? input.slice(0, limit) : input.slice(limit, input.length);
-      } else {
-        return "";
-      }
-    }
-
-    var out = [],
-      i, n;
-
-    // if abs(limit) exceeds maximum length, trim it
-    if (limit > input.length)
-      limit = input.length;
-    else if (limit < -input.length)
-      limit = -input.length;
-
-    if (limit > 0) {
-      i = 0;
-      n = limit;
+    //NaN check on limit
+    if (limit) {
+      return limit > 0 ? input.slice(0, limit) : input.slice(limit);
     } else {
-      i = input.length + limit;
-      n = input.length;
+      return isString(input) ? "" : [];
     }
-
-    for (; i<n; i++) {
-      out.push(input[i]);
-    }
-
-    return out;
   };
 }
 
@@ -40460,7 +40475,7 @@ var ngIfDirective = ['$animate', function($animate) {
        <select ng-model="template" ng-options="t.name for t in templates">
         <option value="">(blank)</option>
        </select>
-       url of the template: <tt>{{template.url}}</tt>
+       url of the template: <code>{{template.url}}</code>
        <hr/>
        <div class="slide-animate-container">
          <div class="slide-animate" ng-include="template.url"></div>
@@ -42762,7 +42777,7 @@ var styleDirective = valueFn({
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}.ng-hide-add-active,.ng-hide-remove{display:block!important;}</style>');
 /**
- * @license AngularJS v1.2.28
+ * @license AngularJS v1.2.29
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -43059,9 +43074,11 @@ angular.module('ngAnimate', ['ng'])
         //so that all the animated elements within the animation frame
         //will be properly updated and drawn on screen. This is
         //required to perform multi-class CSS based animations with
-        //Firefox. DO NOT REMOVE THIS LINE.
-        var a = bod.offsetWidth + 1;
-        fn();
+        //Firefox. DO NOT REMOVE THIS LINE. DO NOT OPTIMIZE THIS LINE.
+        //THE MINIFIER WILL REMOVE IT OTHERWISE WHICH WILL RESULT IN AN
+        //UNPREDICTABLE BUG THAT IS VERY HARD TO TRACK DOWN AND WILL
+        //TAKE YEARS AWAY FROM YOUR LIFE!
+        fn(bod.offsetWidth);
       });
     };
   }])
@@ -52578,7 +52595,7 @@ angular.module("template/typeahead/typeahead-popup.html", []).run(["$templateCac
 }]);
 
 /**
- * @license AngularJS v1.2.28
+ * @license AngularJS v1.2.29
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -54249,7 +54266,7 @@ angular.module('ui.filters').filter('unique', function () {
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.12.0 - 2015-05-28T07:44:11.360Z
+ * Version: 0.12.1 - 2015-07-28T03:50:59.076Z
  * License: MIT
  */
 
@@ -55269,7 +55286,7 @@ uis.directive('uiSelect',
             }
 
             // Hide the dropdown so there is no flicker until $timeout is done executing.
-            dropdown[0].style.visibility = 'hidden';
+            dropdown[0].style.opacity = 0;
 
             // Delay positioning the dropdown until all choices have been added so its height is correct.
             $timeout(function(){
@@ -55284,7 +55301,7 @@ uis.directive('uiSelect',
               }
 
               // Display the dropdown once it has been positioned.
-              dropdown[0].style.visibility = '';
+              dropdown[0].style.opacity = 1;
             });
           } else {
               if (dropdown === null) {
@@ -56063,9 +56080,9 @@ $templateCache.put("selectize/choices.tpl.html","<div ng-show=\"$select.open\" c
 $templateCache.put("selectize/match.tpl.html","<div ng-hide=\"($select.open || $select.isEmpty())\" class=\"ui-select-match\" ng-transclude=\"\"></div>");
 $templateCache.put("selectize/select.tpl.html","<div class=\"ui-select-container selectize-control single\" ng-class=\"{\'open\': $select.open}\"><div class=\"selectize-input\" ng-class=\"{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}\" ng-click=\"$select.activate()\"><div class=\"ui-select-match\"></div><input type=\"text\" autocomplete=\"off\" tabindex=\"-1\" class=\"ui-select-search ui-select-toggle\" ng-click=\"$select.toggle($event)\" placeholder=\"{{$select.placeholder}}\" ng-model=\"$select.search\" ng-hide=\"!$select.searchEnabled || ($select.selected && !$select.open)\" ng-disabled=\"$select.disabled\" aria-label=\"{{ $select.baseTitle }}\"></div><div class=\"ui-select-choices\"></div></div>");}]);
 /**
- * angular-growl-v2 - v0.7.4 - 2015-06-17
+ * angular-growl-v2 - v0.7.8 - 2015-10-25
  * http://janstevens.github.io/angular-growl-2
- * Copyright (c) 2015 Marco Rinck,Jan Stevens; Licensed MIT
+ * Copyright (c) 2015 Marco Rinck,Jan Stevens,Silvan van Leeuwen; Licensed MIT
  */
 angular.module('angular-growl', []);
 angular.module('angular-growl').directive('growl', [function () {
@@ -56081,10 +56098,10 @@ angular.module('angular-growl').directive('growl', [function () {
       },
       controller: [
         '$scope',
-        '$timeout',
+        '$interval',
         'growl',
         'growlMessages',
-        function ($scope, $timeout, growl, growlMessages) {
+        function ($scope, $interval, growl, growlMessages) {
           $scope.referenceId = $scope.reference || 0;
           growlMessages.initDirective($scope.referenceId, $scope.limitMessages);
           $scope.growlMessages = growlMessages;
@@ -56098,7 +56115,7 @@ angular.module('angular-growl').directive('growl', [function () {
           $scope.stopTimeoutClose = function (message) {
             if (!message.clickToClose) {
               angular.forEach(message.promises, function (promise) {
-                $timeout.cancel(promise);
+                $interval.cancel(promise);
               });
               if (message.close) {
                 growlMessages.deleteMessage(message);
@@ -56156,7 +56173,7 @@ angular.module('angular-growl').provider('growl', function () {
       error: null,
       warning: null,
       info: null
-    }, _messagesKey = 'messages', _messageTextKey = 'text', _messageTitleKey = 'title', _messageSeverityKey = 'severity', _onlyUniqueMessages = true, _messageVariableKey = 'variables', _referenceId = 0, _inline = false, _position = 'top-right', _disableCloseButton = false, _disableIcons = false, _reverseOrder = false, _disableCountDown = false, _translateMessages = true;
+    }, _messagesKey = 'messages', _messageTextKey = 'text', _messageTitleKey = 'title', _messageSeverityKey = 'severity', _messageTTLKey = 'ttl', _onlyUniqueMessages = true, _messageVariableKey = 'variables', _referenceId = 0, _inline = false, _position = 'top-right', _disableCloseButton = false, _disableIcons = false, _reverseOrder = false, _disableCountDown = false, _translateMessages = true;
   this.globalTimeToLive = function (ttl) {
     if (typeof ttl === 'object') {
       for (var k in ttl) {
@@ -56221,6 +56238,10 @@ angular.module('angular-growl').provider('growl', function () {
     _messageSeverityKey = messageSeverityKey;
     return this;
   };
+  this.messageTTLKey = function (messageTTLKey) {
+    _messageTTLKey = messageTTLKey;
+    return this;
+  };
   this.onlyUniqueMessages = function (onlyUniqueMessages) {
     _onlyUniqueMessages = onlyUniqueMessages;
     return this;
@@ -56251,9 +56272,9 @@ angular.module('angular-growl').provider('growl', function () {
     '$interpolate',
     '$sce',
     '$filter',
-    '$timeout',
+    '$interval',
     'growlMessages',
-    function ($rootScope, $interpolate, $sce, $filter, $timeout, growlMessages) {
+    function ($rootScope, $interpolate, $sce, $filter, $interval, growlMessages) {
       var translate;
       growlMessages.onlyUnique = _onlyUniqueMessages;
       growlMessages.reverseOrder = _reverseOrder;
@@ -56271,8 +56292,8 @@ angular.module('angular-growl').provider('growl', function () {
         }
         var addedMessage = growlMessages.addMessage(message);
         $rootScope.$broadcast('growlMessage', message);
-        $timeout(function () {
-        }, 0);
+        $interval(function () {
+        }, 0, 1);
         return addedMessage;
       }
       function sendMessage(text, config, severity) {
@@ -56329,6 +56350,9 @@ angular.module('angular-growl').provider('growl', function () {
             var config = {};
             config.variables = message[_messageVariableKey] || {};
             config.title = message[_messageTitleKey];
+            if (message[_messageTTLKey]) {
+              config.ttl = message[_messageTTLKey];
+            }
             sendMessage(message[_messageTextKey], config, severity);
           }
         }
@@ -56362,8 +56386,8 @@ angular.module('angular-growl').provider('growl', function () {
 });
 angular.module('angular-growl').service('growlMessages', [
   '$sce',
-  '$timeout',
-  function ($sce, $timeout) {
+  '$interval',
+  function ($sce, $interval) {
     'use strict';
     var self = this;
     this.directives = {};
@@ -56440,7 +56464,7 @@ angular.module('angular-growl').service('growlMessages', [
         message.countdownFunction = function () {
           if (message.countdown > 1) {
             message.countdown--;
-            message.promises.push($timeout(message.countdownFunction, 1000));
+            message.promises.push($interval(message.countdownFunction, 1000, 1, 1));
           } else {
             message.countdown--;
           }
@@ -56462,15 +56486,20 @@ angular.module('angular-growl').service('growlMessages', [
       }
       if (message.ttl && message.ttl !== -1) {
         var self = this;
-        message.promises.push($timeout(angular.bind(this, function () {
+        message.promises.push($interval(angular.bind(this, function () {
           self.deleteMessage(message);
-        }), message.ttl));
-        message.promises.push($timeout(message.countdownFunction, 1000));
+        }), message.ttl, 1, 1));
+        message.promises.push($interval(message.countdownFunction, 1000, 1, 1));
       }
       return message;
     };
     this.deleteMessage = function (message) {
-      var messages = this.getAllMessages(message.referenceId), index = messages.indexOf(message);
+      var messages = this.getAllMessages(message.referenceId), index = -1;
+      for (var i in messages) {
+        if (messages.hasOwnProperty(i)) {
+          index = messages[i] === message ? i : index;
+        }
+      }
       if (index > -1) {
         messages[index].close = true;
         messages.splice(index, 1);
@@ -56482,7 +56511,7 @@ angular.module('angular-growl').service('growlMessages', [
   }
 ]);
 /**
- * @license AngularJS v1.2.28
+ * @license AngularJS v1.2.29
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -57130,7 +57159,7 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 })(window, window.angular);
 
 /**
- * @license AngularJS v1.2.28
+ * @license AngularJS v1.2.29
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -57758,7 +57787,7 @@ angular.module('ngResource', ['ng']).
 })(window, window.angular);
 
 /**
- * @license AngularJS v1.2.28
+ * @license AngularJS v1.2.29
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -61374,8 +61403,8 @@ reset:function(){b.reset.call(this);this._doReset()},update:function(a){this._ap
 m(c,d,g,i,b[f+(3*a+5)%16],4,h[a]),i=m(i,c,d,g,b[f+(3*a+8)%16],11,h[a+1]),g=m(g,i,c,d,b[f+(3*a+11)%16],16,h[a+2]),d=m(d,g,i,c,b[f+(3*a+14)%16],23,h[a+3])):(c=n(c,d,g,i,b[f+3*a%16],6,h[a]),i=n(i,c,d,g,b[f+(3*a+7)%16],10,h[a+1]),g=n(g,i,c,d,b[f+(3*a+14)%16],15,h[a+2]),d=n(d,g,i,c,b[f+(3*a+5)%16],21,h[a+3]));e[0]=e[0]+c|0;e[1]=e[1]+d|0;e[2]=e[2]+g|0;e[3]=e[3]+i|0},_doFinalize:function(){var b=this._data,f=b.words,a=8*this._nDataBytes,e=8*b.sigBytes;f[e>>>5]|=128<<24-e%32;f[(e+64>>>9<<4)+14]=(a<<8|a>>>
 24)&16711935|(a<<24|a>>>8)&4278255360;b.sigBytes=4*(f.length+1);this._process();b=this._hash.words;for(f=0;4>f;f++)a=b[f],b[f]=(a<<8|a>>>24)&16711935|(a<<24|a>>>8)&4278255360}});j.MD5=k._createHelper(p);j.HmacMD5=k._createHmacHelper(p)})(Math);
 
-(function(){var d=window,e=document,f="text/javascript",g="text/css",h="stylesheet",k="script",l="link",m="head",n="complete",p="UTF-8",q=".";function r(b){var a=e.getElementsByTagName(m)[0];a||(a=e.body.parentNode.appendChild(e.createElement(m)));a.appendChild(b)}function _loadJs(b){var a=e.createElement(k);a.type=f;a.charset=p;a.src=b;r(a)}function _loadCss(b){var a=e.createElement(l);a.type=g;a.rel=h;a.charset=p;a.href=b;r(a)}function _isNS(b){b=b.split(q);for(var a=d,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}function _setupNS(b){b=b.split(q);for(var a=d,c=0;c<b.length;++c)a=a[b[c]]||(a[b[c]]={});return a}
-d.addEventListener&&"undefined"==typeof e.readyState&&d.addEventListener("DOMContentLoaded",function(){e.readyState=n},!1);
+(function(){var d=window,e=document,f="text/javascript",g="text/css",h="stylesheet",k="script",l="link",m="head",n="complete",p="UTF-8",q=".";function r(b){var a=e.getElementsByTagName(m)[0];a||(a=e.body.parentNode.appendChild(e.createElement(m)));a.appendChild(b)}function _loadJs(b){var a=e.createElement(k);a.type=f;a.charset=p;a.src=b;r(a)}function _loadCss(b){var a=e.createElement(l);a.type=g;a.rel=h;a.charset=p;a.href=b;r(a)}function _isNS(b){b=b.split(q);for(var a=d,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}
+function _setupNS(b){b=b.split(q);for(var a=d,c=0;c<b.length;++c)a.hasOwnProperty?a.hasOwnProperty(b[c])?a=a[b[c]]:a=a[b[c]]={}:a=a[b[c]]||(a[b[c]]={});return a}d.addEventListener&&"undefined"==typeof e.readyState&&d.addEventListener("DOMContentLoaded",function(){e.readyState=n},!1);
 if (_isNS('google.translate.Element')){return}(function(){var c=_setupNS('google.translate._const');c._cl='en';c._cuc='googleTranslateElementInit';c._cac='';c._cam='';var h='translate.googleapis.com';var s=(true?'https':window.location.protocol=='https:'?'https':'http')+'://';var b=s+h;c._pah=h;c._pas=s;c._pbi=b+'/translate_static/img/te_bk.gif';c._pci=b+'/translate_static/img/te_ctrl3.gif';c._pli=b+'/translate_static/img/loading.gif';c._plla=h+'/translate_a/l';c._pmi=b+'/translate_static/img/mini_google.png';c._ps=b+'/translate_static/css/translateelement.css';c._puh='translate.google.com';_loadCss(c._ps);_loadJs(b+'/translate_static/js/element/main.js');})();})();
 /*
  * Copyright 2013 Ivan Pusic
@@ -61431,6 +61460,8 @@ factory('ipCookie', ['$document',
                 options.expires.setMinutes(options.expires.getMinutes() + expiresFor);
               } else if (options.expirationUnit === 'seconds') {
                 options.expires.setSeconds(options.expires.getSeconds() + expiresFor);
+              } else if (options.expirationUnit === 'milliseconds') {
+                options.expires.setMilliseconds(options.expires.getMilliseconds() + expiresFor);
               } else {
                 options.expires.setDate(options.expires.getDate() + expiresFor);
               }
