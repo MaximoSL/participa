@@ -314,6 +314,12 @@ class DocumentController extends AbstractApiController
         } else {
             $toAdd = Group::where('name', $group['text'])->first();
 
+            if (!$toAdd) {
+                $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.invalidgroup'))), 'severity' => 'error'];
+
+                return response()->json($response);
+            }
+
             if (!$user->hasRole(Role::ROLE_ADMIN)) {
                 if (!isset($toAdd) || !$user->groups->contains($toAdd->id)) {
                     $response['messages'][0] = ['text' => ucfirst(strtolower(trans('messages.invalidgroup'))), 'severity' => 'error'];
@@ -322,10 +328,10 @@ class DocumentController extends AbstractApiController
                 }
             }
 
-            if (!isset($toAdd)) {
-                $toAdd = new Group();
-                $toAdd->name = $group['text'];
-            }
+            // if (!isset($toAdd)) {
+            //     $toAdd = new Group();
+            //     $toAdd->name = $group['text'];
+            // }
             $toAdd->save();
 
             $doc->group()->sync([$toAdd->id]);
