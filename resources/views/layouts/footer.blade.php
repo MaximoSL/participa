@@ -28,6 +28,11 @@
                 INAI
               </a>
             </li>
+            <li>
+              <a href='http://www.gob.mx/sitemap'>
+                Mapa de sitio
+              </a>
+            </li>
           </ul>
         </div>
         <div class='col-sm-4'>
@@ -48,16 +53,9 @@
 	</div>
         <div class='col-sm-4'>
           <h5>Contacto</h5>
-          <p>
-            Insurgentes Sur 1735, Col. Guadalupe Inn.
-            <br>
-            Delegación Álvaro Obregón
-            <br>
-            México, D.F. C.P. 01020
-          </p>
+          <p>Mesa de ayuda</p>
           <p>gobmx@funcionpublica.gob.mx</p>
-          <p><a target="_self" href="http://www.gob.mx/atencion">Atención Ciudadana</a></p>
-	  <p><a target="_self" href="http://www.gob.mx/tramites/ficha/presentacion-de-quejas-y-denuncias-en-la-sfp/SFP54">Quejas y denuncias</a></p>
+          <p><a target="_self" href="http://www.gob.mx/tramites/ficha/presentacion-de-quejas-y-denuncias-en-la-sfp/SFP54">Quejas y denuncias</a></p>
         </div>
       </div>
       <div class='row'>
