@@ -53,8 +53,8 @@
 	</div>
         <div class='col-sm-4'>
           <h5>Contacto</h5>
-          <p>Mesa de ayuda</p>
-          <p>gobmx@funcionpublica.gob.mx</p>
+          <p>Mesa de ayuda<br>
+          gobmx@funcionpublica.gob.mx</p>
           <p><a target="_self" href="http://www.gob.mx/tramites/ficha/presentacion-de-quejas-y-denuncias-en-la-sfp/SFP54">Quejas y denuncias</a></p>
         </div>
       </div>
