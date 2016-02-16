@@ -346,7 +346,7 @@ class AuthController extends AbstractController
        if (isset($new_user)) {
            $message = 'Bienvenido '.$user->fname;
        } else {
-           $message = 'Benvenido de nuevo, '.$user->fname;
+           $message = 'Bienvenido de nuevo, '.$user->fname;
        }
 
        return redirect()->route('home')->with('success_message', $message);
