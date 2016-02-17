@@ -52,11 +52,11 @@
 					<div class="checkbox">
 						@if($user->verified())
 							<label>
-								<input name="verify" id="verify" type="checkbox" checked disabled> {{ trans('messages.reqveraccount') }} is '{{ $user->verified() }}'
+								<input name="verify" id="verify" type="hidden" checked disabled> <!-- {{ trans('messages.reqveraccount') }} is '{{ $user->verified() }}' -->
 							</label>
 						@else
 							<label>
-								<input name="verify" id="verify" type="checkbox"> {{ trans('messages.reqveraccount') }}'
+								<input name="verify" id="verify" type="hidden"> <!-- {{ trans('messages.reqveraccount') }}' -->
 							</label>
 						@endif
 					</div>
