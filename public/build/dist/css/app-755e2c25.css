@@ -8914,7 +8914,7 @@ ul.format {
     top: 3px; }
 
 .main-banner {
-  height: auto;
+  height: 350px;
   min-height: initial;
   background-image: url("https://framework-gb.cdn.gob.mx/main/home_picture.jpg"); }
   .main-banner .container {
